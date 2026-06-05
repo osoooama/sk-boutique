@@ -44,7 +44,7 @@ export default function FeedbackSection({ isEnglish, feedbackPage, onSetFeedback
 
         <div className="max-w-4xl mx-auto relative px-4">
           
-          <div className="hidden md:block relative bg-[var(--bg-secondary)] border border-[var(--border-subtle)] rounded-[2rem] p-4 md:p-8 shadow-2xl shadow-black/80">
+          <div className="hidden md:block relative bg-[var(--bg-secondary)] border border-[var(--border-subtle)] rounded-[2rem] p-4 md:p-8 shadow-2xl" style={{ boxShadow: "var(--shadow-strong)" }}>
             <div className="absolute -inset-px rounded-[2rem] bg-gradient-to-b from-[var(--border-subtle)] to-transparent pointer-events-none" />
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0 bg-[var(--bg-elevated)] rounded-2xl overflow-hidden shadow-inner relative border border-[var(--border-subtle)] min-h-[450px] md:min-h-[500px]">

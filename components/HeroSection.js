@@ -38,7 +38,7 @@ export default function HeroSection({ isEnglish, onApplyPromo }) {
       <div className="absolute inset-0 z-0">
         <Image
           src="/assets/sk.png"
-          alt="SK BOUTIQUE — تصاميم أردنية عصرية"
+          alt="SK BOUTIQUE — تصاميم أوروبية عصرية"
           fill
           sizes="100vw"
           preload

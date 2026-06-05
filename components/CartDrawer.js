@@ -117,7 +117,7 @@ export default function CartDrawer({
                   </div>
                 )}
 
-                <div className="h-px bg-zinc-800 my-1" />
+                <div className="h-px bg-[var(--border-subtle)] my-1" />
 
                 <div className="flex justify-between text-sm">
                   <span className="text-[var(--text-primary)] font-bold">{isEnglish ? "Total Price:" : "المجموع الإجمالي:"}</span>

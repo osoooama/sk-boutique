@@ -19,22 +19,28 @@
   --shemagh-red: #cc0000;
   --petra-red: #b53a2b;
   --desert-sand: #d4b896;
+  --shadow-card: 0 0 0 0 transparent;
+  --shadow-glow: 0 0 0 0 transparent;
+  --shadow-strong: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
 }
 
 .light-theme {
-  --bg-primary: #fcfbf9;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #f5f4ef;
-  --bg-elevated: #f7f6f2;
-  --bg-glass: rgba(252, 251, 249, 0.75);
-  --bg-subtle: rgba(0, 0, 0, 0.03);
-  --bg-subtle-hover: rgba(0, 0, 0, 0.06);
-  --text-primary: #1c1c1e;
-  --text-secondary: #3a3a3c;
-  --text-muted: #8e8e93;
-  --text-dim: #aeaeb2;
-  --border-subtle: rgba(0, 0, 0, 0.05);
-  --border-light: rgba(0, 0, 0, 0.08);
+  --bg-primary: #f5f0e8;
+  --bg-secondary: #faf7f1;
+  --bg-tertiary: #efe9df;
+  --bg-elevated: #f8f4ec;
+  --bg-glass: rgba(245, 240, 232, 0.8);
+  --bg-subtle: rgba(207, 168, 80, 0.06);
+  --bg-subtle-hover: rgba(207, 168, 80, 0.12);
+  --text-primary: #2c2416;
+  --text-secondary: #5c5240;
+  --text-muted: #8a7f6b;
+  --text-dim: #b0a696;
+  --border-subtle: rgba(207, 168, 80, 0.12);
+  --border-light: rgba(207, 168, 80, 0.2);
+  --shadow-card: 0 2px 12px rgba(207, 168, 80, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(207, 168, 80, 0.1);
+  --shadow-strong: 0 25px 50px -12px rgba(207, 168, 80, 0.08);
 }
 
 @theme {
@@ -144,6 +150,55 @@ input::placeholder, textarea::placeholder, select::placeholder, .input-placehold
   -webkit-backdrop-filter: blur(12px);
   background: var(--bg-glass);
   border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card);
+}
+
+.light-theme .glass-effect {
+  background: rgba(250, 247, 241, 0.75);
+  border-color: rgba(207, 168, 80, 0.15);
+}
+
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(207, 168, 80, 0.3), transparent);
+  margin: 0 auto;
+}
+
+.light-theme .gold-divider {
+  background: linear-gradient(90deg, transparent, rgba(207, 168, 80, 0.4), transparent);
+}
+
+.card-elegant {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+}
+
+.card-elegant:hover {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.light-theme ::selection {
+  background: rgba(207, 168, 80, 0.25);
+  color: #2c2416;
+}
+
+::selection {
+  background: rgba(207, 168, 80, 0.35);
+  color: #ffffff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 .toast-animation {

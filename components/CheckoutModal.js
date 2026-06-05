@@ -197,8 +197,8 @@ export default function CheckoutModal({
               </div>
 
               {paymentMethod === "cod" ? (
-                <div className="bg-[#1c3d27]/25 border border-emerald-500/20 rounded-2xl p-5 text-center space-y-2">
-                  <div className="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto text-sm mb-1">
+                <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-2xl p-5 text-center space-y-2">
+                  <div className="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto text-sm mb-1">
                     <i className="fas fa-shipping-fast" />
                   </div>
                   <h4 className="font-bold text-[var(--text-primary)] text-xs">
