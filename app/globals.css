@@ -208,6 +208,24 @@ html {
   }
 }
 
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(207, 168, 80, 0.08) 50%, transparent 100%);
+  animation: skeleton-slide 1.8s ease-in-out infinite;
+}
+
+@keyframes skeleton-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
 .toast-animation {
   animation: toast-slide-in 0.3s ease forwards, toast-fade-out 0.3s ease 3.7s forwards;
 }

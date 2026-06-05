@@ -12,6 +12,7 @@ export default function Navbar({
   onToggleLang,
   onSearchChange,
   onCartOpen,
+  onSizeGuideOpen,
   searchInputRef
 }) {
   return (
@@ -48,6 +49,14 @@ export default function Navbar({
             </nav>
 
             <div className="flex items-center gap-2 md:gap-3">
+              <button
+                onClick={onSizeGuideOpen}
+                className="hidden md:flex w-9 h-9 md:w-10 md:h-10 rounded-xl hover:bg-[var(--bg-subtle)] border border-[var(--border-subtle)] hover:border-gold/20 transition-all duration-300 text-[var(--text-muted)] hover:text-gold items-center justify-center active:scale-90"
+                aria-label={isEnglish ? "Size Guide" : "جدول المقاسات"}
+                title={isEnglish ? "Size Guide" : "جدول المقاسات"}
+              >
+                <i className="fas fa-ruler text-xs md:text-sm" />
+              </button>
               <button
                 onClick={onToggleTheme}
                 className="w-9 h-9 md:w-10 md:h-10 rounded-xl hover:bg-[var(--bg-subtle)] border border-[var(--border-subtle)] hover:border-gold/20 transition-all duration-300 text-gold flex items-center justify-center active:scale-90"

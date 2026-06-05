@@ -51,17 +51,33 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Store",
-              name: "SK BOUTIQUE",
-              description: "\u062A\u0635\u0627\u0645\u064A\u0645 \u0623\u0648\u0631\u0648\u0628\u064A\u0629 \u0639\u0635\u0631\u064A\u0629 \u062A\u064F\u0635\u0646\u0639 \u0645\u062D\u0644\u064A\u0627\u064B \u0628\u0645\u0639\u0627\u064A\u064A\u0631 \u0627\u0644\u062C\u0648\u062F\u0629 \u0627\u0644\u0623\u0648\u0631\u0648\u0628\u064A\u0629",
-              url: "https://sk-boutique-977.netlify.app",
-              telephone: "+962798921123",
-              address: {
-                "@type": "PostalAddress",
-                addressCountry: "JO"
-              },
-              sameAs: [
-                "https://www.instagram.com/sk_boutique977/"
+              "@graph": [
+                {
+                  "@type": "Store",
+                  name: "SK BOUTIQUE",
+                  description: "\u062A\u0635\u0627\u0645\u064A\u0645 \u0623\u0648\u0631\u0648\u0628\u064A\u0629 \u0639\u0635\u0631\u064A\u0629 \u062A\u064F\u0635\u0646\u0639 \u0645\u062D\u0644\u064A\u0627\u064B \u0628\u0645\u0639\u0627\u064A\u064A\u0631 \u0627\u0644\u062C\u0648\u062F\u0629 \u0627\u0644\u0623\u0648\u0631\u0648\u0628\u064A\u0629",
+                  url: "https://sk-boutique-977.netlify.app",
+                  telephone: "+962798921123",
+                  address: {
+                    "@type": "PostalAddress",
+                    addressCountry: "JO"
+                  },
+                  sameAs: [
+                    "https://www.instagram.com/sk_boutique977/"
+                  ]
+                },
+                {
+                  "@type": "WebSite",
+                  url: "https://sk-boutique-977.netlify.app",
+                  potentialAction: {
+                    "@type": "SearchAction",
+                    target: {
+                      "@type": "EntryPoint",
+                      urlTemplate: "https://sk-boutique-977.netlify.app/?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                  }
+                }
               ]
             })
           }}

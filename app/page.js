@@ -22,6 +22,9 @@ import MobileSearch from "@/components/MobileSearch";
 import BottomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import BackToTop from "@/components/BackToTop";
+import SizeGuideModal from "@/components/SizeGuideModal";
+import ProductSkeleton from "@/components/ProductSkeleton";
 
 let toastIdCounter = 0;
 
@@ -50,6 +53,8 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [sortBy, setSortBy] = useState("default");
   const [feedbackPage, setFeedbackPage] = useState(0);
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
+  const [productsLoading, setProductsLoading] = useState(true);
   const searchInputRef = useRef(null);
 
   useEffect(() => {
@@ -96,6 +101,11 @@ export default function Home() {
       }
     }, 0);
 
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setProductsLoading(false), 1200);
     return () => clearTimeout(timer);
   }, []);
 
@@ -172,6 +182,15 @@ export default function Home() {
       setConfettiParticles([]);
     }, 5000);
   }, []);
+
+  const handleNewsletterSubscribe = useCallback((email) => {
+    addToast(
+      isEnglish
+        ? "You have subscribed to our newsletter! Stay tuned for exclusive offers."
+        : "تم اشتراكك في نشرتنا البريدية! ترقبي العروض الحصرية.",
+      "success"
+    );
+  }, [isEnglish, addToast]);
 
   const addToCart = useCallback((productId, size, colorName, image, quantity = 1) => {
     const product = PRODUCTS.find((p) => p.id === productId);
@@ -292,6 +311,7 @@ export default function Home() {
         onToggleLang={() => setIsEnglish(!isEnglish)}
         onSearchChange={setSearchQuery}
         onCartOpen={() => setCartOpen(true)}
+        onSizeGuideOpen={() => setSizeGuideOpen(true)}
         searchInputRef={searchInputRef}
       />
 
@@ -307,19 +327,21 @@ export default function Home() {
         onApplyPromo={applyPromoCode}
       /></div>
 
-      <div data-reveal className="opacity-0"><CatalogSection
-        isEnglish={isEnglish}
-        wishlist={wishlist}
-        searchQuery={searchQuery}
-        activeCategory={activeCategory}
-        sortBy={sortBy}
-        onSetActiveCategory={setActiveCategory}
-        onSetSortBy={setSortBy}
-        onSearchChange={setSearchQuery}
-        onToggleWishlist={toggleWishlist}
-        onAddToCart={addToCart}
-        onOpenDetails={openProductDetails}
-      /></div>
+      <div data-reveal className="opacity-0">
+        {productsLoading ? <ProductSkeleton count={4} /> : <CatalogSection
+          isEnglish={isEnglish}
+          wishlist={wishlist}
+          searchQuery={searchQuery}
+          activeCategory={activeCategory}
+          sortBy={sortBy}
+          onSetActiveCategory={setActiveCategory}
+          onSetSortBy={setSortBy}
+          onSearchChange={setSearchQuery}
+          onToggleWishlist={toggleWishlist}
+          onAddToCart={addToCart}
+          onOpenDetails={openProductDetails}
+        />}
+      </div>
 
       <div data-reveal className="opacity-0"><AboutSection isEnglish={isEnglish} /></div>
 
@@ -366,6 +388,12 @@ export default function Home() {
         onTriggerConfetti={triggerConfetti}
       />
 
+      <SizeGuideModal
+        isOpen={sizeGuideOpen}
+        isEnglish={isEnglish}
+        onClose={() => setSizeGuideOpen(false)}
+      />
+
       <MobileSearch
           isOpen={mobileSearchOpen}
           isEnglish={isEnglish}
@@ -386,7 +414,9 @@ export default function Home() {
         onMobileSearchOpen={() => setMobileSearchOpen(true)}
       />
 
-      <Footer isEnglish={isEnglish} />
+      <Footer isEnglish={isEnglish} onNewsletterSubscribe={handleNewsletterSubscribe} />
+
+      <BackToTop />
 
       <WhatsAppButton isEnglish={isEnglish} />
     </div>

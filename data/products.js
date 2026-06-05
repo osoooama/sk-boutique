@@ -9,7 +9,7 @@ const PRODUCTS = [
     price: 15,
     sizes: ["S", "M", "L", "XL"],
     colors: [
-      { name: "عنابي ملكي", englishName: "Royal Burgundy", value: "#800020", image: "/assets/sk_boutique977-photo-DKANChnMMkq-20250523_194235_500481283.jpg", surcharge: 1.5 }
+      { name: "عنابي ملكي", englishName: "Royal Burgundy", value: "#800020", image: "/assets/sk_boutique977-photo-DKANChnMMkq-20250523_194235_500481283.webp", surcharge: 1.5 }
     ],
     details: "قماش مخمل ناعم عالي الجودة • تطريز دقيق بحبات اللؤلؤ البراقة • طقم كامل قطعتين بقصة عصرية • حزام خصر عريض متناسق • مشغول بحرفية ودقة عالية.",
     englishDetails: "Premium quality soft velvet fabric • Precisely embroidered with shiny pearl beads • Complete two-piece set with modern cut • Matching wide waist belt • Crafted with precision and care.",
@@ -26,8 +26,8 @@ const PRODUCTS = [
     price: 14,
     sizes: ["S", "M", "L"],
     colors: [
-      { name: "أزرق بترولي", englishName: "Petroleum Blue", value: "#4a6b82", image: "/assets/sk_boutique977-thumbnail-DQKeCZDDAsC-20251023_223213_571049654.jpg", surcharge: 0 },
-      { name: "أسود ملكي", englishName: "Royal Black", value: "#0d0d0d", image: "/assets/sk_boutique977-thumbnail-DQKfmC0jODi-20251023_224554_569566349.jpg", surcharge: 1.5 }
+      { name: "أزرق بترولي", englishName: "Petroleum Blue", value: "#4a6b82", image: "/assets/sk_boutique977-thumbnail-DQKeCZDDAsC-20251023_223213_571049654.webp", surcharge: 0 },
+      { name: "أسود ملكي", englishName: "Royal Black", value: "#0d0d0d", image: "/assets/sk_boutique977-thumbnail-DQKfmC0jODi-20251023_224554_569566349.webp", surcharge: 1.5 }
     ],
     details: "قماش ناعم منسدل مقاوم للتجعد • أزرار كريستالية لامعة • تصميم بلفة جانبية مع حزام قابل للتعديل • طقم قطعتين كامل • مشغول بحرفية عالية.",
     englishDetails: "Soft, drapeable wrinkle-resistant fabric • Sparkling crystal buttons • Side-wrap design with adjustable belt • Complete two-piece set • High craftsmanship.",
@@ -44,7 +44,7 @@ const PRODUCTS = [
     price: 15,
     sizes: ["S", "M", "L", "XL"],
     colors: [
-      { name: "بني داكن", englishName: "Dark Brown", value: "#3d2314", image: "/assets/sk_boutique977-photo-DYsrFPZsvLJ-20260524_013125_706198458.jpg", surcharge: 1.0 }
+      { name: "بني داكن", englishName: "Dark Brown", value: "#3d2314", image: "/assets/sk_boutique977-photo-DYsrFPZsvLJ-20260524_013125_706198458.webp", surcharge: 1.0 }
     ],
     details: "قماش متوسط الوزن عالي الجودة مقاوم للتجعد • حزام خصر عريض منفصل قابل للربط • تصميم Wrap عصري • ياقات عريضة مبطنة بدقة • مشغول بحرفية عالية.",
     englishDetails: "Premium mid-weight wrinkle-resistant fabric • Detachable wide waist tie • Modern wrap design • Precisely lined wide lapels • High-quality craftsmanship.",
@@ -61,10 +61,10 @@ const PRODUCTS = [
     price: 12,
     sizes: ["S", "M", "L", "XL"],
     colors: [
-      { name: "بيج شامبين", englishName: "Champagne Beige", value: "#e5d3b3", image: "/assets/sk_boutique977-thumbnail-DYpsZawMGWi-20260522_214524_706237541.jpg", surcharge: 0 },
-      { name: "أسود ملكي", englishName: "Royal Black", value: "#121212", image: "/assets/sk_boutique977-thumbnail-DYposBJsCwF-20260522_211341_703559149.jpg", surcharge: 2.0 },
-      { name: "أزرق ملكي", englishName: "Royal Blue", value: "#0038a8", image: "/assets/sk_boutique977-thumbnail-DYpsmnEMJA--20260522_214717_704427197.jpg", surcharge: 1.5 },
-      { name: "أبيض لؤلؤي", englishName: "Pearl White", value: "#fdfdfd", image: "/assets/sk_boutique977-thumbnail-DYpwc68sOWc-20260522_222040_704653143.jpg", surcharge: 1.0 }
+      { name: "بيج شامبين", englishName: "Champagne Beige", value: "#e5d3b3", image: "/assets/sk_boutique977-thumbnail-DYpsZawMGWi-20260522_214524_706237541.webp", surcharge: 0 },
+      { name: "أسود ملكي", englishName: "Royal Black", value: "#121212", image: "/assets/sk_boutique977-thumbnail-DYposBJsCwF-20260522_211341_703559149.webp", surcharge: 2.0 },
+      { name: "أزرق ملكي", englishName: "Royal Blue", value: "#0038a8", image: "/assets/sk_boutique977-thumbnail-DYpsmnEMJA--20260522_214717_704427197.webp", surcharge: 1.5 },
+      { name: "أبيض لؤلؤي", englishName: "Pearl White", value: "#fdfdfd", image: "/assets/sk_boutique977-thumbnail-DYpwc68sOWc-20260522_222040_704653143.webp", surcharge: 1.0 }
     ],
     details: "ساتان إيطالي فاخر 100% • ياقة مرتفعة مزمومة مع سحاب خلفي خفي • أربطة خصر متناسقة • أكمام منفوخة بأساور مرنة • خياطة متقنة بأعلى معايير الجودة.",
     englishDetails: "100% premium Italian satin silk • Gathered high collar with hidden back zip • Matching waist ties • Puff sleeves with elastic cuffs • Precision stitching with the highest quality standards.",
@@ -81,9 +81,9 @@ const PRODUCTS = [
     price: 10,
     sizes: ["S", "M", "L"],
     colors: [
-      { name: "بني شوكولاتة", englishName: "Chocolate Brown", value: "#5c4033", image: "/assets/sk_boutique977-thumbnail-DXhVfNNDObL-20260424_192008_674506967.jpg", surcharge: 0 },
-      { name: "عنابي ملكي", englishName: "Royal Burgundy", value: "#800020", image: "/assets/sk_boutique977-thumbnail-DXhY4GyjJn8-20260424_194941_672357180.jpg", surcharge: 2.0 },
-      { name: "بيج كلاسيكي", englishName: "Classic Beige", value: "#e1d8c3", image: "/assets/sk_boutique977-thumbnail-DYpcx1FsCrl-20260522_192848_706629160.jpg", surcharge: 1.0 }
+      { name: "بني شوكولاتة", englishName: "Chocolate Brown", value: "#5c4033", image: "/assets/sk_boutique977-thumbnail-DXhVfNNDObL-20260424_192008_674506967.webp", surcharge: 0 },
+      { name: "عنابي ملكي", englishName: "Royal Burgundy", value: "#800020", image: "/assets/sk_boutique977-thumbnail-DXhY4GyjJn8-20260424_194941_672357180.webp", surcharge: 2.0 },
+      { name: "بيج كلاسيكي", englishName: "Classic Beige", value: "#e1d8c3", image: "/assets/sk_boutique977-thumbnail-DYpcx1FsCrl-20260522_192848_706629160.webp", surcharge: 1.0 }
     ],
     details: "قماش كريب خفيف وناعم عالي الجودة • أربطة خصر جانبية مزدوجة قابلة للتعديل • قصة انسيابية مريحة • أزرار أمامية مخفية • خياطة متقنة.",
     englishDetails: "High-quality lightweight soft crepe fabric • Double adjustable side waist ties • Relaxed flowing fit • Concealed front buttons • Precision stitching.",

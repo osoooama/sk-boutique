@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 
-export default function Footer({ isEnglish }) {
+export default function Footer({ isEnglish, onNewsletterSubscribe }) {
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
-    alert(isEnglish ? "Your email has been registered! We will send you offers first." : "تم تسجيل بريدك الإلكتروني! سنرسل لك العروض أولاً.");
+    const email = e.target.elements.email.value;
+    if (onNewsletterSubscribe) onNewsletterSubscribe(email);
     e.target.reset();
   };
 

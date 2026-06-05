@@ -56,7 +56,7 @@ export default function FeedbackSection({ isEnglish, feedbackPage, onSetFeedback
                 </div>
                 <div className="w-full h-full relative rounded-xl overflow-hidden shadow-md aspect-[3/4] max-w-[320px]">
                   <Image
-                    src={"/assets/feedback-" + (feedbackPage * 2 + 1) + ".jpg"}
+                    src={"/assets/feedback-" + (feedbackPage * 2 + 1) + ".webp"}
                     alt={isEnglish ? "Customer review " + (feedbackPage * 2 + 1) : "رأي عميل رقم " + (feedbackPage * 2 + 1)}
                     fill
                     sizes="(max-width: 768px) 100vw, 320px"
@@ -73,7 +73,7 @@ export default function FeedbackSection({ isEnglish, feedbackPage, onSetFeedback
                 {feedbackPage * 2 + 2 <= 17 ? (
                   <div className="w-full h-full relative rounded-xl overflow-hidden shadow-md aspect-[3/4] max-w-[320px]">
                     <Image
-                      src={"/assets/feedback-" + (feedbackPage * 2 + 2) + ".jpg"}
+                      src={"/assets/feedback-" + (feedbackPage * 2 + 2) + ".webp"}
                       alt={isEnglish ? "Customer review " + (feedbackPage * 2 + 2) : "رأي عميل رقم " + (feedbackPage * 2 + 2)}
                       fill
                       sizes="(max-width: 768px) 100vw, 320px"
@@ -134,7 +134,7 @@ export default function FeedbackSection({ isEnglish, feedbackPage, onSetFeedback
                   </div>
                   <div className="w-full relative aspect-[3/4] rounded-2xl overflow-hidden shadow-inner mt-6 border border-[var(--border-subtle)] bg-zinc-950">
                     <Image
-                      src={`/assets/feedback-${idx + 1}.jpg`}
+                      src={`/assets/feedback-${idx + 1}.webp`}
                       alt={isEnglish ? "Customer review " + (idx + 1) : `رأي عميل رقم ${idx + 1}`}
                       fill
                       sizes="280px"
