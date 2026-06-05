@@ -17,7 +17,7 @@ export default function Navbar({
   return (
     <header className="fixed top-0 left-0 right-0 z-40 transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 pt-4">
-        <div className="rounded-[1.5rem] glass-effect border border-[var(--border-light)] shadow-2xl shadow-black/30 transition-all duration-500 backdrop-blur-md">
+        <div className="rounded-[1.5rem] glass-effect border border-[var(--border-light)] shadow-2xl transition-all duration-500 backdrop-blur-md">
           <div className="px-4 md:px-10 h-14 md:h-20 flex items-center justify-between">
             <a href="#hero" className="flex items-center gap-2 select-none group">
               <div className="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center transition-all duration-500 group-hover:bg-gold/20 group-hover:scale-105">

@@ -48,7 +48,7 @@ export default function FeedbackSection({ isEnglish, feedbackPage, onSetFeedback
             <div className="absolute -inset-px rounded-[2rem] bg-gradient-to-b from-[var(--border-subtle)] to-transparent pointer-events-none" />
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0 bg-[var(--bg-elevated)] rounded-2xl overflow-hidden shadow-inner relative border border-[var(--border-subtle)] min-h-[450px] md:min-h-[500px]">
-              <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-8 bg-gradient-to-r from-black/30 via-black/60 to-black/30 border-x border-black/10 z-10" />
+              <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-8 bg-gradient-to-r from-[var(--border-subtle)] via-[var(--text-dim)]/20 to-[var(--border-subtle)] border-x border-[var(--border-subtle)] z-10" />
 
               <div className="p-4 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-l border-[var(--border-subtle)] bg-gradient-to-l from-[var(--bg-elevated)] to-[var(--bg-elevated)] relative group">
                 <div className="absolute top-3 right-4 text-[10px] text-[var(--text-dim)] font-mono">
@@ -96,8 +96,8 @@ export default function FeedbackSection({ isEnglish, feedbackPage, onSetFeedback
               </div>
             </div>
 
-            <div className="absolute top-0 bottom-0 left-0 w-2 bg-gradient-to-r from-black/40 to-transparent pointer-events-none rounded-l-[2rem]" />
-            <div className="absolute top-0 bottom-0 right-0 w-2 bg-gradient-to-l from-black/40 to-transparent pointer-events-none rounded-r-[2rem]" />
+            <div className="absolute top-0 bottom-0 left-0 w-2 bg-gradient-to-r from-[var(--text-dim)]/10 to-transparent pointer-events-none rounded-l-[2rem]" />
+            <div className="absolute top-0 bottom-0 right-0 w-2 bg-gradient-to-l from-[var(--text-dim)]/10 to-transparent pointer-events-none rounded-r-[2rem]" />
           </div>
 
           <div className="hidden md:flex items-center justify-center gap-6 mt-8">

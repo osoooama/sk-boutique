@@ -6,12 +6,12 @@ export default function ToastNotifications({ toasts }) {
       {toasts.map((t) => (
         <div
           key={t.id}
-          className={`toast-animation flex items-center gap-3 px-4 py-3.5 rounded-xl shadow-xl backdrop-blur-md border text-sm text-white ${
+          className={`toast-animation flex items-center gap-3 px-4 py-3.5 rounded-xl shadow-xl backdrop-blur-md border text-sm ${
             t.type === "success"
-              ? "bg-[#1c3d27]/95 border-[#2b683d]"
+              ? "bg-[#1c3d27]/95 border-[#2b683d] text-white"
               : t.type === "danger"
-              ? "bg-[#3d1c1c]/95 border-[#682b2b]"
-              : "bg-black/90 border-[#cfa850]/20"
+              ? "bg-[#3d1c1c]/95 border-[#682b2b] text-white"
+              : "bg-[var(--bg-elevated)] border-[var(--border-light)] text-[var(--text-primary)]"
           }`}
         >
           <i

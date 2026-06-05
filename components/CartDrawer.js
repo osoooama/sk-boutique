@@ -97,7 +97,7 @@ export default function CartDrawer({
                   placeholder={isEnglish ? "Discount code (e.g. NASHAMA)" : "رمز الخصم (مثال: NASHAMA)"}
                   value={promoInput}
                   onChange={(e) => onSetPromoInput(e.target.value)}
-                  className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-light)] rounded-xl px-4 py-2 text-xs text-[var(--text-primary)] placeholder-zinc-500 outline-none focus:border-gold/30"
+                  className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-light)] rounded-xl px-4 py-2 text-xs text-[var(--text-primary)] placeholder-[var(--text-dim)] outline-none focus:border-gold/30"
                 />
                 <button onClick={onApplyPromo} className="px-4 py-2 bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-primary)] border border-[var(--border-light)] rounded-xl text-xs font-semibold transition">
                   {isEnglish ? "Apply" : "تطبيق"}

@@ -42,7 +42,7 @@ export default function WelcomeSplash({ visible, isEnglish, onEnter }) {
           </p>
         </div>
 
-        <div className="h-px bg-zinc-800 w-32 mx-auto" />
+        <div className="h-px bg-[var(--border-subtle)] w-32 mx-auto" />
 
         <button
           onClick={onEnter}
