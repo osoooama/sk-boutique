@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "powershell -NoProfile -ExecutionPolicy Bypass -File fix-encoding.ps1",
     "start": "next start",
     "lint": "eslint"
   },
