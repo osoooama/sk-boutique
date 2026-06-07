@@ -40,7 +40,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.vercel
-
 # Local Netlify folder
 .netlify
+
+# OpenCode workspace config
+.opencode
+
+# temp logs
+tunnel.log
+tunnel_err.log
+session-info.txt

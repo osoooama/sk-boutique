@@ -15,7 +15,7 @@ mode: primary
 - **الموقع:** عمان، الأردن
 
 ## هيكل المشروع
-المسار: `C:\Users\osama\.gemini\antigravity\scratch\sk-boutique\`
+المسار: `C:\Users\osama\Documents\sk-boutique\`
 
 ### الملفات الرئيسية
 - `app/layout.js` — الـ Layout الرئيسي (Meta, Schema, Fonts)

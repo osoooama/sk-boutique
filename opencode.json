@@ -2,8 +2,12 @@
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "SK",
   "instructions": [".opencode/agents/SK.md"],
-
+  "snapshot": true,
   "command": {
+    "dev": {
+      "description": "تشغيل سيرفر التطوير",
+      "prompt": "شغل npm run dev في مجلد المشروع"
+    },
     "build": {
       "description": "بناء المشروع",
       "prompt": "شغل npm run build في مجلد المشروع"
