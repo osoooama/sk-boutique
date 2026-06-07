@@ -318,11 +318,13 @@ export default function Home() {
         searchQuery={searchQuery}
         cartCount={cartCount}
         cartWobble={cartWobble}
+        wishlistCount={wishlist.length}
         onToggleTheme={toggleTheme}
         onToggleLang={() => setIsEnglish(!isEnglish)}
         onSearchChange={setSearchQuery}
         onCartOpen={() => setCartOpen(true)}
         onSizeGuideOpen={() => setSizeGuideOpen(true)}
+        onWishlistOpen={() => {}}
         searchInputRef={searchInputRef}
       />
 

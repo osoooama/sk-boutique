@@ -8,11 +8,13 @@ export default function Navbar({
   searchQuery,
   cartCount,
   cartWobble,
+  wishlistCount,
   onToggleTheme,
   onToggleLang,
   onSearchChange,
   onCartOpen,
   onSizeGuideOpen,
+  onWishlistOpen,
   searchInputRef
 }) {
   return (
@@ -84,6 +86,19 @@ export default function Navbar({
                 />
                 <i className="fas fa-search text-[var(--text-dim)] text-xs" />
               </div>
+
+              <button
+                onClick={onWishlistOpen}
+                className="relative w-10 h-10 md:w-11 md:h-11 rounded-xl hover:bg-[var(--bg-subtle)] border border-[var(--border-subtle)] hover:border-gold/20 transition-all duration-300 text-gold flex items-center justify-center active:scale-90 min-touch-target"
+                aria-label={isEnglish ? "Wishlist" : "المفضلة"}
+              >
+                <i className={`${wishlistCount > 0 ? "fas" : "far"} fa-heart text-xs md:text-sm`} />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -end-1 bg-gold text-black text-[9px] font-black w-[18px] h-[18px] rounded-lg flex items-center justify-center border border-[var(--bg-primary)] shadow-lg animate-scale-in">
+                    {wishlistCount}
+                  </span>
+                )}
+              </button>
 
               <button
                 onClick={onCartOpen}

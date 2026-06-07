@@ -96,6 +96,9 @@ export default function Footer({ isEnglish, onNewsletterSubscribe }) {
             </span>
             <span>{isEnglish ? "— Sara Krishan Store Jordan. All rights reserved." : "— متجر سارة كريشان الأردن. جميع الحقوق محفوظة."}</span>
           </p>
+          <p className="text-[9px] tracking-wide font-cinzel text-gold/40 italic">
+            {isEnglish ? "Under the Supervision of Osama Krishan" : "تحت إشراف أسامة كريشان"}
+          </p>
           <div className="flex items-center gap-3 text-base">
             <i className="fab fa-cc-visa text-[var(--text-muted)]" title="Visa" />
             <i className="fab fa-cc-mastercard text-[var(--text-muted)]" title="MasterCard" />
