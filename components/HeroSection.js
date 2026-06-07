@@ -77,16 +77,7 @@ export default function HeroSection({ isEnglish, onApplyPromo }) {
         </div>
 
         <div className="lg:col-span-5 flex justify-center">
-          <div
-            onClick={() => onApplyPromo("NASHAMA")}
-            className="relative w-full max-w-sm bg-gradient-to-br from-[var(--bg-secondary)] to-[var(--bg-elevated)] border border-[#cfa850]/20 rounded-3xl p-6 shadow-2xl overflow-hidden group cursor-pointer transform hover:-translate-y-2 transition-all duration-500 active:scale-[0.98]"
-          >
-            <div className="absolute top-0 right-0 w-24 h-24 overflow-hidden pointer-events-none">
-              <div className="absolute top-3 -right-8 w-28 py-1.5 shemagh-pattern text-center text-[var(--text-primary)] text-[9px] font-bold uppercase tracking-wider rotate-45 border-b border-white/20 shadow-md">
-                NASHAMA
-              </div>
-            </div>
-
+          <div className="relative w-full max-w-sm bg-gradient-to-br from-[var(--bg-secondary)] to-[var(--bg-elevated)] border border-[#cfa850]/20 rounded-3xl p-6 shadow-2xl overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
 
             <div className="space-y-4">
@@ -104,7 +95,7 @@ export default function HeroSection({ isEnglish, onApplyPromo }) {
 
               <div className="space-y-1">
                 <div className="text-3xl font-extrabold text-[var(--text-primary)] flex items-baseline gap-1">
-                  {isEnglish ? <>15% <span className="text-gold text-lg">Instant Discount</span></> : <>15% <span className="text-gold text-lg">خصم فوري</span></>}
+                  {isEnglish ? <>10% <span className="text-gold text-lg">Instant Discount</span></> : <>10% <span className="text-gold text-lg">خصم فوري</span></>}
                 </div>
                 <p className="text-xs text-[var(--text-muted)]">{t("promoCardDesc")}</p>
               </div>
@@ -112,7 +103,7 @@ export default function HeroSection({ isEnglish, onApplyPromo }) {
               <div className="bg-gold/5 border border-gold/10 rounded-2xl p-4 text-center space-y-2 group-hover:bg-gold/10 transition-colors duration-300">
                 <span className="text-[10px] text-[var(--text-muted)] block">{t("promoCardClick")}</span>
                 <div className="inline-block bg-[var(--bg-primary)] border border-[var(--border-subtle)] rounded-lg px-4 py-2 text-gold font-mono font-bold tracking-widest text-lg group-hover:border-gold/30 transition-all">
-                  NASHAMA
+                  SK10
                 </div>
               </div>
             </div>

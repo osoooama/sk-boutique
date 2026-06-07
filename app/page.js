@@ -21,7 +21,7 @@ import CheckoutModal from "@/components/CheckoutModal";
 import MobileSearch from "@/components/MobileSearch";
 import BottomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import InstagramFAB from "@/components/InstagramFAB";
 import BackToTop from "@/components/BackToTop";
 import SizeGuideModal from "@/components/SizeGuideModal";
 import ProductSkeleton from "@/components/ProductSkeleton";
@@ -173,9 +173,7 @@ export default function Home() {
       setAppliedPromo(codeUpper);
       localStorage.setItem("sk_promo", codeUpper);
       addToast(
-        codeUpper === "NASHAMA"
-          ? isEnglish ? "15% discount activated! Support our national team! 🇯🇴" : "كفو! تم تفعيل خصم 15% دعماً للمنتخب الوطني! 🇯🇴"
-          : "تم تطبيق رمز الخصم بنجاح بنسبة 10%!",
+        isEnglish ? "Discount code applied successfully — 10% off!" : "تم تطبيق رمز الخصم بنجاح بنسبة 10%!",
         "success"
       );
       setPromoInput("");
@@ -431,7 +429,7 @@ export default function Home() {
 
       <BackToTop />
 
-      <WhatsAppButton isEnglish={isEnglish} />
+      <InstagramFAB />
     </div>
   );
 }

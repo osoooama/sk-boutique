@@ -52,9 +52,9 @@ export default function WelcomeSplash({ visible, isEnglish, onEnter }) {
         </button>
         <p className="text-xs text-[var(--text-dim)]">
           {isEnglish ? (
-            <>Use code <span className="font-bold text-gold">NASHAMA</span> for 15% off — support our national team! 🇯🇴</>
+            <>Use code <span className="font-bold text-gold">SK10</span> for 10% off your first order!</>
           ) : (
-            <>استخدم كود <span className="font-bold text-gold">NASHAMA</span> خصم 15% دعماً للمنتخب الوطني! 🇯🇴</>
+            <>استخدم كود <span className="font-bold text-gold">SK10</span> للحصول على 10% خصم على طلبك الأول!</>
           )}
         </p>
       </div>

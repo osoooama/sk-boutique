@@ -22,7 +22,7 @@ export default function CartDrawer({
   if (!isOpen) return null;
 
   const discountPct = promoCode
-    ? (promoCode.toUpperCase() === "NASHAMA" ? 15 : ["JORDAN", "SK10", "WELCOME10"].includes(promoCode.toUpperCase()) ? 10 : 0)
+    ? (["JORDAN", "SK10", "WELCOME10"].includes(promoCode.toUpperCase()) ? 10 : 0)
     : 0;
 
   return (
@@ -94,7 +94,7 @@ export default function CartDrawer({
               <div className="flex gap-2">
                 <input
                   type="text"
-                  placeholder={isEnglish ? "Discount code (e.g. NASHAMA)" : "رمز الخصم (مثال: NASHAMA)"}
+                  placeholder={isEnglish ? "Discount code (e.g. SK10)" : "رمز الخصم (مثال: SK10)"}
                   value={promoInput}
                   onChange={(e) => onSetPromoInput(e.target.value)}
                   className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-light)] rounded-xl px-4 py-2 text-xs text-[var(--text-primary)] placeholder-[var(--text-dim)] outline-none focus:border-gold/30"
