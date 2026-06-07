@@ -46,7 +46,7 @@ export default function WelcomeSplash({ visible, isEnglish, onEnter }) {
 
         <button
           onClick={onEnter}
-          className="w-full py-4 bg-gold hover:bg-gold/90 text-black font-semibold rounded-xl transition duration-300 transform active:scale-95 shadow-lg shadow-gold/20 flex items-center justify-center gap-2"
+          className="w-full py-5 bg-gold hover:bg-gold/90 text-black font-semibold rounded-xl transition duration-300 transform active:scale-95 shadow-lg shadow-gold/20 flex items-center justify-center gap-2 min-touch-target text-sm"
         >
           <i className="fas fa-door-open" /> {isEnglish ? "Enter & Shop Now" : "ادخل وتسوق الآن"}
         </button>

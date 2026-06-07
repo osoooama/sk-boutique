@@ -83,7 +83,7 @@ export default function CatalogSection({
               <button
                 key={tab.id}
                 onClick={() => onSetActiveCategory(tab.id)}
-                className={`px-5 py-2.5 rounded-full text-xs font-medium transition duration-300 whitespace-nowrap ${
+                className={`px-5 py-3 rounded-full text-xs font-medium transition duration-300 whitespace-nowrap min-touch-target active:scale-90 ${
                   activeCategory === tab.id
                     ? "bg-gold text-black shadow-lg shadow-gold/10 font-semibold"
                     : "bg-[var(--bg-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle-hover)]"
@@ -149,7 +149,7 @@ export default function CatalogSection({
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                       <button
                         onClick={() => onOpenDetails(prod)}
-                        className="px-6 py-3 bg-white text-black font-semibold rounded-xl text-xs shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex items-center gap-2"
+                        className="px-6 py-4 bg-white text-black font-semibold rounded-xl text-xs shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex items-center gap-2 min-touch-target"
                       >
                         {t("viewDetails")} <i className="far fa-eye text-xs" />
                       </button>
@@ -175,7 +175,7 @@ export default function CatalogSection({
                           e.stopPropagation();
                           onAddToCart(prod.id, prod.sizes[0], prod.colors[0].name, prod.colors[0].image, 1);
                         }}
-                        className="w-[30px] h-[30px] md:w-8 md:h-8 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black text-[var(--text-primary)]/80 transition-all duration-300 flex items-center justify-center active:scale-90"
+                        className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black text-[var(--text-primary)]/80 transition-all duration-300 flex items-center justify-center active:scale-90 min-touch-target"
                         title={isEnglish ? "Quick add to cart" : "إضافة سريعة للسلة"}
                       >
                         <i className="fas fa-plus text-[10px] md:text-xs" />

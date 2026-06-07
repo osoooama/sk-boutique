@@ -78,7 +78,7 @@ export default function CheckoutModal({
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
       <div className="relative w-full max-w-2xl bg-[var(--bg-secondary)] border border-[var(--border-light)] rounded-3xl overflow-hidden shadow-2xl animate-slide-up flex flex-col max-h-[90vh]">
-        <button onClick={onClose} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] hover:text-[var(--text-primary)] flex items-center justify-center transition z-10">
+        <button onClick={onClose} className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] hover:text-[var(--text-primary)] flex items-center justify-center transition z-10 min-touch-target active:scale-90">
           <i className="fas fa-times" />
         </button>
 
@@ -164,7 +164,7 @@ export default function CheckoutModal({
               </div>
 
               <div className="pt-4 flex justify-end">
-                <button type="submit" className="w-full sm:w-auto px-8 py-3.5 bg-gold hover:bg-gold/90 text-black font-bold rounded-xl text-xs transition duration-300 flex items-center justify-center gap-2">
+                <button type="submit" className="w-full sm:w-auto px-8 py-4 bg-gold hover:bg-gold/90 text-black font-bold rounded-xl text-xs transition duration-300 flex items-center justify-center gap-2 active:scale-95 min-touch-target">
                   {isEnglish ? "Next — Payment" : "التالي — الدفع"} <i className={`fas ${isEnglish ? "fa-arrow-right" : "fa-arrow-left"} text-[10px]`} />
                 </button>
               </div>
@@ -186,7 +186,7 @@ export default function CheckoutModal({
                     key={opt.method}
                     type="button"
                     onClick={() => setPaymentMethod(opt.method)}
-                    className={`flex flex-col items-center gap-2.5 p-5 border rounded-2xl transition duration-300 ${
+                    className={`flex flex-col items-center gap-2.5 p-5 border rounded-2xl transition duration-300 min-touch-target active:scale-95 ${
                       paymentMethod === opt.method ? "bg-gold/5 border-gold text-gold" : "bg-[var(--bg-subtle)] border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)]"
                     }`}
                   >
@@ -284,10 +284,10 @@ export default function CheckoutModal({
               )}
 
               <div className="flex items-center gap-4 pt-4 border-t border-[var(--border-subtle)]">
-                <button type="button" onClick={() => setStep(1)} className="px-6 py-3.5 bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-primary)] rounded-xl text-xs font-semibold border border-[var(--border-light)] transition duration-300 flex items-center justify-center gap-2">
+                <button type="button" onClick={() => setStep(1)} className="px-6 py-4 bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-primary)] rounded-xl text-xs font-semibold border border-[var(--border-light)] transition duration-300 flex items-center justify-center gap-2 active:scale-95 min-touch-target">
                   <i className={`fas ${isEnglish ? "fa-arrow-left" : "fa-arrow-right"} text-[10px]`} /> {isEnglish ? "Back" : "الرجوع"}
                 </button>
-                <button type="submit" disabled={isSubmitting} className="flex-1 py-3.5 bg-gold hover:bg-gold/90 text-black font-bold rounded-xl text-xs transition duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <button type="submit" disabled={isSubmitting} className="flex-1 py-4 bg-gold hover:bg-gold/90 text-black font-bold rounded-xl text-xs transition duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 min-touch-target">
                   {isSubmitting ? (
                     <><i className="fas fa-spinner fa-spin" /> {isEnglish ? "Placing your order..." : "جاري تسجيل طلبك..."}</>
                   ) : (
@@ -356,7 +356,7 @@ function SuccessStep({ isEnglish, orderId, paymentMethod, onHome }) {
         </ul>
       </div>
 
-      <button onClick={onHome} className="w-full max-w-xs py-3.5 bg-gold hover:bg-gold/90 text-black font-bold rounded-xl text-xs transition duration-300">
+      <button onClick={onHome} className="w-full max-w-xs py-4 bg-gold hover:bg-gold/90 text-black font-bold rounded-xl text-xs transition duration-300 active:scale-95 min-touch-target">
         {isEnglish ? "Back to Home" : "العودة للرئيسية"}
       </button>
     </div>

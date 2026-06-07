@@ -103,7 +103,7 @@ export default function FeedbackSection({ isEnglish, feedbackPage, onSetFeedback
           <div className="hidden md:flex items-center justify-center gap-6 mt-8">
             <button
               onClick={() => onSetFeedbackPage((prev) => (prev === 0 ? 8 : prev - 1))}
-              className="w-11 h-11 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black border border-[var(--border-light)] flex items-center justify-center transition text-[var(--text-primary)] active:scale-95 shadow-md cursor-pointer"
+              className="w-12 h-12 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black border border-[var(--border-light)] flex items-center justify-center transition text-[var(--text-primary)] active:scale-95 shadow-md cursor-pointer min-touch-target"
               aria-label={isEnglish ? "Previous page" : "الصفحة السابقة"}
             >
               <i className="fas fa-chevron-right text-sm" />
@@ -115,7 +115,7 @@ export default function FeedbackSection({ isEnglish, feedbackPage, onSetFeedback
 
             <button
               onClick={() => onSetFeedbackPage((prev) => (prev === 8 ? 0 : prev + 1))}
-              className="w-11 h-11 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black border border-[var(--border-light)] flex items-center justify-center transition text-[var(--text-primary)] active:scale-95 shadow-md cursor-pointer"
+              className="w-12 h-12 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black border border-[var(--border-light)] flex items-center justify-center transition text-[var(--text-primary)] active:scale-95 shadow-md cursor-pointer min-touch-target"
               aria-label={isEnglish ? "Next page" : "الصفحة التالية"}
             >
               <i className="fas fa-chevron-left text-sm" />

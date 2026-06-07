@@ -9,7 +9,7 @@ export default function VideoSection({ isEnglish, onApplyPromo }) {
           <div className="lg:col-span-5 order-2 lg:order-1 space-y-6">
             <div
               onClick={() => onApplyPromo("NASHAMA")}
-              className="bg-gradient-to-br from-[var(--bg-secondary)] to-[var(--bg-elevated)] border border-gold/20 rounded-3xl p-6 hover:border-gold/45 transition-all duration-300 cursor-pointer shadow-lg relative group overflow-hidden"
+              className="bg-gradient-to-br from-[var(--bg-secondary)] to-[var(--bg-elevated)] border border-gold/20 rounded-3xl p-6 hover:border-gold/45 transition-all duration-300 cursor-pointer shadow-lg relative group overflow-hidden active:scale-[0.98] min-touch-target"
             >
               <div className="absolute inset-0 bg-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 

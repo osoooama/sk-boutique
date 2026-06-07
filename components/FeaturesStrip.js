@@ -30,7 +30,7 @@ export default function FeaturesStrip({ isEnglish }) {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {items.map((item, i) => (
             <div key={i} className="flex flex-col items-center text-center p-3 md:p-4 group">
-              <div className="w-12 h-12 rounded-full bg-gold/5 border border-gold/10 flex items-center justify-center text-gold mb-4 text-lg group-hover:bg-gold/10 group-hover:scale-110 transition-all duration-300">
+              <div className="w-14 h-14 rounded-full bg-gold/5 border border-gold/10 flex items-center justify-center text-gold mb-4 text-lg group-hover:bg-gold/10 group-hover:scale-110 transition-all duration-300 min-touch-target">
                 <i className={`fas ${item.icon}`} />
               </div>
               <h4 className="text-sm font-bold text-[var(--text-primary)] mb-1">{item.title}</h4>

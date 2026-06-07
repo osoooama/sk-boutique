@@ -22,6 +22,10 @@
   --shadow-card: 0 0 0 0 transparent;
   --shadow-glow: 0 0 0 0 transparent;
   --shadow-strong: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
 }
 
 .light-theme {
@@ -116,6 +120,13 @@
   100% { transform: translate(5px, -15px) scale(1.02); }
 }
 
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -123,6 +134,19 @@ body {
   transition: background-color 0.4s ease, color 0.4s ease;
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  touch-action: manipulation;
+}
+
+input, textarea, select {
+  font-size: 16px !important;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select:focus, textarea:focus, input:focus {
+    font-size: 16px !important;
+  }
 }
 
 input::placeholder, textarea::placeholder, select::placeholder, .input-placeholder::placeholder {
@@ -198,9 +222,7 @@ input::placeholder, textarea::placeholder, select::placeholder, .input-placehold
   color: #ffffff;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -271,6 +293,75 @@ html {
 @media (max-width: 768px) {
   ::-webkit-scrollbar {
     width: 3px;
+  }
+}
+
+button, a, input, select, textarea, [role="button"] {
+  cursor: pointer;
+}
+
+button:active, a:active, [role="button"]:active {
+  transform: scale(0.96);
+  transition: transform 0.1s ease;
+}
+
+.min-touch-target {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+.pt-safe {
+  padding-top: var(--safe-area-top);
+}
+
+.pb-safe {
+  padding-bottom: var(--safe-area-bottom);
+}
+
+.pl-safe {
+  padding-left: var(--safe-area-left);
+}
+
+.pr-safe {
+  padding-right: var(--safe-area-right);
+}
+
+.px-safe {
+  padding-left: var(--safe-area-left);
+  padding-right: var(--safe-area-right);
+}
+
+.py-safe {
+  padding-top: var(--safe-area-top);
+  padding-bottom: var(--safe-area-bottom);
+}
+
+.inset-safe {
+  top: var(--safe-area-top);
+  bottom: var(--safe-area-bottom);
+  left: var(--safe-area-left);
+  right: var(--safe-area-right);
+}
+
+.apple-modal-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  .ios-safe-area {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-lift {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px -8px rgba(207, 168, 80, 0.15);
   }
 }
 

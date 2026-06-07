@@ -63,13 +63,13 @@ export default function HeroSection({ isEnglish, onApplyPromo }) {
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 md:gap-4">
             <a
               href="#catalog"
-              className="w-full sm:w-auto px-8 py-4 bg-gold hover:bg-gold/90 text-black font-semibold rounded-xl text-sm transition-all duration-300 shadow-lg shadow-gold/10 flex items-center justify-center gap-2 active:scale-95"
+              className="w-full sm:w-auto px-8 py-4 bg-gold hover:bg-gold/90 text-black font-semibold rounded-xl text-sm transition-all duration-300 shadow-lg shadow-gold/10 flex items-center justify-center gap-2 active:scale-95 min-touch-target"
             >
               {t("heroExplore")} <i className={`fas ${isEnglish ? "fa-arrow-right" : "fa-arrow-left"} text-xs`} />
             </a>
             <a
               href="#about"
-              className="w-full sm:w-auto px-8 py-4 bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-primary)] font-medium rounded-xl text-sm border border-[var(--border-light)] transition-all duration-300 flex items-center justify-center active:scale-95"
+              className="w-full sm:w-auto px-8 py-4 bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-primary)] font-medium rounded-xl text-sm border border-[var(--border-light)] transition-all duration-300 flex items-center justify-center active:scale-95 min-touch-target"
             >
               {t("heroStory")}
             </a>

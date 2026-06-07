@@ -22,7 +22,7 @@ export default function MobileSearch({ isOpen, isEnglish, searchQuery, onSearchC
   return (
     <div className="fixed inset-0 z-[5000] bg-[var(--bg-primary)]/95 backdrop-blur-md flex flex-col p-6 pt-16 space-y-6 animate-fade-in">
       <div className="flex items-center gap-3">
-        <div className="flex-1 bg-[var(--bg-subtle-hover)] border border-[var(--border-light)] rounded-full px-5 py-3.5 flex items-center gap-3 focus-within:border-gold/30 transition-all duration-300">
+        <div className="flex-1 bg-[var(--bg-subtle-hover)] border border-[var(--border-light)] rounded-full px-5 py-4 flex items-center gap-3 focus-within:border-gold/30 transition-all duration-300">
           <i className="fas fa-search text-[var(--text-muted)]" />
           <input
             ref={inputRef}

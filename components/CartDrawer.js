@@ -30,12 +30,12 @@ export default function CartDrawer({
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300" onClick={onClose} />
 
       <div className="absolute inset-y-0 left-0 max-w-full flex">
-        <div className="w-screen max-w-md bg-[var(--bg-primary)] border-r border-[var(--border-subtle)] flex flex-col shadow-2xl animate-slide-in-right">
-          <div className="h-16 md:h-20 border-b border-[var(--border-subtle)] px-4 md:px-6 flex items-center justify-between">
+        <div className="w-screen max-w-md bg-[var(--bg-primary)] border-r border-[var(--border-subtle)] flex flex-col shadow-2xl animate-slide-in-right pb-safe">
+          <div className="h-16 md:h-20 border-b border-[var(--border-subtle)] px-4 md:px-6 flex items-center justify-between pt-safe">
             <h3 className="text-base md:text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
               {isEnglish ? "Shopping Bag" : "حقيبة التسوق"} <span className="text-gold font-extrabold font-mono text-sm">({cartCount})</span>
             </h3>
-            <button onClick={onClose} className="w-8 h-8 rounded-full bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] hover:text-[var(--text-primary)] flex items-center justify-center transition active:scale-90" aria-label={isEnglish ? "Close cart" : "إغلاق السلة"}>
+            <button onClick={onClose} className="w-10 h-10 rounded-full bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] hover:text-[var(--text-primary)] flex items-center justify-center transition active:scale-90 min-touch-target" aria-label={isEnglish ? "Close cart" : "إغلاق السلة"}>
               <i className="fas fa-times text-sm" />
             </button>
           </div>
@@ -50,7 +50,7 @@ export default function CartDrawer({
                   <h4 className="font-bold text-[var(--text-primary)] text-sm">{isEnglish ? "Your bag is currently empty" : "حقيبتك فارغة حالياً"}</h4>
                   <p className="text-xs text-[var(--text-dim)]">{isEnglish ? "Add some luxury items to your shopping." : "أضف بعض القطع الفاخرة لتسوقك."}</p>
                 </div>
-                <button onClick={onClose} className="px-6 py-2.5 bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-primary)] rounded-xl text-xs font-semibold border border-[var(--border-light)] transition active:scale-95">
+                <button onClick={onClose} className="px-8 py-3.5 bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-primary)] rounded-xl text-xs font-semibold border border-[var(--border-light)] transition active:scale-95 min-touch-target">
                   {isEnglish ? "Start Shopping" : "ابدأ التسوق"}
                 </button>
               </div>
@@ -66,11 +66,11 @@ export default function CartDrawer({
                       {isEnglish ? "Size" : "المقاس"}: {item.size} | {isEnglish ? "Color" : "اللون"}: {item.color}
                     </p>
                     <div className="flex items-center gap-3">
-                      <button onClick={() => onChangeQty(idx, -1)} className="w-6 h-6 rounded-md bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] flex items-center justify-center text-xs active:scale-90 transition">
+                      <button onClick={() => onChangeQty(idx, -1)} className="w-8 h-8 md:w-7 md:h-7 rounded-lg bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] flex items-center justify-center text-xs active:scale-90 transition min-touch-target">
                         <i className="fas fa-minus" />
                       </button>
-                      <span className="text-xs font-bold text-[var(--text-primary)] w-4 text-center font-mono">{item.quantity}</span>
-                      <button onClick={() => onChangeQty(idx, 1)} className="w-6 h-6 rounded-md bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] flex items-center justify-center text-xs active:scale-90 transition">
+                      <span className="text-xs font-bold text-[var(--text-primary)] w-5 text-center font-mono">{item.quantity}</span>
+                      <button onClick={() => onChangeQty(idx, 1)} className="w-8 h-8 md:w-7 md:h-7 rounded-lg bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] flex items-center justify-center text-xs active:scale-90 transition min-touch-target">
                         <i className="fas fa-plus" />
                       </button>
                     </div>
@@ -99,7 +99,7 @@ export default function CartDrawer({
                   onChange={(e) => onSetPromoInput(e.target.value)}
                   className="flex-1 bg-[var(--bg-primary)] border border-[var(--border-light)] rounded-xl px-4 py-2 text-xs text-[var(--text-primary)] placeholder-[var(--text-dim)] outline-none focus:border-gold/30"
                 />
-                <button onClick={onApplyPromo} className="px-4 py-2 bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-primary)] border border-[var(--border-light)] rounded-xl text-xs font-semibold transition">
+                <button onClick={onApplyPromo} className="px-5 py-3 bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-primary)] border border-[var(--border-light)] rounded-xl text-xs font-semibold transition active:scale-90 min-touch-target">
                   {isEnglish ? "Apply" : "تطبيق"}
                 </button>
               </div>

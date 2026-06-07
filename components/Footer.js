@@ -25,13 +25,13 @@ export default function Footer({ isEnglish, onNewsletterSubscribe }) {
                 : "بيت أزياء معاصر يجمع بين التصميم الأوروبي الحديث والصناعة المحلية الحرفية. أقمشة مستوردة فاخرة من إيطاليا وفرنسا، تُصنع يدوياً بمعايير الجودة الأوروبية."}
             </p>
             <div className="flex items-center gap-3">
-              <a href="https://www.instagram.com/sk_boutique977/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black transition-all duration-300 flex items-center justify-center text-sm" aria-label="Instagram">
+              <a href="https://www.instagram.com/sk_boutique977/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black transition-all duration-300 flex items-center justify-center text-sm min-touch-target active:scale-90" aria-label="Instagram">
                 <i className="fab fa-instagram" />
               </a>
-              <a href="#hero" className="w-8 h-8 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black transition-all duration-300 flex items-center justify-center text-sm" aria-label="TikTok">
+              <a href="#hero" className="w-10 h-10 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black transition-all duration-300 flex items-center justify-center text-sm min-touch-target active:scale-90" aria-label="TikTok">
                 <i className="fab fa-tiktok" />
               </a>
-              <a href="https://api.whatsapp.com/send/?phone=962798921123&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black transition-all duration-300 flex items-center justify-center text-sm" aria-label="WhatsApp">
+              <a href="https://api.whatsapp.com/send/?phone=962798921123&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[var(--bg-subtle)] hover:bg-gold hover:text-black transition-all duration-300 flex items-center justify-center text-sm min-touch-target active:scale-90" aria-label="WhatsApp">
                 <i className="fab fa-whatsapp" />
               </a>
             </div>
@@ -47,10 +47,10 @@ export default function Footer({ isEnglish, onNewsletterSubscribe }) {
               {isEnglish ? "Links" : "روابط"}
             </h3>
             <ul className="space-y-2 text-[var(--text-muted)]">
-              <li><a href="#catalog" className="hover:text-[var(--text-primary)] transition">{isEnglish ? "Current Collection" : "المجموعة الحالية"}</a></li>
-              <li><a href="#about" className="hover:text-[var(--text-primary)] transition">{isEnglish ? "Identity & Heritage" : "الهوية والتراث"}</a></li>
-              <li><a href="#hero" className="hover:text-[var(--text-primary)] transition">{isEnglish ? "Privacy Policy" : "سياسة الخصوصية"}</a></li>
-              <li><a href="#hero" className="hover:text-[var(--text-primary)] transition">{isEnglish ? "Terms & Conditions" : "الشروط والأحكام"}</a></li>
+              <li><a href="#catalog" className="inline-block py-1.5 hover:text-[var(--text-primary)] transition active:scale-95 min-touch-target">{isEnglish ? "Current Collection" : "المجموعة الحالية"}</a></li>
+              <li><a href="#about" className="inline-block py-1.5 hover:text-[var(--text-primary)] transition active:scale-95 min-touch-target">{isEnglish ? "Identity & Heritage" : "الهوية والتراث"}</a></li>
+              <li><a href="#hero" className="inline-block py-1.5 hover:text-[var(--text-primary)] transition active:scale-95 min-touch-target">{isEnglish ? "Privacy Policy" : "سياسة الخصوصية"}</a></li>
+              <li><a href="#hero" className="inline-block py-1.5 hover:text-[var(--text-primary)] transition active:scale-95 min-touch-target">{isEnglish ? "Terms & Conditions" : "الشروط والأحكام"}</a></li>
             </ul>
           </div>
 
@@ -59,10 +59,10 @@ export default function Footer({ isEnglish, onNewsletterSubscribe }) {
               {isEnglish ? "Customer Service" : "خدمة العملاء"}
             </h3>
             <ul className="space-y-2 text-[var(--text-muted)]">
-              <li><a href="#hero" className="hover:text-[var(--text-primary)] transition">{isEnglish ? "Nationwide Shipping" : "الشحن لكل المحافظات"}</a></li>
-              <li><a href="#hero" className="hover:text-[var(--text-primary)] transition">{isEnglish ? "Returns & Sizing" : "سياسة الاسترجاع والقياس"}</a></li>
-              <li><a href="#hero" className="hover:text-[var(--text-primary)] transition">{isEnglish ? "Size Guide" : "جدول المقاسات"}</a></li>
-              <li><a href="#hero" className="hover:text-[var(--text-primary)] transition">{isEnglish ? "Track Your Order" : "تتبع طلبيتك"}</a></li>
+              <li><a href="#hero" className="inline-block py-1.5 hover:text-[var(--text-primary)] transition active:scale-95 min-touch-target">{isEnglish ? "Nationwide Shipping" : "الشحن لكل المحافظات"}</a></li>
+              <li><a href="#hero" className="inline-block py-1.5 hover:text-[var(--text-primary)] transition active:scale-95 min-touch-target">{isEnglish ? "Returns & Sizing" : "سياسة الاسترجاع والقياس"}</a></li>
+              <li><a href="#hero" className="inline-block py-1.5 hover:text-[var(--text-primary)] transition active:scale-95 min-touch-target">{isEnglish ? "Size Guide" : "جدول المقاسات"}</a></li>
+              <li><a href="#hero" className="inline-block py-1.5 hover:text-[var(--text-primary)] transition active:scale-95 min-touch-target">{isEnglish ? "Track Your Order" : "تتبع طلبيتك"}</a></li>
             </ul>
           </div>
 
@@ -78,7 +78,7 @@ export default function Footer({ isEnglish, onNewsletterSubscribe }) {
                 placeholder={isEnglish ? "Your Email" : "بريدك الإلكتروني"}
                 className="bg-[var(--bg-subtle)] border border-[var(--border-light)] rounded-xl px-3 py-2.5 text-xs text-[var(--text-primary)] outline-none focus:border-gold/30 w-full transition-all duration-300"
               />
-              <button type="submit" className="px-3.5 py-2.5 bg-gold text-black rounded-xl text-xs font-bold transition-all duration-300 shrink-0 hover:bg-gold/90 active:scale-95">
+              <button type="submit" className="px-4 py-3 bg-gold text-black rounded-xl text-xs font-bold transition-all duration-300 shrink-0 hover:bg-gold/90 active:scale-95 min-touch-target">
                 <i className="fas fa-paper-plane" />
               </button>
             </form>

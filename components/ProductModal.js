@@ -17,7 +17,7 @@ export default function ProductModal({ product, isEnglish, onClose, onAddToCart 
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
       <div className="relative w-full max-w-4xl bg-[var(--bg-secondary)] border border-[var(--border-light)] rounded-3xl overflow-hidden shadow-2xl animate-slide-up flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-y-visible">
-        <button onClick={onClose} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-primary)] flex items-center justify-center transition z-10">
+        <button onClick={onClose} className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-primary)] flex items-center justify-center transition z-10 min-touch-target active:scale-90">
           <i className="fas fa-times" />
         </button>
 
@@ -53,12 +53,12 @@ export default function ProductModal({ product, isEnglish, onClose, onAddToCart 
                   <span className="text-gold text-[10px] font-bold mr-1">{getSizeSurchargeText(modalActiveSize, isEnglish)}</span>
                 )}
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2.5">
                 {product.sizes.map((size) => (
                   <button
                     key={size}
                     onClick={() => setModalActiveSize(size)}
-                    className={`w-9 h-9 rounded-lg text-xs font-bold transition flex items-center justify-center border ${
+                    className={`w-11 h-11 md:w-10 md:h-10 rounded-xl text-xs font-bold transition flex items-center justify-center border min-touch-target active:scale-90 ${
                       modalActiveSize === size
                         ? "bg-gold border-gold text-black shadow shadow-gold/10"
                         : "bg-[var(--bg-subtle)] border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)]"
@@ -77,7 +77,7 @@ export default function ProductModal({ product, isEnglish, onClose, onAddToCart 
                   <button
                     key={color.name}
                     onClick={() => setModalActiveColor(color)}
-                    className={`w-8 h-8 rounded-full border-2 transition ${
+                    className={`w-10 h-10 rounded-full border-2 transition min-touch-target active:scale-90 ${
                       modalActiveColor?.name === color.name
                         ? "border-gold scale-110 shadow-lg shadow-gold/10"
                         : "border-transparent hover:scale-105"
@@ -96,12 +96,12 @@ export default function ProductModal({ product, isEnglish, onClose, onAddToCart 
             </div>
 
             <div className="flex items-center gap-4 pt-2">
-              <div className="flex items-center gap-3 bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded-xl px-3 py-2">
-                <button onClick={() => setModalQty((prev) => Math.max(1, prev - 1))} className="w-7 h-7 rounded-md bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] flex items-center justify-center text-xs">
+              <div className="flex items-center gap-3 bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded-xl px-3 py-2.5">
+                <button onClick={() => setModalQty((prev) => Math.max(1, prev - 1))} className="w-9 h-9 rounded-lg bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] flex items-center justify-center text-xs min-touch-target active:scale-90">
                   <i className="fas fa-minus" />
                 </button>
-                <span className="text-sm font-bold text-[var(--text-primary)] w-6 text-center font-mono">{modalQty}</span>
-                <button onClick={() => setModalQty((prev) => prev + 1)} className="w-7 h-7 rounded-md bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] flex items-center justify-center text-xs">
+                <span className="text-sm font-bold text-[var(--text-primary)] w-7 text-center font-mono">{modalQty}</span>
+                <button onClick={() => setModalQty((prev) => prev + 1)} className="w-9 h-9 rounded-lg bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] flex items-center justify-center text-xs min-touch-target active:scale-90">
                   <i className="fas fa-plus" />
                 </button>
               </div>
@@ -117,7 +117,7 @@ export default function ProductModal({ product, isEnglish, onClose, onAddToCart 
                   );
                   onClose();
                 }}
-                className="flex-1 py-3.5 bg-gold hover:bg-gold/90 text-black font-bold rounded-xl text-xs transition-all duration-300 flex items-center justify-center gap-2 shadow active:scale-[0.97]"
+                className="flex-1 py-4 bg-gold hover:bg-gold/90 text-black font-bold rounded-xl text-xs transition-all duration-300 flex items-center justify-center gap-2 shadow active:scale-95 min-touch-target"
               >
                 {isEnglish ? "Add to Cart" : "أضف إلى السلة"} <i className="fas fa-shopping-bag text-[10px]" />
               </button>

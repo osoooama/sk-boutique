@@ -2,7 +2,7 @@
 
 export default function ToastNotifications({ toasts }) {
   return (
-    <div className="fixed bottom-20 md:bottom-6 left-6 z-[9990] flex flex-col gap-3 max-w-sm w-full">
+    <div className="fixed bottom-20 md:bottom-6 left-4 md:left-6 z-[9990] flex flex-col gap-3 max-w-sm w-full pb-safe">
       {toasts.map((t) => (
         <div
           key={t.id}

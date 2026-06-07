@@ -57,6 +57,17 @@ export default function Home() {
   const [productsLoading, setProductsLoading] = useState(true);
   const searchInputRef = useRef(null);
 
+  const anyModalOpen = cartOpen || checkoutOpen || selectedProduct || sizeGuideOpen || mobileSearchOpen;
+
+  useEffect(() => {
+    if (anyModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [anyModalOpen]);
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -284,8 +295,8 @@ export default function Home() {
 
   return (
     <div className={`min-h-screen ${isThemeDark ? "dark-theme" : "light-theme"}`}>
-      <div className="bg-gradient-to-r from-gold/5 via-gold/10 to-gold/5 border-b border-gold/20 text-center py-1.5 text-[10px] md:text-xs text-gold/80 font-medium tracking-wide">
-        <i className="fas fa-code text-[9px] mr-1" /> {isEnglish ? "🔧 Under development & optimization by osamaCODER05" : "🔧 الموقع قيد التطوير والصيانة بواسطة osamaCODER05"}
+      <div className="bg-gradient-to-r from-gold/5 via-gold/10 to-gold/5 border-b border-gold/20 text-center py-1.5 text-[10px] md:text-xs text-gold/60 font-medium tracking-wide">
+        <i className="fas fa-sparkles text-[9px] mr-1" /> {isEnglish ? "🇯🇴 Jordanian craftsmanship · European quality 🇪🇺" : "🇯🇴 صناعة أردنية · جودة أوروبية 🇪🇺"}
       </div>
       <ConfettiOverlay particles={showConfetti ? confettiParticles : []} />
 

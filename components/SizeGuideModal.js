@@ -19,7 +19,7 @@ export default function SizeGuideModal({ isOpen, isEnglish, onClose }) {
             <h3 className="text-lg font-bold text-[var(--text-primary)] font-cairo">
               {isEnglish ? "Size Guide" : "جدول المقاسات"}
             </h3>
-            <button onClick={onClose} className="w-8 h-8 rounded-full bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] flex items-center justify-center transition">
+            <button onClick={onClose} className="w-10 h-10 rounded-full bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] text-[var(--text-muted)] flex items-center justify-center transition min-touch-target active:scale-90">
               <i className="fas fa-times text-sm" />
             </button>
           </div>
