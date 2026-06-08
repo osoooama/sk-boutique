@@ -2,10 +2,13 @@
 
 import Image from "next/image";
 
-export default function Footer({ isEnglish }) {
+export default function Footer({ isEnglish, addToast }) {
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
-    alert(isEnglish ? "Your email has been registered! We will send you offers first." : "تم تسجيل بريدك الإلكتروني! سنرسل لك العروض أولاً.");
+    addToast(
+      isEnglish ? "Your email has been registered! We will send you offers first." : "تم تسجيل بريدك الإلكتروني! سنرسل لك العروض أولاً.",
+      "success"
+    );
     e.target.reset();
   };
 

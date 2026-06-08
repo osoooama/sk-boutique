@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-export default function MobileSearch({ isOpen, searchQuery, onSearchChange, onClose }) {
+export default function MobileSearch({ isOpen, isEnglish, searchQuery, onSearchChange, onClose }) {
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function MobileSearch({ isOpen, searchQuery, onSearchChange, onCl
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="ابحث عن قطعة..."
+            placeholder={isEnglish ? "Search for items..." : "ابحث عن قطعة..."}
             className="bg-transparent border-none outline-none text-sm text-[var(--text-primary)] w-full"
           />
         </div>
@@ -38,7 +38,7 @@ export default function MobileSearch({ isOpen, searchQuery, onSearchChange, onCl
         </button>
       </div>
       <p className="text-xs text-[var(--text-dim)] text-center font-light">
-        اكتب اسم القطعة أو نوعها للبحث الفوري...
+        {isEnglish ? "Type item name or category for instant search..." : "اكتب اسم القطعة أو نوعها للبحث الفوري..."}
       </p>
     </div>
   );

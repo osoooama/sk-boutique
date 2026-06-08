@@ -16,7 +16,7 @@ export default function ProductModal({ product, isEnglish, onClose, onAddToCart 
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
-      <div className="relative w-full max-w-4xl bg-[var(--bg-secondary)] border border-[var(--border-light)] rounded-3xl overflow-hidden shadow-2xl animate-slide-up flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-y-visible">
+      <div className="relative w-full max-w-4xl bg-[var(--bg-secondary)] border border-[var(--border-light)] rounded-3xl overflow-hidden shadow-2xl animate-slide-up flex flex-col md:flex-row max-h-[90vh] overflow-y-auto">
         <button onClick={onClose} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-[var(--text-primary)] flex items-center justify-center transition z-10">
           <i className="fas fa-times" />
         </button>

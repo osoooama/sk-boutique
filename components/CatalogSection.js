@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import PRODUCTS from "@/data/products";
 import { getProductPrice, getCategoryLabel } from "@/lib/utils";

@@ -365,6 +365,7 @@ export default function Home() {
 
       <MobileSearch
         isOpen={mobileSearchOpen}
+        isEnglish={isEnglish}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onClose={() => {
@@ -382,7 +383,7 @@ export default function Home() {
         onMobileSearchOpen={() => setMobileSearchOpen(true)}
       />
 
-      <Footer isEnglish={isEnglish} />
+      <Footer isEnglish={isEnglish} addToast={addToast} />
 
       <WhatsAppButton isEnglish={isEnglish} />
     </div>
