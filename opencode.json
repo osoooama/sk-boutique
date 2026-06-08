@@ -1,0 +1,20 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "SK",
+  "instructions": [".opencode/agents/SK.md"],
+
+  "command": {
+    "build": {
+      "description": "بناء المشروع",
+      "prompt": "شغل npm run build في مجلد المشروع"
+    },
+    "deploy": {
+      "description": "رفع التعديلات للموقع المباشر",
+      "prompt": "شغل deploy.ps1 -Prod في مجلد المشروع"
+    },
+    "deploy-draft": {
+      "description": "رفع التعديلات لرابط تجريبي",
+      "prompt": "شغل deploy.ps1 في مجلد المشروع"
+    }
+  }
+}

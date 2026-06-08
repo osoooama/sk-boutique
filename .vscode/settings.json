@@ -1,0 +1,45 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.experimental.classRegex": [],
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "javascript"
+  },
+  "tailwindCSS.validate": true,
+  "css.validate": false,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "emmet.triggerExpansionOnTab": true,
+  "prettier.semi": true,
+  "prettier.singleQuote": false,
+  "prettier.trailingComma": "es5",
+  "prettier.tabWidth": 2,
+  "prettier.printWidth": 100,
+  "typescript.preferences.quoteStyle": "double",
+  "javascript.preferences.quoteStyle": "double",
+  "search.exclude": {
+    ".next/**": true,
+    "out/**": true,
+    "node_modules/**": true
+  },
+  "files.exclude": {
+    ".next": true,
+    "out": true,
+    "node_modules": true
+  },
+  "files.watcherExclude": {
+    ".next/**": true,
+    "out/**": true,
+    "node_modules/**": true
+  }
+}
