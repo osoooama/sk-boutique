@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useCallback, useMemo } from "react";
 
 const FavoritesContext = createContext();
 
@@ -15,19 +15,21 @@ export function FavoritesProvider({ children }) {
     }
   });
 
-  const toggleFavorite = (id) => {
+  const toggleFavorite = useCallback((id) => {
     setFavorites((prev) => {
       const exists = prev.includes(id);
       const updated = exists ? prev.filter((item) => item !== id) : [...prev, id];
       localStorage.setItem("sk_wishlist", JSON.stringify(updated));
       return updated;
     });
-  };
+  }, []);
 
-  const isFavorite = (id) => favorites.includes(id);
+  const isFavorite = useCallback((id) => favorites.includes(id), [favorites]);
+
+  const value = useMemo(() => ({ favorites, toggleFavorite, isFavorite }), [favorites, toggleFavorite, isFavorite]);
 
   return (
-    <FavoritesContext.Provider value={{ favorites, toggleFavorite, isFavorite }}>
+    <FavoritesContext.Provider value={value}>
       {children}
     </FavoritesContext.Provider>
   );

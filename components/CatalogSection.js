@@ -145,10 +145,10 @@ export default function CatalogSection({
                         <i className={`${isLiked ? "fas fa-heart" : "far fa-heart"} text-xs md:text-sm transition-all duration-300 ${isLiked ? "animate-heart-pulse" : ""}`} />
                       </button>
 
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 pointer-events-none">
                       <button
                         onClick={() => onOpenDetails(prod)}
-                        className="px-6 py-4 bg-white text-black font-semibold rounded-xl text-xs shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex items-center gap-2 min-touch-target"
+                        className="px-6 py-4 bg-white text-black font-semibold rounded-xl text-xs shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex items-center gap-2 min-touch-target pointer-events-auto"
                       >
                         {t("viewDetails")} <i className="far fa-eye text-xs" />
                       </button>
