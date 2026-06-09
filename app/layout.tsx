@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import AnimatedBackground from "@/components/AnimatedBackground";
-import { FavoritesProvider } from "@/context/FavoritesContext";
-import ThemeProvider from "@/components/ThemeProvider";
+import ThemeProvider from "@/context/ThemeContext";
+import WishlistProvider from "@/context/WishlistContext";
+import CartProvider from "@/context/CartContext";
 
 export const metadata: Metadata = {
   title: {
@@ -102,7 +103,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AnimatedBackground />
         <ThemeProvider>
           <div className="relative z-10">
-            <FavoritesProvider>{children}</FavoritesProvider>
+            <CartProvider><WishlistProvider>{children}</WishlistProvider></CartProvider>
           </div>
         </ThemeProvider>
       </body>

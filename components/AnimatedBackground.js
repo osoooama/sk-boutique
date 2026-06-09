@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 
 const ORBS = [
   { size: 500, top: "8%", left: "3%", baseOpacity: 0.035, color: "rgba(207, 168, 80, 0.5)", speed: 1 },
@@ -13,6 +13,7 @@ const ORBS = [
 ];
 
 export default function AnimatedBackground() {
+  const [reducedMotion, setReducedMotion] = useState(true);
   const scrollRef = useRef(0);
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
   const containerRef = useRef(null);
@@ -39,9 +40,18 @@ export default function AnimatedBackground() {
     rafRef.current = requestAnimationFrame(animateRef.current);
   }, []);
 
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+    const handler = (e) => setReducedMotion(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
   useEffect(() => { animateRef.current = animate; });
 
   useEffect(() => {
+    if (reducedMotion) return;
     const onScroll = () => { scrollRef.current = window.scrollY; };
     const onMouseMove = (e) => {
       mouseRef.current = { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight };
@@ -54,7 +64,9 @@ export default function AnimatedBackground() {
       window.removeEventListener("mousemove", onMouseMove);
       cancelAnimationFrame(rafRef.current);
     };
-  }, [animate]);
+  }, [animate, reducedMotion]);
+
+  if (reducedMotion) return null;
 
   return (
     <div

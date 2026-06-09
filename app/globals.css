@@ -194,40 +194,6 @@
   50% { filter: drop-shadow(0 0 15px rgba(192, 192, 192, 0.5)) grayscale(1) brightness(1.3); }
 }
 
-/* ─────────────────────── Aurora Background ─────────────────────── */
-
-.aurora-bg {
-  position: relative;
-  overflow: hidden;
-}
-
-.aurora-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(201, 168, 76, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 90% 80%, rgba(232, 213, 163, 0.04) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 40%);
-  background-size: 200% 200%;
-  background-position: 0% 50%;
-  animation: aurora 12s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.light-theme .aurora-bg::before {
-  background:
-    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(201, 168, 76, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 90% 80%, rgba(232, 213, 163, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(184, 134, 11, 0.02) 0%, transparent 40%);
-}
-
-.aurora-bg > * {
-  position: relative;
-  z-index: 1;
-}
-
 /* ─────────────────────── Glassmorphism ─────────────────────── */
 
 .glass {
@@ -284,17 +250,6 @@ body {
   touch-action: manipulation;
 }
 
-/* ─────────────────────── Legacy Glass (back-compat) ─────────────────────── */
-
-.glass-effect {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  background: var(--bg-glass);
-  border: 1px solid var(--border-light);
-  box-shadow: var(--shadow-card);
-  transition: background var(--duration-luxury) var(--ease-luxury), border var(--duration-luxury) var(--ease-luxury);
-}
-
 /* ─────────────────────── Selection ─────────────────────── */
 
 ::selection {
@@ -317,19 +272,6 @@ body {
 
 .light-theme .gold-divider {
   background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.4), transparent);
-}
-
-.card-elegant {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  box-shadow: var(--shadow-card);
-  transition: box-shadow var(--duration-luxury) var(--ease-luxury), transform var(--duration-luxury) var(--ease-luxury), background-color var(--duration-luxury) var(--ease-luxury);
-}
-
-.card-elegant:hover {
-  box-shadow: var(--shadow-glow);
-  transform: translateY(-2px);
 }
 
 .skeleton-shimmer {
@@ -360,19 +302,6 @@ body {
 }
 
 /* ─────────────────────── Font Utilities ─────────────────────── */
-
-.font-luxury-serif {
-  font-family: 'Playfair Display', 'Noto Naskh Arabic', Georgia, serif;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
-.font-luxury-mono {
-  font-family: 'Cinzel', 'Courier New', monospace;
-  letter-spacing: 0.05em;
-}
-
-/* ─────────────────────── Form Elements ─────────────────────── */
 
 input, textarea, select {
   font-size: 16px !important;
@@ -468,16 +397,6 @@ button:active, a:active, [role="button"]:active {
 
 .scrollbar-none::-webkit-scrollbar {
   display: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .hover-lift {
-    transition: transform var(--duration-luxury) var(--ease-luxury), box-shadow var(--duration-luxury) var(--ease-luxury);
-  }
-  .hover-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px -8px rgba(201, 168, 76, 0.15);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

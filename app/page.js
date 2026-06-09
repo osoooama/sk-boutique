@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { getProductPrice, getDiscountRate, generateConfetti } from "@/lib/utils";
+import { generateConfetti } from "@/lib/utils";
 import PRODUCTS from "@/data/products";
 import TRANSLATIONS from "@/data/translations";
-import { useFavorites } from "@/context/FavoritesContext";
+import { useWishlist } from "@/context/WishlistContext";
+import { useTheme } from "@/context/ThemeContext";
+import { useCart } from "@/context/CartContext";
 
 import ConfettiOverlay from "@/components/ConfettiOverlay";
 import ToastNotifications from "@/components/ToastNotifications";
@@ -14,8 +16,8 @@ import HeroSection from "@/components/HeroSection";
 import FeaturesStrip from "@/components/FeaturesStrip";
 import VideoSection from "@/components/VideoSection";
 import CatalogSection from "@/components/CatalogSection";
-import AboutSection from "@/components/AboutSection";
 import FeedbackSection from "@/components/FeedbackSection";
+import AboutSection from "@/components/AboutSection";
 import CartDrawer from "@/components/CartDrawer";
 import ProductModal from "@/components/ProductModal";
 import CheckoutModal from "@/components/CheckoutModal";
@@ -26,37 +28,32 @@ import InstagramFAB from "@/components/InstagramFAB";
 import BackToTop from "@/components/BackToTop";
 import SizeGuideModal from "@/components/SizeGuideModal";
 import ProductSkeleton from "@/components/ProductSkeleton";
-import FavoritesDrawer from "@/components/FavoritesDrawer";
+import WishlistSection from "@/components/WishlistSection";
 
 let toastIdCounter = 0;
 
 export default function Home() {
-  const { favorites, toggleFavorite } = useFavorites();
-  const [cart, setCart] = useState([]);
-  const [isThemeDark, setIsThemeDark] = useState(true);
-  const [isEnglish, setIsEnglish] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("sk_lang") === "en";
-    }
-    return false;
-  });
+  const { favorites, toggleFavorite } = useWishlist();
+  const { isDark: isThemeDark, isEnglish, toggleTheme, toggleLang } = useTheme();
+  const {
+    items: cart, count: cartCount, subtotal: cartSubtotal,
+    discountRate, discountAmount: cartDiscountAmount, total: cartTotalPrice,
+    appliedPromo, promoInput, setPromoInput,
+    addItem, changeQty: cartChangeQty, removeItem, clearCart,
+    applyPromo: applyPromoCode, wobble: cartWobble,
+  } = useCart();
   const [welcomeVisible, setWelcomeVisible] = useState(false);
-  const [appliedPromo, setAppliedPromo] = useState(null);
-  const [promoInput, setPromoInput] = useState("");
   const [toasts, setToasts] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const [confettiParticles, setConfettiParticles] = useState([]);
-  const [cartWobble, setCartWobble] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [favoritesOpen, setFavoritesOpen] = useState(false);
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const [sortBy, setSortBy] = useState("default");
-  const [feedbackPage, setFeedbackPage] = useState(0);
-  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const [productsLoading, setProductsLoading] = useState(true);
   const searchInputRef = useRef(null);
 
@@ -85,28 +82,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const lang = isEnglish ? "en" : "ar";
-    localStorage.setItem("sk_lang", lang);
-    document.documentElement.dir = isEnglish ? "ltr" : "rtl";
-    document.documentElement.lang = lang;
-  }, [isEnglish]);
-
-  useEffect(() => {
     const timer = setTimeout(() => {
       try {
-        const savedCart = localStorage.getItem("sk_cart");
-        if (savedCart) setCart(JSON.parse(savedCart));
-
         const hasVisited = localStorage.getItem("sk_has_visited");
         if (!hasVisited) setWelcomeVisible(true);
-
-        const savedPromo = localStorage.getItem("sk_promo");
-        if (savedPromo) setAppliedPromo(savedPromo);
-
-        const savedTheme = localStorage.getItem("sk_theme") || "dark";
-        setIsThemeDark(savedTheme === "dark");
-        document.body.classList.toggle("dark-theme", savedTheme === "dark");
-        document.body.classList.toggle("light-theme", savedTheme !== "dark");
       } catch (e) {
         // Silently handle JSON parse errors for corrupted localStorage
       }
@@ -132,22 +111,6 @@ export default function Home() {
     }, 4000);
   }, []);
 
-  const toggleTheme = useCallback(() => {
-    setIsThemeDark((prev) => {
-      const next = !prev;
-      localStorage.setItem("sk_theme", next ? "dark" : "light");
-      document.body.classList.toggle("dark-theme", next);
-      document.body.classList.toggle("light-theme", !next);
-      addToast(
-        isEnglish
-          ? next ? "Switched to luxurious Dark mode" : "Switched to elegant Light mode"
-          : next ? "تم التحويل لمظهر الداكن الفاخر" : "تم التحويل للمظهر المضيء",
-        "info"
-      );
-      return next;
-    });
-  }, [isEnglish, addToast]);
-
   const toggleWishlist = useCallback((e, id) => {
     e.stopPropagation();
     const exists = favorites.includes(id);
@@ -160,23 +123,47 @@ export default function Home() {
     );
   }, [isEnglish, addToast, toggleFavorite, favorites]);
 
-  const applyPromoCode = useCallback((codeToApply, overrideInput) => {
-    const code = codeToApply || overrideInput?.trim() || "";
-    if (!code) return;
-    const rate = getDiscountRate(code);
-    if (rate > 0) {
-      const codeUpper = code.toUpperCase();
-      setAppliedPromo(codeUpper);
-      localStorage.setItem("sk_promo", codeUpper);
-      addToast(
-        isEnglish ? "Discount code applied successfully — 10% off!" : "تم تطبيق رمز الخصم بنجاح بنسبة 10%!",
-        "success"
-      );
-      setPromoInput("");
-    } else {
-      addToast(isEnglish ? "Sorry, this promo code is invalid" : "عذراً، رمز الخصم هذا غير صحيح أو غير مفعل حالياً", "danger");
+  const addToCart = useCallback((productId, size, colorName, image, quantity = 1) => {
+    const product = PRODUCTS.find((p) => p.id === productId);
+    if (!product) return;
+    addItem(productId, size, colorName, image, quantity);
+    addToast(
+      isEnglish
+        ? `Added "${isEnglish ? product.englishTitle : product.title}" to shopping bag`
+        : `تمت إضافة "${product.title}" إلى حقيبة التسوق`,
+      "success"
+    );
+  }, [isEnglish, addToast, addItem]);
+
+  const changeQty = useCallback((index, delta) => {
+    const item = cart[index];
+    if (item && item.quantity + delta <= 0) {
+      addToast(isEnglish ? "Removed from bag" : "تمت إزالة القطعة من السلة", "info");
     }
-  }, [isEnglish, addToast]);
+    cartChangeQty(index, delta);
+  }, [isEnglish, addToast, cartChangeQty, cart]);
+
+  const removeCartItem = useCallback((index) => {
+    removeItem(index);
+    addToast(
+      isEnglish ? "Removed from bag" : "تمت إزالة القطعة من حقيبة التسوق",
+      "info"
+    );
+  }, [isEnglish, addToast, removeItem]);
+
+  const openProductDetails = useCallback((prod) => {
+    setSelectedProduct(prod);
+  }, []);
+
+  const handleOrderSuccess = useCallback((orderId, paymentMethod) => {
+    clearCart();
+    addToast(
+      isEnglish
+        ? "Thank you for shopping! Your order has been placed and the agent will contact you shortly."
+        : "شكراً لتسوقك! تم تسجيل طلبك وسيتواصل معك المندوب قريباً لتسليمه",
+      "success"
+    );
+  }, [isEnglish, addToast, clearCart]);
 
   const triggerConfetti = useCallback(() => {
     const particles = generateConfetti(80);
@@ -196,96 +183,6 @@ export default function Home() {
       "success"
     );
   }, [isEnglish, addToast]);
-
-  const addToCart = useCallback((productId, size, colorName, image, quantity = 1) => {
-    const product = PRODUCTS.find((p) => p.id === productId);
-    if (!product) return;
-
-    setCart((prev) => {
-      const existingIndex = prev.findIndex(
-        (item) => item.id === productId && item.size === size && item.color === colorName
-      );
-      let updated;
-      if (existingIndex > -1) {
-        updated = [...prev];
-        updated[existingIndex].quantity += quantity;
-      } else {
-        updated = [
-          ...prev,
-          {
-            id: productId,
-            title: product.title,
-            price: getProductPrice(product, size, colorName),
-            image: image || product.colors[0].image,
-            size,
-            color: colorName,
-            quantity
-          }
-        ];
-      }
-      localStorage.setItem("sk_cart", JSON.stringify(updated));
-      return updated;
-    });
-
-    addToast(
-      isEnglish
-        ? `Added "${isEnglish ? product.englishTitle : product.title}" to shopping bag`
-        : `تمت إضافة "${product.title}" إلى حقيبة التسوق`,
-      "success"
-    );
-    setCartWobble(true);
-    setTimeout(() => setCartWobble(false), 600);
-  }, [isEnglish, addToast]);
-
-  const changeQty = useCallback((index, delta) => {
-    setCart((prev) => {
-      const updated = [...prev];
-      if (updated[index]) {
-        updated[index].quantity += delta;
-        if (updated[index].quantity <= 0) {
-          addToast(isEnglish ? `Removed from bag` : `تمت إزالة القطعة من السلة`, "info");
-          updated.splice(index, 1);
-        }
-      }
-      localStorage.setItem("sk_cart", JSON.stringify(updated));
-      return updated;
-    });
-  }, [isEnglish, addToast]);
-
-  const removeCartItem = useCallback((index) => {
-    setCart((prev) => {
-      const updated = [...prev];
-      if (updated[index]) {
-        addToast(isEnglish ? `Removed from bag` : `تمت إزالة القطعة من حقيبة التسوق`, "info");
-        updated.splice(index, 1);
-      }
-      localStorage.setItem("sk_cart", JSON.stringify(updated));
-      return updated;
-    });
-  }, [isEnglish, addToast]);
-
-  const openProductDetails = useCallback((prod) => {
-    setSelectedProduct(prod);
-  }, []);
-
-  const handleOrderSuccess = useCallback((orderId, paymentMethod) => {
-    setCart([]);
-    localStorage.removeItem("sk_cart");
-    localStorage.removeItem("sk_promo");
-    setAppliedPromo(null);
-    addToast(
-      isEnglish
-        ? "Thank you for shopping! Your order has been placed and the agent will contact you shortly."
-        : "شكراً لتسوقك! تم تسجيل طلبك وسيتواصل معك المندوب قريباً لتسليمه",
-      "success"
-    );
-  }, [isEnglish, addToast]);
-
-  const cartSubtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const discountRate = appliedPromo ? getDiscountRate(appliedPromo) : 0;
-  const cartDiscountAmount = cartSubtotal * discountRate;
-  const cartTotalPrice = cartSubtotal - cartDiscountAmount;
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className={`min-h-screen ${isThemeDark ? "dark-theme" : "light-theme"}`}>
@@ -313,11 +210,11 @@ export default function Home() {
         cartCount={cartCount}
         cartWobble={cartWobble}
         onToggleTheme={toggleTheme}
-        onToggleLang={() => setIsEnglish(!isEnglish)}
+        onToggleLang={toggleLang}
         onSearchChange={setSearchQuery}
         onCartOpen={() => setCartOpen(true)}
         onSizeGuideOpen={() => setSizeGuideOpen(true)}
-        onWishlistOpen={() => setFavoritesOpen(true)}
+        onWishlistOpen={() => document.getElementById('wishlist')?.scrollIntoView({ behavior: 'smooth' })}
         searchInputRef={searchInputRef}
       />
 
@@ -330,13 +227,11 @@ export default function Home() {
       <div data-reveal className="opacity-0">
         {productsLoading ? <ProductSkeleton count={4} /> : <CatalogSection
           isEnglish={isEnglish}
-          wishlist={favorites}
           searchQuery={searchQuery}
           activeCategory={activeCategory}
           sortBy={sortBy}
           onSetActiveCategory={setActiveCategory}
           onSetSortBy={setSortBy}
-          onToggleWishlist={toggleWishlist}
           onAddToCart={addToCart}
           onOpenDetails={openProductDetails}
         />}
@@ -344,35 +239,14 @@ export default function Home() {
 
       <div data-reveal className="opacity-0"><AboutSection isEnglish={isEnglish} /></div>
 
-      <div data-reveal className="opacity-0"><FeedbackSection
-        isEnglish={isEnglish}
-        feedbackPage={feedbackPage}
-        onSetFeedbackPage={setFeedbackPage}
-      /></div>
+      <div data-reveal className="opacity-0"><FeedbackSection isEnglish={isEnglish} /></div>
 
-      <FavoritesDrawer
-        isOpen={favoritesOpen}
-        isEnglish={isEnglish}
-        onClose={() => setFavoritesOpen(false)}
-        onOpenDetails={openProductDetails}
-        onAddToCart={addToCart}
-      />
+      <div data-reveal className="opacity-0"><WishlistSection isEnglish={isEnglish} onOpenDetails={openProductDetails} onAddToCart={addToCart} /></div>
 
       <CartDrawer
         isOpen={cartOpen}
         isEnglish={isEnglish}
-        cart={cart}
-        promoInput={promoInput}
-        appliedPromo={appliedPromo}
-        cartSubtotal={cartSubtotal}
-        cartDiscountAmount={cartDiscountAmount}
-        cartTotalPrice={cartTotalPrice}
-        cartCount={cartCount}
         onClose={() => setCartOpen(false)}
-        onSetPromoInput={setPromoInput}
-        onApplyPromo={() => applyPromoCode(null, promoInput)}
-        onChangeQty={changeQty}
-        onRemoveItem={removeCartItem}
         onProceedCheckout={() => {
           setCartOpen(false);
           setCheckoutOpen(true);
