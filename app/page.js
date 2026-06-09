@@ -289,7 +289,7 @@ export default function Home() {
 
   return (
     <div className={`min-h-screen ${isThemeDark ? "dark-theme" : "light-theme"}`}>
-      <div className="bg-gradient-to-r from-gold/5 via-gold/10 to-gold/5 border-b border-gold/20 text-center py-1.5 text-[10px] md:text-xs text-gold/60 font-medium tracking-wide">
+      <div className="bg-linear-to-r from-gold/5 via-gold/10 to-gold/5 border-b border-gold/20 text-center py-1.5 text-[10px] md:text-xs text-gold/60 font-medium tracking-wide">
         <i className="fas fa-sparkles text-[9px] mr-1" /> {isEnglish ? "🇯🇴 Jordanian craftsmanship · European quality 🇪🇺" : "🇯🇴 صناعة أردنية · جودة أوروبية 🇪🇺"}
       </div>
       <ConfettiOverlay particles={showConfetti ? confettiParticles : []} />

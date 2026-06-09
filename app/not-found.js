@@ -2,16 +2,16 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)] p-6">
+    <div className="min-h-screen flex items-center justify-center bg-(--bg-primary) p-6">
       <div className="text-center space-y-6 max-w-md">
         <div className="w-20 h-20 mx-auto rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center">
           <i className="fas fa-compass text-3xl text-gold" />
         </div>
         <h1 className="text-6xl font-extrabold text-gold font-cinzel">404</h1>
-        <h2 className="text-xl font-bold text-[var(--text-primary)] font-cairo">
+        <h2 className="text-xl font-bold text-(--text-primary) font-cairo">
           Page Not Found
         </h2>
-        <p className="text-sm text-[var(--text-muted)] font-light leading-relaxed">
+        <p className="text-sm text-(--text-muted) font-light leading-relaxed">
           The page you are looking for does not exist or has been moved. Let us help you find your way back.
         </p>
         <Link
