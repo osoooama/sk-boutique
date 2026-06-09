@@ -1,5 +1,6 @@
 ﻿import "./globals.css";
 import AnimatedBackground from "@/components/AnimatedBackground";
+import { FavoritesProvider } from "@/context/FavoritesContext";
 
 export const metadata = {
   title: {
@@ -89,7 +90,9 @@ export default function RootLayout({ children }) {
       <body className="h-full bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased overflow-x-hidden selection:bg-[#cfa850]/30 relative">
         <AnimatedBackground />
         <div className="relative z-10">
-          {children}
+          <FavoritesProvider>
+            {children}
+          </FavoritesProvider>
         </div>
       </body>
     </html>

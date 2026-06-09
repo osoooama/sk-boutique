@@ -92,8 +92,6 @@ const PRODUCTS = [
   }
 ];
 
-export const CATEGORIES = ["all", "sets", "outerwear", "blouses"];
-
 export const CITIES_AR = ["عمان", "إربد", "الزرقاء", "العقبة", "البلقاء", "مادبا", "الكرك", "معان", "المفرق", "جرش", "عجلون", "الطفيلة"];
 export const CITIES_EN = ["Amman", "Irbid", "Zarqa", "Aqaba", "Balqa", "Madaba", "Karak", "Ma'an", "Mafraq", "Jerash", "Ajloun", "Tafilah"];
 

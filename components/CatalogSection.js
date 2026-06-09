@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import PRODUCTS from "@/data/products";
-import { getProductPrice, getCategoryLabel } from "@/lib/utils";
+import { getCategoryLabel } from "@/lib/utils";
 
 export default function CatalogSection({
   isEnglish,
@@ -12,7 +12,6 @@ export default function CatalogSection({
   sortBy,
   onSetActiveCategory,
   onSetSortBy,
-  onSearchChange,
   onToggleWishlist,
   onAddToCart,
   onOpenDetails
@@ -136,15 +135,15 @@ export default function CatalogSection({
                       onClick={() => onOpenDetails(prod)}
                     />
 
-                    <button
-                      onClick={(e) => onToggleWishlist(e, prod.id)}
-                      className={`absolute top-2.5 right-2.5 md:top-4 md:right-4 w-[30px] h-[30px] md:w-9 md:h-9 rounded-full flex items-center justify-center glass-effect transition duration-300 transform active:scale-90 ${
-                        isLiked ? "text-gold" : "text-[var(--text-primary)]/60 hover:text-[var(--text-primary)]"
-                      }`}
-                      aria-label={isEnglish ? "Add to wishlist" : "أضف للمفضلة"}
-                    >
-                      <i className={isLiked ? "fas fa-heart text-xs md:text-sm" : "far fa-heart text-xs md:text-sm"} />
-                    </button>
+                      <button
+                        onClick={(e) => onToggleWishlist(e, prod.id)}
+                        className={`absolute top-2.5 right-2.5 md:top-4 md:right-4 w-[30px] h-[30px] md:w-9 md:h-9 rounded-full flex items-center justify-center glass-effect transition-all duration-300 transform active:scale-90 ${
+                          isLiked ? "text-gold" : "text-[var(--text-primary)]/60 hover:text-[var(--text-primary)]"
+                        }`}
+                        aria-label={isEnglish ? "Add to wishlist" : "أضف للمفضلة"}
+                      >
+                        <i className={`${isLiked ? "fas fa-heart" : "far fa-heart"} text-xs md:text-sm transition-all duration-300 ${isLiked ? "animate-heart-pulse" : ""}`} />
+                      </button>
 
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                       <button

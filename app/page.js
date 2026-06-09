@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { getProductPrice, getDiscountRate, generateConfetti } from "@/lib/utils";
 import PRODUCTS from "@/data/products";
 import TRANSLATIONS from "@/data/translations";
+import { useFavorites } from "@/context/FavoritesContext";
 
 import ConfettiOverlay from "@/components/ConfettiOverlay";
 import ToastNotifications from "@/components/ToastNotifications";
@@ -25,12 +26,13 @@ import InstagramFAB from "@/components/InstagramFAB";
 import BackToTop from "@/components/BackToTop";
 import SizeGuideModal from "@/components/SizeGuideModal";
 import ProductSkeleton from "@/components/ProductSkeleton";
+import FavoritesDrawer from "@/components/FavoritesDrawer";
 
 let toastIdCounter = 0;
 
 export default function Home() {
+  const { favorites, toggleFavorite } = useFavorites();
   const [cart, setCart] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
   const [isThemeDark, setIsThemeDark] = useState(true);
   const [isEnglish, setIsEnglish] = useState(() => {
     if (typeof window !== "undefined") {
@@ -48,6 +50,7 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [favoritesOpen, setFavoritesOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
@@ -93,9 +96,6 @@ export default function Home() {
       try {
         const savedCart = localStorage.getItem("sk_cart");
         if (savedCart) setCart(JSON.parse(savedCart));
-
-        const savedWishlist = localStorage.getItem("sk_wishlist");
-        if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
 
         const hasVisited = localStorage.getItem("sk_has_visited");
         if (!hasVisited) setWelcomeVisible(true);
@@ -150,19 +150,15 @@ export default function Home() {
 
   const toggleWishlist = useCallback((e, id) => {
     e.stopPropagation();
-    setWishlist((prev) => {
-      const exists = prev.includes(id);
-      const updated = exists ? prev.filter((item) => item !== id) : [...prev, id];
-      localStorage.setItem("sk_wishlist", JSON.stringify(updated));
-      addToast(
-        isEnglish
-          ? exists ? "Removed from wishlist" : "Added to wishlist"
-          : exists ? "تمت إزالة القطعة من المفضلة" : "تمت إضافة القطعة للمفضلة لديك",
-        exists ? "info" : "success"
-      );
-      return updated;
-    });
-  }, [isEnglish, addToast]);
+    const exists = favorites.includes(id);
+    toggleFavorite(id);
+    addToast(
+      isEnglish
+        ? exists ? "Removed from wishlist" : "Added to wishlist"
+        : exists ? "تمت إزالة القطعة من المفضلة" : "تمت إضافة القطعة للمفضلة لديك",
+      exists ? "info" : "success"
+    );
+  }, [isEnglish, addToast, toggleFavorite, favorites]);
 
   const applyPromoCode = useCallback((codeToApply, overrideInput) => {
     const code = codeToApply || overrideInput?.trim() || "";
@@ -316,38 +312,30 @@ export default function Home() {
         searchQuery={searchQuery}
         cartCount={cartCount}
         cartWobble={cartWobble}
-        wishlistCount={wishlist.length}
         onToggleTheme={toggleTheme}
         onToggleLang={() => setIsEnglish(!isEnglish)}
         onSearchChange={setSearchQuery}
         onCartOpen={() => setCartOpen(true)}
         onSizeGuideOpen={() => setSizeGuideOpen(true)}
-        onWishlistOpen={() => {}}
+        onWishlistOpen={() => setFavoritesOpen(true)}
         searchInputRef={searchInputRef}
       />
 
-      <HeroSection
-        isEnglish={isEnglish}
-        onApplyPromo={applyPromoCode}
-      />
+      <HeroSection isEnglish={isEnglish} />
 
       <div data-reveal className="opacity-0"><FeaturesStrip isEnglish={isEnglish} /></div>
 
-      <div data-reveal className="opacity-0"><VideoSection
-        isEnglish={isEnglish}
-        onApplyPromo={applyPromoCode}
-      /></div>
+      <div data-reveal className="opacity-0"><VideoSection isEnglish={isEnglish} /></div>
 
       <div data-reveal className="opacity-0">
         {productsLoading ? <ProductSkeleton count={4} /> : <CatalogSection
           isEnglish={isEnglish}
-          wishlist={wishlist}
+          wishlist={favorites}
           searchQuery={searchQuery}
           activeCategory={activeCategory}
           sortBy={sortBy}
           onSetActiveCategory={setActiveCategory}
           onSetSortBy={setSortBy}
-          onSearchChange={setSearchQuery}
           onToggleWishlist={toggleWishlist}
           onAddToCart={addToCart}
           onOpenDetails={openProductDetails}
@@ -361,6 +349,14 @@ export default function Home() {
         feedbackPage={feedbackPage}
         onSetFeedbackPage={setFeedbackPage}
       /></div>
+
+      <FavoritesDrawer
+        isOpen={favoritesOpen}
+        isEnglish={isEnglish}
+        onClose={() => setFavoritesOpen(false)}
+        onOpenDetails={openProductDetails}
+        onAddToCart={addToCart}
+      />
 
       <CartDrawer
         isOpen={cartOpen}

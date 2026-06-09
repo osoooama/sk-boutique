@@ -1,6 +1,6 @@
 "use client";
 
-export default function VideoSection({ isEnglish, onApplyPromo }) {
+export default function VideoSection({ isEnglish }) {
   return (
     <section className="py-20 bg-[var(--bg-tertiary)] border-b border-[var(--border-subtle)] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-8">

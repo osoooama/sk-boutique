@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-export default function HeroSection({ isEnglish, onApplyPromo }) {
+export default function HeroSection({ isEnglish }) {
   const t = (key) => {
     const TRANSLATIONS = {
       ar: {
@@ -41,7 +41,7 @@ export default function HeroSection({ isEnglish, onApplyPromo }) {
           alt="SK BOUTIQUE — تصاميم أوروبية عصرية"
           fill
           sizes="100vw"
-          preload
+          priority
           className="object-cover object-center opacity-45 brightness-75 scale-105 transition duration-1000"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-[var(--bg-primary)]/80" />

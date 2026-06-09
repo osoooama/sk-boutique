@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useFavorites } from "@/context/FavoritesContext";
 
 export default function Navbar({
   isEnglish,
@@ -8,7 +9,6 @@ export default function Navbar({
   searchQuery,
   cartCount,
   cartWobble,
-  wishlistCount,
   onToggleTheme,
   onToggleLang,
   onSearchChange,
@@ -17,6 +17,8 @@ export default function Navbar({
   onWishlistOpen,
   searchInputRef
 }) {
+  const { favorites } = useFavorites();
+  const wishlistCount = favorites.length;
   return (
     <header className="fixed top-0 left-0 right-0 z-40 transition-all duration-500 pt-safe">
       <div className="max-w-7xl mx-auto px-4 pt-2 md:pt-4">
@@ -94,7 +96,7 @@ export default function Navbar({
               >
                 <i className={`${wishlistCount > 0 ? "fas" : "far"} fa-heart text-xs md:text-sm`} />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -end-1 bg-gold text-black text-[9px] font-black w-[18px] h-[18px] rounded-lg flex items-center justify-center border border-[var(--bg-primary)] shadow-lg animate-scale-in">
+                  <span key={wishlistCount} className="absolute -top-1 -end-1 bg-gold text-black text-[9px] font-black w-[18px] h-[18px] rounded-lg flex items-center justify-center border border-[var(--bg-primary)] shadow-lg animate-counter-bounce">
                     {wishlistCount}
                   </span>
                 )}

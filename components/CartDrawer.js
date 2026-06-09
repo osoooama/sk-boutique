@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { PROMO_CODES } from "@/lib/utils";
 
 export default function CartDrawer({
   isOpen,
@@ -22,7 +23,7 @@ export default function CartDrawer({
   if (!isOpen) return null;
 
   const discountPct = promoCode
-    ? (["JORDAN", "SK10", "WELCOME10"].includes(promoCode.toUpperCase()) ? 10 : 0)
+    ? (PROMO_CODES.includes(promoCode.toUpperCase()) ? 10 : 0)
     : 0;
 
   return (
