@@ -16,10 +16,10 @@
 
 ### Deployment
 - **GitHub:** https://github.com/osoooama/sk-boutique
-- **Live Site:** https://sk-boutique-flax.vercel.app/
+- **Live Site:** https://sk-boutique.pages.dev/
 - **Platform:** Cloudflare Pages (static export via `next.config.mjs` output: 'export')
-- **Canonical URL:** https://sk-boutique-flax.vercel.app
-- **Old deployments:** Netlify (https://sk-boutique-977.netlify.app), Cloudflare (https://sk-boutique.pages.dev)
+- **Canonical URL:** https://sk-boutique.pages.dev
+- **Old deployments:** Netlify (https://sk-boutique-977.netlify.app) — [REMOVED] Vercel (deleted)
 
 ### Tech Stack
 | Technology | Version |
@@ -442,7 +442,7 @@ sk-boutique/
 - **Fixed:**
   - `HeroSection.js:44` — changed `preload` to `priority` (valid Next.js Image prop)
   - `globals.css:413-419` — added `.scrollbar-none` class (was missing — breaks scrollbar hiding on mobile catalog/feedback)
-  - `sitemap.xml:4` — updated URL from old Netlify `sk-boutique-977.netlify.app` to current Vercel `sk-boutique-flax.vercel.app`
+  - `sitemap.xml:4` — updated URL from old Netlify `sk-boutique-977.netlify.app` to current Cloudflare `sk-boutique.pages.dev`
 - **Verified:**
   - `npm run build` — **0 errors, 0 warnings** — all pages generate statically
   - All 27 source files' imports checked — **no unused imports, no wrong paths**
