@@ -10,16 +10,17 @@ import ToastContainer from "@/components/ui/ToastContainer";
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import { useTheme } from "@/hooks/useTheme";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
 import { products } from "@/lib/products";
-import { perfumes } from "@/lib/perfumes";
+import { perfumes, getPerfumePrice } from "@/lib/perfumes";
 
 export default function WishlistPage() {
   const [isEnglish, setIsEnglish] = useState(true);
-  const [isDark, setIsDark] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
 
   const { items: wishlist, toggleItem } = useWishlist();
   const { addItem, openCart } = useCart();
@@ -29,12 +30,12 @@ export default function WishlistPage() {
   const wishlistedPerfumes = perfumes.filter((p) => wishlist.includes(p.id));
 
   return (
-    <div className={`min-h-screen bg-luxury-black text-luxury-white ${isEnglish ? "font-inter" : "font-alexandria"}`} dir={isEnglish ? "ltr" : "rtl"}>
+    <div className={`min-h-screen bg-[var(--page-bg)] text-[var(--page-text)] ${isEnglish ? "font-inter" : "font-alexandria"}`} dir={isEnglish ? "ltr" : "rtl"}>
       <Navbar
         isEnglish={isEnglish}
         isDark={isDark}
         onToggleLang={() => setIsEnglish((p) => !p)}
-        onToggleTheme={() => setIsDark((p) => !p)}
+        onToggleTheme={toggleTheme}
         onSearchOpen={() => setSearchOpen(true)}
       />
       <CartDrawer isEnglish={isEnglish} />
@@ -161,7 +162,7 @@ export default function WishlistPage() {
                     <p className={`text-xs font-bold truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                       {isEnglish ? perfume.englishTitle : perfume.title}
                     </p>
-                    <p className="text-[10px] text-luxury-gold/40">{perfume.basePrice} {isEnglish ? "JD" : "د.أ"} · {perfume.volume}</p>
+                    <p className="text-[10px] text-luxury-gold/40">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "د.أ"} · {perfume.volume}</p>
                   </Link>
                 </motion.div>
               ))}

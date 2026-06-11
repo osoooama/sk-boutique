@@ -13,6 +13,7 @@ import SizeSelector from "@/components/product/SizeSelector";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import SizeGuideModal from "@/components/ui/SizeGuideModal";
 import BackToTop from "@/components/ui/BackToTop";
+import { useTheme } from "@/hooks/useTheme";
 import { products } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -23,8 +24,8 @@ const RECENT_KEY = "sk_recently_viewed";
 export default function ProductDetailPage() {
   const params = useParams();
   const [isEnglish, setIsEnglish] = useState(false);
-  const [isDark, setIsDark] = useState(true);
   const [selectedSize, setSelectedSize] = useState("");
+  const { isDark, toggleTheme } = useTheme();
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedImage, setSelectedImage] = useState(0);
   const [addedToCart, setAddedToCart] = useState(false);
@@ -49,7 +50,7 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-luxury-black text-luxury-white flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--page-bg)] text-[var(--page-text)] flex items-center justify-center">
         <div className="text-center space-y-4">
           <i className="fas fa-tshirt text-4xl text-luxury-gold/20 block" />
           <p className="text-luxury-gold/60">{isEnglish ? "Product not found" : "المنتج غير موجود"}</p>
@@ -100,12 +101,12 @@ export default function ProductDetailPage() {
     .reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-luxury-black text-luxury-white" dir={isEnglish ? "ltr" : "rtl"}>
+    <div className="min-h-screen bg-[var(--page-bg)] text-[var(--page-text)]" dir={isEnglish ? "ltr" : "rtl"}>
       <Navbar
         isEnglish={isEnglish}
         isDark={isDark}
         onToggleLang={() => setIsEnglish((prev) => !prev)}
-        onToggleTheme={() => setIsDark((prev) => !prev)}
+        onToggleTheme={toggleTheme}
       />
       <CartDrawer isEnglish={isEnglish} />
       <ToastContainer />

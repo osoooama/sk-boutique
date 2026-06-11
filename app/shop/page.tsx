@@ -10,6 +10,7 @@ import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import ProductCard from "@/components/product/ProductCard";
+import { useTheme } from "@/hooks/useTheme";
 import { products } from "@/lib/products";
 
 const CATEGORIES = [
@@ -21,10 +22,10 @@ const CATEGORIES = [
 
 export default function ShopPage() {
   const [isEnglish, setIsEnglish] = useState(false);
-  const [isDark, setIsDark] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
 
   const filtered =
     activeCategory === "all"
@@ -32,12 +33,12 @@ export default function ShopPage() {
       : products.filter((p) => p.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-luxury-black text-luxury-white" dir={isEnglish ? "ltr" : "rtl"}>
+    <div className="min-h-screen bg-[var(--page-bg)] text-[var(--page-text)]" dir={isEnglish ? "ltr" : "rtl"}>
       <Navbar
         isEnglish={isEnglish}
         isDark={isDark}
         onToggleLang={() => setIsEnglish((prev) => !prev)}
-        onToggleTheme={() => setIsDark((prev) => !prev)}
+        onToggleTheme={toggleTheme}
         onSearchOpen={() => setSearchOpen(true)}
       />
       <CartDrawer isEnglish={isEnglish} />

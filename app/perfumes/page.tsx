@@ -9,6 +9,7 @@ import ToastContainer from "@/components/ui/ToastContainer";
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import { useTheme } from "@/hooks/useTheme";
 import { perfumes } from "@/lib/perfumes";
 import type { Perfume } from "@/lib/types";
 import { useCart } from "@/context/CartContext";
@@ -16,9 +17,9 @@ import { useToast } from "@/context/ToastContext";
 
 const getPrice = (p: Perfume) => {
   switch (p.category) {
-    case "musk": return 25;
-    case "perfume": return 35;
-    case "sample": return 5;
+    case "musk": return 5;
+    case "perfume": return p.volume === "50ml" ? 8 : 6;
+    case "sample": return 3;
     default: return 0;
   }
 };
@@ -32,10 +33,10 @@ const CATEGORIES = [
 
 export default function PerfumesPage() {
   const [isEnglish, setIsEnglish] = useState(false);
-  const [isDark, setIsDark] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
 
   const { addItem, openCart } = useCart();
   const { addToast } = useToast();
@@ -56,17 +57,17 @@ export default function PerfumesPage() {
       colorHex: "#C9A84C",
       image: perfume.image,
     });
-    addToast("success", isEnglish ? "Added to cart!" : "\u0623\u0636\u064a\u0641 \u0644\u0644\u0633\u0644\u0629!", "fa-check");
+    addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
     openCart();
   };
 
   return (
-    <div className="min-h-screen bg-luxury-black text-luxury-white" dir={isEnglish ? "ltr" : "rtl"}>
+    <div className="min-h-screen bg-[var(--page-bg)] text-[var(--page-text)]" dir={isEnglish ? "ltr" : "rtl"}>
       <Navbar
         isEnglish={isEnglish}
         isDark={isDark}
         onToggleLang={() => setIsEnglish((prev) => !prev)}
-        onToggleTheme={() => setIsDark((prev) => !prev)}
+        onToggleTheme={toggleTheme}
         onSearchOpen={() => setSearchOpen(true)}
       />
       <CartDrawer isEnglish={isEnglish} />

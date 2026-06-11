@@ -8,6 +8,13 @@
     --safe-area-bottom: env(safe-area-inset-bottom, 0px);
     --safe-area-left: env(safe-area-inset-left, 0px);
     --safe-area-right: env(safe-area-inset-right, 0px);
+    --page-bg: #0A0A0A;
+    --page-text: #FFFFFF;
+  }
+
+  .light {
+    --page-bg: #FFFFFF;
+    --page-text: #0A0A0A;
   }
 
   html {
@@ -16,11 +23,26 @@
   }
 
   body {
-    @apply bg-luxury-black text-luxury-white antialiased;
+    @apply bg-luxury-black text-luxury-white antialiased transition-colors duration-300;
+  }
+
+  .light body,
+  body.light {
+    @apply bg-luxury-white text-luxury-black;
+  }
+
+  .light input,
+  .light textarea,
+  .light select {
+    color: #0A0A0A;
   }
 
   ::selection {
     @apply bg-luxury-gold/30 text-luxury-white;
+  }
+
+  .light ::selection {
+    @apply bg-luxury-gold/30 text-luxury-black;
   }
 
   input,
@@ -49,6 +71,11 @@
                 radial-gradient(ellipse at bottom, #E8C97A10, transparent);
   }
 
+  .light .aurora-bg {
+    background: radial-gradient(ellipse at top, #C9A84C30, transparent),
+                radial-gradient(ellipse at bottom, #E8C97A20, transparent);
+  }
+
   .glass {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
@@ -56,9 +83,18 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
+  .light .glass {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
   .glass-card {
     @apply backdrop-blur-[20px] bg-black/70 border border-white/5 rounded-2xl;
     -webkit-backdrop-filter: blur(20px);
+  }
+
+  .light .glass-card {
+    @apply bg-white/80 border-black/5;
   }
 
   .gold-gradient {
@@ -79,6 +115,11 @@
             drop-shadow(0 0 2px rgba(232, 232, 232, 0.9));
   }
 
+  .light .logo-glow {
+    filter: drop-shadow(0 0 8px rgba(201, 168, 76, 0.5))
+            drop-shadow(0 0 4px rgba(201, 168, 76, 0.3));
+  }
+
   .section-padding {
     @apply px-4 md:px-8 lg:px-12;
   }
@@ -89,10 +130,18 @@
            shadow-lg shadow-luxury-gold/25 hover:shadow-luxury-gold/40;
   }
 
+  .light .btn-primary {
+    @apply shadow-luxury-gold/30;
+  }
+
   .btn-secondary {
     @apply glass-card text-luxury-gold font-medium rounded-xl px-8 py-4 
            transition-all duration-300 active:scale-95
            hover:bg-white/10 hover:border-luxury-gold/30;
+  }
+
+  .light .btn-secondary {
+    @apply border-luxury-gold/20 hover:bg-luxury-gold/5;
   }
 
   .scrollbar-none {

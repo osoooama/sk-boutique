@@ -10,24 +10,25 @@ import ToastContainer from "@/components/ui/ToastContainer";
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import { useTheme } from "@/hooks/useTheme";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
 
 export default function CartPage() {
   const [isEnglish, setIsEnglish] = useState(true);
-  const [isDark, setIsDark] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
 
   const { items, removeItem, updateQuantity, subtotal, clearCart } = useCart();
   const { addToast } = useToast();
 
   return (
-    <div className={`min-h-screen bg-luxury-black text-luxury-white ${isEnglish ? "font-inter" : "font-alexandria"}`} dir={isEnglish ? "ltr" : "rtl"}>
+    <div className={`min-h-screen bg-[var(--page-bg)] text-[var(--page-text)] ${isEnglish ? "font-inter" : "font-alexandria"}`} dir={isEnglish ? "ltr" : "rtl"}>
       <Navbar
         isEnglish={isEnglish}
         isDark={isDark}
         onToggleLang={() => setIsEnglish((p) => !p)}
-        onToggleTheme={() => setIsDark((p) => !p)}
+        onToggleTheme={toggleTheme}
         onSearchOpen={() => setSearchOpen(true)}
       />
       <CartDrawer isEnglish={isEnglish} />

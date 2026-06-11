@@ -7,7 +7,7 @@ const velvetSetColors: ProductColor[] = [
   {
     name: "عنابي ملكي",
     englishName: "Royal Burgundy",
-    hex: "#800020",
+    hex: "#6B1D2F",
     images: [
       "/clothing/sk_boutique977-photo-DHgKbsmNsb7-20250322_160119_485626926.webp",
     ],
@@ -16,7 +16,7 @@ const velvetSetColors: ProductColor[] = [
   {
     name: "أسود عميق",
     englishName: "Deep Black",
-    hex: "#0d0d0d",
+    hex: "#1A1A1A",
     images: [
       "/clothing/sk_boutique977-photo-DHgrFOOs96l-20250322_204636_485743576.webp",
     ],
@@ -27,7 +27,7 @@ const wrapSetColors: ProductColor[] = [
   {
     name: "أزرق بترولي",
     englishName: "Petroleum Blue",
-    hex: "#4a6b82",
+    hex: "#2A5C6E",
     images: [
       "/clothing/sk_boutique977-thumbnail-DQKeh-EjLQA-20251023_223639_567438507.webp",
     ],
@@ -35,7 +35,7 @@ const wrapSetColors: ProductColor[] = [
   {
     name: "أسود ملكي",
     englishName: "Royal Black",
-    hex: "#0d0d0d",
+    hex: "#1A1A1A",
     images: [
       "/clothing/sk_boutique977-thumbnail-DQKfmC0jODi-20251023_224554_569566349.webp",
     ],
@@ -47,7 +47,7 @@ const blazerColors: ProductColor[] = [
   {
     name: "بني داكن",
     englishName: "Dark Brown",
-    hex: "#3d2314",
+    hex: "#3D2314",
     images: [
       "/clothing/sk_boutique977-photo-DYsrFPZsvLJ-20260524_013125_706198458.webp",
     ],
@@ -59,7 +59,7 @@ const satinBlouseColors: ProductColor[] = [
   {
     name: "بيج شامبين",
     englishName: "Champagne Beige",
-    hex: "#e5d3b3",
+    hex: "#E5D3B3",
     images: [
       "/clothing/sk_boutique977-thumbnail-DYposBJsCwF-20260522_211341_703559149.webp",
     ],
@@ -67,7 +67,7 @@ const satinBlouseColors: ProductColor[] = [
   {
     name: "أسود ملكي",
     englishName: "Royal Black",
-    hex: "#121212",
+    hex: "#1A1A1A",
     images: [
       "/clothing/sk_boutique977-thumbnail-DYpsmnEMJA--20260522_214717_704427197.webp",
     ],
@@ -76,7 +76,7 @@ const satinBlouseColors: ProductColor[] = [
   {
     name: "أبيض لؤلؤي",
     englishName: "Pearl White",
-    hex: "#fdfdfd",
+    hex: "#F0EEEB",
     images: [
       "/clothing/sk_boutique977-thumbnail-DYpwc68sOWc-20260522_222040_704653143.webp",
     ],
@@ -88,7 +88,7 @@ const sideTieColors: ProductColor[] = [
   {
     name: "بني شوكولاتة",
     englishName: "Chocolate Brown",
-    hex: "#5c4033",
+    hex: "#4A2C1A",
     images: [
       "/clothing/sk_boutique977-thumbnail-DXhVfNNDObL-20260424_192008_674506967.webp",
     ],
@@ -96,7 +96,7 @@ const sideTieColors: ProductColor[] = [
   {
     name: "عنابي ملكي",
     englishName: "Royal Burgundy",
-    hex: "#800020",
+    hex: "#6B1D2F",
     images: [
       "/clothing/sk_boutique977-thumbnail-DXhY4GyjJn8-20260424_194941_672357180.webp",
       "/clothing/sk_boutique977-thumbnail-DXhXRfejHth-20260424_193611_672347469.webp",
@@ -106,7 +106,7 @@ const sideTieColors: ProductColor[] = [
   {
     name: "بيج كلاسيكي",
     englishName: "Classic Beige",
-    hex: "#e1d8c3",
+    hex: "#DDD0B8",
     images: [
       "/clothing/sk_boutique977-thumbnail-DYpcx1FsCrl-20260522_192848_706629160.webp",
     ],

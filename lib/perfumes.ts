@@ -119,11 +119,11 @@ export const perfumes: Perfume[] = [
 export function getPerfumePrice(perfume: Perfume): number {
   switch (perfume.category) {
     case "musk":
-      return 25;
-    case "perfume":
-      return 35;
-    case "sample":
       return 5;
+    case "perfume":
+      return perfume.volume === "50ml" ? 8 : 6;
+    case "sample":
+      return 3;
     default:
       return 0;
   }

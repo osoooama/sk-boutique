@@ -8,19 +8,20 @@ import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
+import { useTheme } from "@/hooks/useTheme";
 
 export default function OrderConfirmationPage() {
   const [isEnglish, setIsEnglish] = useState(true);
-  const [isDark, setIsDark] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
 
   return (
-    <div className={`min-h-screen bg-luxury-black text-luxury-white ${isEnglish ? "font-inter" : "font-alexandria"}`} dir={isEnglish ? "ltr" : "rtl"}>
+    <div className={`min-h-screen bg-[var(--page-bg)] text-[var(--page-text)] ${isEnglish ? "font-inter" : "font-alexandria"}`} dir={isEnglish ? "ltr" : "rtl"}>
       <Navbar
         isEnglish={isEnglish}
         isDark={isDark}
         onToggleLang={() => setIsEnglish((p) => !p)}
-        onToggleTheme={() => setIsDark((p) => !p)}
+        onToggleTheme={toggleTheme}
         onSearchOpen={() => setSearchOpen(true)}
       />
       <CartDrawer isEnglish={isEnglish} />

@@ -15,6 +15,9 @@ const config: Config = {
           gold: "#C9A84C",
           "gold-light": "#E8C97A",
           "gold-dark": "#A07830",
+          cream: "#F5F0E8",
+          charcoal: "#1A1A1A",
+          beige: "#EDE7DC",
         },
       },
       fontFamily: {

@@ -16,13 +16,13 @@
 
 ### Deployment
 - **GitHub:** https://github.com/osoooama/sk-boutique
-- **Live Site:** https://sk-boutique.pages.dev/
-- **Canonical URL:** https://sk-boutique.pages.dev
+- **Live Site:** https://sk-boutique.osamakreshan352.workers.dev
+- **Worker Name:** sk-boutique (Cloudflare Workers + OpenNext adapter)
 
 ### Tech Stack
 | Technology | Version |
 |------------|---------|
-| Next.js | ^14.2.29 |
+| Next.js | ^15.5.19 |
 | React | ^18.3.1 |
 | React DOM | ^18.3.1 |
 | Tailwind CSS | ^3.4.17 |
@@ -33,6 +33,7 @@
 | sharp | ^0.33.5 |
 | ESLint | ^8.57.1 |
 | Prettier | ^3.4.2 |
+| @opennextjs/cloudflare | ^1.19.11 |
 | Font Awesome | 6.x (CDN via `<link>`) |
 | Google Fonts | Alexandria (AR), Inter (EN) |
 
@@ -396,3 +397,20 @@ colors: {
 - **State management:** 3 React Contexts with localStorage persistence, auto-dismiss toasts (3.5s), cart with add/remove/update/clear
 - **Data flow:** Cart drawer opens on add-item, toasts appear at top center, search filters 8 products, wishlist syncs heart state across ProductCard + detail + wishlist page
 - **Verified:** `npx tsc --noEmit` = **0 errors** | `npm run build` = **0 errors, 0 warnings, 11/11 pages generated**
+
+### Session 4 — Thu Jun 11, 2026 (Part 3 — Deploy + Bugfix + Polish)
+- **Task:** Upgrade Next.js 14.2.29 → 15.5.19, install OpenNext Cloudflare adapter, deploy to Cloudflare Workers, fix OS compatibility bugs, add Light/Dark theme + color swatch fixes
+- **Upgrade:** `next` 14.2.29 → 15.5.19, `react`/`react-dom` 18.3.1, `@opennextjs/cloudflare` 1.19.11, `next.config.js` updated (PWA, images, headers), `wrangler.jsonc` created (nodejs_compat, images binding)
+- **Deploy:** `npm run deploy` → site live at `https://sk-boutique.osamakreshan352.workers.dev`
+- **GitHub:** Commit + push all sessions (v2.0 features + OpenNext/Next.js 15 config)
+- **Bugfixes (5):**
+  - ToastContainer missing on 5 pages (cart, checkout, wishlist, product/[id], order-confirmation) — added
+  - SearchOverlay missing on shop, perfumes pages — added
+  - Perfume image path double-slash (`/perfumes//berry-musk.webp`) — fixed Image src
+  - Navbar `lastScroll` refactored from `let` to `useRef` (stale closure bug)
+  - Dead `getPerfumePrice` function in product detail — removed
+- **Light/Dark theme (working):** `isDark` toggle adds/removes `light` class on `<html>`, CSS variables switch backgrounds, glass becomes translucent white, text inverts, localStorage persists `sk_theme`, inline init script prevents flash
+- **Color swatches:** Updated hex values to match actual fabric colors (burgundy #6B1D2F, petroleum blue #2A5C6E, chocolate brown #4A2C2A, champagne beige #E8CEB5)
+- **Perfume pricing:** Updated to 5–10 JD range (musk 5 JD, perfume 6–8 JD, samples 3 JD)
+- **Pages domain cleanup:** Deleted old `sk-boutique` Pages project; final URL is `sk-boutique.osamakreshan352.workers.dev`
+- **Verified:** `npm run build` = **0 errors, 0 warnings, 11/11 pages** | Worker deployed & serving correctly
