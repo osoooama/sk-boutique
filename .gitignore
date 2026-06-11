@@ -50,3 +50,11 @@ next-env.d.ts
 tunnel.log
 tunnel_err.log
 session-info.txt
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
