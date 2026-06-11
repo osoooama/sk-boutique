@@ -47,7 +47,7 @@ const blazerColors: ProductColor[] = [
   {
     name: "بني داكن",
     englishName: "Dark Brown",
-    hex: "#3D2314",
+    hex: "#4A2C1A",
     images: [
       "/clothing/sk_boutique977-photo-DYsrFPZsvLJ-20260524_013125_706198458.webp",
     ],
@@ -59,7 +59,7 @@ const satinBlouseColors: ProductColor[] = [
   {
     name: "بيج شامبين",
     englishName: "Champagne Beige",
-    hex: "#E5D3B3",
+    hex: "#D4C5A9",
     images: [
       "/clothing/sk_boutique977-thumbnail-DYposBJsCwF-20260522_211341_703559149.webp",
     ],
@@ -118,7 +118,7 @@ const dressColors: ProductColor[] = [
   {
     name: "كحلي",
     englishName: "Navy Blue",
-    hex: "#1a2744",
+    hex: "#1B2A4A",
     images: [
       "/clothing/sk_boutique977-photo-DMdcVqDs9oL-20250723_211701_523124697.webp",
     ],
@@ -129,7 +129,7 @@ const blazerSetColors: ProductColor[] = [
   {
     name: "رمادي داكن",
     englishName: "Charcoal",
-    hex: "#2c2c30",
+    hex: "#3A3B3C",
     images: [
       "/clothing/sk_boutique977-photo-DNOLea3MMcE-20250811_193226_530569642.webp",
     ],
