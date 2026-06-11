@@ -1,9 +1,21 @@
 import type { Metadata, Viewport } from "next";
+import { Alexandria, Inter } from "next/font/google";
 import "./globals.css";
-import AnimatedBackground from "@/components/AnimatedBackground";
-import ThemeProvider from "@/context/ThemeContext";
-import WishlistProvider from "@/context/WishlistContext";
-import CartProvider from "@/context/CartContext";
+import Providers from "@/context/Providers";
+
+const alexandria = Alexandria({
+  subsets: ["arabic"],
+  variable: "--font-alexandria",
+  display: "swap",
+  adjustFontFallback: true,
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  adjustFontFallback: false,
+});
 
 export const metadata: Metadata = {
   title: {
@@ -11,21 +23,21 @@ export const metadata: Metadata = {
     template: "%s | SK BOUTIQUE",
   },
   description:
-    "SK BOUTIQUE — تصاميم أوروبية عصرية تُصنع محلياً بأيدٍ أردنية ماهرة. نستورد أفضل الخامات من إيطاليا وفرنسا ونصنعها بمعايير الجودة الأوروبية. تسوق تشكيلتنا الحصرية الآن.",
+    "SK BOUTIQUE — تصاميم أوروبية عصرية تُصنع محلياً بأيدٍ أردنية ماهرة. نستورد أفضل الخامات من إيطاليا وفرنسا ونصنعها بمعايير الجودة الأوروبية.",
   keywords: [
-    "تصاميم أوروبية",
-    "صناعة محلية",
-    "SK BOUTIQUE",
-    "ملابس نسائية",
-    "فساتين",
-    "أطقم فاخرة",
-    "موضة عصرية",
-    "جودة أوروبية",
-    "متجر ملابس أردن",
+    "تصاميم أوروبية", "صناعة محلية", "SK BOUTIQUE", "ملابس نسائية",
+    "عطور", "مسك", "موضة عصرية", "متجر ملابس أردن",
   ],
   authors: [{ name: "SK BOUTIQUE Jordan" }],
   creator: "SK BOUTIQUE",
   publisher: "SK BOUTIQUE",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "SK BOUTIQUE",
+  },
+  formatDetection: { telephone: true },
   openGraph: {
     title: "SK BOUTIQUE | تصاميم أوروبية عصرية بصناعة محلية متقنة",
     description:
@@ -37,10 +49,11 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   alternates: { canonical: "https://sk-boutique.pages.dev" },
+  other: { "mobile-web-app-capable": "yes" },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0f",
+  themeColor: "#0A0A0A",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -50,20 +63,27 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className="h-full scroll-smooth dark-theme" style={{ paddingTop: "env(safe-area-inset-top, 0px)", paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
+    <html
+      lang="ar"
+      dir="rtl"
+      className={`${alexandria.variable} ${inter.variable} h-full scroll-smooth`}
+      style={{
+        paddingTop: "env(safe-area-inset-top, 0px)",
+        paddingBottom: "env(safe-area-inset-bottom, 0px)",
+      }}
+    >
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="SK BOUTIQUE" />
-        <meta name="format-detection" content="telephone=yes" />
-        <meta name="theme-color" content="#0a0a0f" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#faf8f5" media="(prefers-color-scheme: light)" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <link rel="apple-touch-startup-image" href="/icons/icon-512x512.png" />
         <link
           rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-          precedence="default"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
           crossOrigin="anonymous"
-          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          referrerPolicy="no-referrer"
         />
         <script
           type="application/ld+json"
@@ -74,8 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {
                   "@type": "Store",
                   name: "SK BOUTIQUE",
-                  description:
-                    "تصاميم أوروبية عصرية تُصنع محلياً بمعايير الجودة الأوروبية",
+                  description: "تصاميم أوروبية عصرية تُصنع محلياً بمعايير الجودة الأوروبية",
                   url: "https://sk-boutique.pages.dev",
                   telephone: "+962798921123",
                   address: { "@type": "PostalAddress", addressCountry: "JO" },
@@ -88,8 +107,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     "@type": "SearchAction",
                     target: {
                       "@type": "EntryPoint",
-                      urlTemplate:
-                        "https://sk-boutique.pages.dev/?q={search_term_string}",
+                      urlTemplate: "https://sk-boutique.pages.dev/?q={search_term_string}",
                     },
                     "query-input": "required name=search_term_string",
                   },
@@ -99,13 +117,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="h-full bg-(--bg-primary) text-(--text-primary) antialiased overflow-x-hidden selection:bg-gold/30 relative">
-        <AnimatedBackground />
-        <ThemeProvider>
-          <div className="relative z-10">
-            <CartProvider><WishlistProvider>{children}</WishlistProvider></CartProvider>
-          </div>
-        </ThemeProvider>
+      <body className="font-inter h-full bg-luxury-black text-luxury-white antialiased overflow-x-hidden selection:bg-luxury-gold/30">
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

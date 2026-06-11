@@ -1,56 +1,54 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 
 interface WishlistContextType {
-  ids: string[];
-  favorites: string[]; // alias for backward compat
+  items: string[];
+  toggleItem: (productId: string) => void;
+  isWishlisted: (productId: string) => boolean;
   count: number;
-  toggle: (id: string) => boolean;
-  toggleFavorite: (id: string) => void; // alias for backward compat
-  has: (id: string) => boolean;
-  isFavorite: (id: string) => boolean; // alias for backward compat
 }
 
-const WishlistContext = createContext<WishlistContextType | null>(null);
+const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
 
-export function useWishlist() {
-  const ctx = useContext(WishlistContext);
-  if (!ctx) throw new Error("useWishlist must be used within a WishlistProvider");
-  return ctx;
-}
+const STORAGE_KEY = "sk_wishlist";
 
-export default function WishlistProvider({ children }: { children: ReactNode }) {
-  const [ids, setIds] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
+export function WishlistProvider({ children }: { children: ReactNode }) {
+  const [items, setItems] = useState<string[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
     try {
-      return JSON.parse(localStorage.getItem("sk_wishlist") || localStorage.getItem("favorites") || "[]");
-    } catch {
-      return [];
-    }
-  });
-
-  const toggle = useCallback((id: string) => {
-    let added = false;
-    setIds((prev) => {
-      const exists = prev.includes(id);
-      const next = exists ? prev.filter((i) => i !== id) : [...prev, id];
-      added = !exists;
-      localStorage.setItem("sk_wishlist", JSON.stringify(next));
-      return next;
-    });
-    return added;
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) setItems(JSON.parse(stored));
+    } catch { /* ignore */ }
+    setLoaded(true);
   }, []);
 
-  const has = useCallback((id: string) => ids.includes(id), [ids]);
+  useEffect(() => {
+    if (loaded) {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); }
+      catch { /* ignore */ }
+    }
+  }, [items, loaded]);
 
-  const count = ids.length;
+  const toggleItem = useCallback((productId: string) => {
+    setItems((prev) =>
+      prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
+    );
+  }, []);
 
-  const value = useMemo(() => ({ ids, favorites: ids, count, toggle, toggleFavorite: toggle, has, isFavorite: has }), [ids, count, toggle, has]);
+  const isWishlisted = useCallback((productId: string) => items.includes(productId), [items]);
 
   return (
-    <WishlistContext.Provider value={value}>
+    <WishlistContext.Provider value={{ items, toggleItem, isWishlisted, count: items.length }}>
       {children}
     </WishlistContext.Provider>
   );
+}
+
+export function useWishlist() {
+  const ctx = useContext(WishlistContext);
+  if (!ctx) throw new Error("useWishlist must be used within WishlistProvider");
+  return ctx;
 }

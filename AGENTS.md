@@ -17,25 +17,24 @@
 ### Deployment
 - **GitHub:** https://github.com/osoooama/sk-boutique
 - **Live Site:** https://sk-boutique.pages.dev/
-- **Platform:** Cloudflare Pages (static export via `next.config.mjs` output: 'export')
 - **Canonical URL:** https://sk-boutique.pages.dev
-- **Old deployments:** Netlify (https://sk-boutique-977.netlify.app) — [REMOVED] Vercel (deleted)
 
 ### Tech Stack
 | Technology | Version |
 |------------|---------|
-| Next.js | 16.2.7 |
-| React | 19.2.4 |
-| React DOM | 19.2.4 |
-| Tailwind CSS | ^4 |
-| @tailwindcss/postcss | ^4 |
-| PostCSS | via Next.js |
-| ESLint | ^9.39.4 |
-| eslint-config-next | 16.2.7 |
-| Prettier | ^3.8.3 |
-| Terser | ^5.48.0 |
-| Font Awesome | 6.4.0 (CDN) |
-| Google Fonts | Cairo, Cinzel, Outfit, Playfair Display |
+| Next.js | ^14.2.29 |
+| React | ^18.3.1 |
+| React DOM | ^18.3.1 |
+| Tailwind CSS | ^3.4.17 |
+| TypeScript | ^5.7.3 |
+| Framer Motion | ^11.18.0 |
+| GSAP | ^3.12.7 |
+| next-pwa | ^5.6.0 |
+| sharp | ^0.33.5 |
+| ESLint | ^8.57.1 |
+| Prettier | ^3.4.2 |
+| Font Awesome | 6.x (CDN via `<link>`) |
+| Google Fonts | Alexandria (AR), Inter (EN) |
 
 ---
 
@@ -43,352 +42,274 @@
 
 ```
 sk-boutique/
-├── app/                          # Next.js App Router pages
-│   ├── globals.css               # Global styles, CSS variables, Tailwind v4, all animations
-│   ├── layout.js                 # Root layout — HTML, metadata, OG tags, schema.org JSON-LD
-│   ├── not-found.js              # 404 page with gold styling
-│   └── page.js                   # Main SPA (single page) — all state, all components
+├── app/                              # Next.js App Router (11 pages)
+│   ├── globals.css                   # Tailwind v3 directives, @layer components/utilities
+│   ├── layout.tsx                    # Root layout — fonts, metadata, PWA, schema.org JSON-LD + Providers wrapper
+│   ├── not-found.tsx                 # 404 page
+│   ├── page.tsx                      # Homepage (HeroSlider + Featured Clothing + Perfumes Teaser + Features bar)
+│   ├── api/
+│   │   └── create-order/
+│   │       └── route.ts             # POST endpoint for logging orders
+│   ├── shop/
+│   │   └── page.tsx                  # Product grid with category filters + breadcrumbs
+│   ├── perfumes/
+│   │   └── page.tsx                  # Perfume grid with category filters + notes + add-to-cart
+│   ├── cart/
+│   │   └── page.tsx                  # Full cart page with quantity controls + order summary
+│   ├── checkout/
+│   │   └── page.tsx                  # Checkout form (name/phone/address/city) → WhatsApp redirect
+│   ├── order-confirmation/
+│   │   └── page.tsx                  # Success page after placing order
+│   ├── wishlist/
+│   │   └── page.tsx                  # Wishlist grid with products + perfumes
+│   └── product/
+│       └── [id]/
+│           └── page.tsx              # Product detail (images, colors, sizes, cart/wishlist, size guide, related, recently viewed)
 │
-├── components/                   # All React components (22 files)
-│   ├── AboutSection.js           # "Our Story" brand identity section
-│   ├── AnimatedBackground.js     # Parallax floating orbs background effect
-│   ├── BackToTop.js              # Floating scroll-to-top button
-│   ├── BottomNav.js              # Mobile bottom nav bar (Home, Shop, Cart, Search, Theme)
-│   ├── CartDrawer.js             # Slide-in cart drawer with promo codes
-│   ├── CatalogSection.js         # Product grid with filters, sorting, search
-│   ├── CheckoutModal.js          # 3-step checkout (Shipping → Payment → Confirmation)
-│   ├── ConfettiOverlay.js        # Confetti particle animation overlay
-│   ├── FavoritesDrawer.js        # Slide-in wishlist/favorites drawer
-│   ├── FeaturesStrip.js          # 4-column feature grid (Delivery, COD, Returns, EU Quality)
-│   ├── FeedbackSection.js        # Customer reviews/image gallery (17 feedback images)
-│   ├── Footer.js                 # Full footer with links, social, newsletter, payment methods
-│   ├── HeroSection.js            # Hero with background image, CTA buttons, promo card
-│   ├── InstagramFAB.js           # Floating Instagram icon (bottom-left)
-│   ├── MobileSearch.js           # Full-screen mobile search overlay
-│   ├── Navbar.js                 # Top navigation with logo, links, search, cart, wishlist, theme
-│   ├── ProductModal.js           # Product detail modal with size/color/qty selection
-│   ├── ProductSkeleton.js        # Loading skeleton cards for products
-│   ├── SizeGuideModal.js         # Size guide table (S/M/L/XL in cm)
-│   ├── ToastNotifications.js     # Toast notification stack (success/danger/info)
-│   ├── VideoSection.js           # YouTube video embed + promo code display
-│   └── WelcomeSplash.js          # First-visit welcome splash screen
+├── components/                       # All React components (12 files)
+│   ├── ui/
+│   │   ├── Navbar.tsx                # Top nav — search button, wishlist link, cart button (opens drawer), badge counts
+│   │   ├── Footer.tsx                # Full dark footer with logo, social links, features, copyright
+│   │   ├── Logo.tsx                  # Animated dual-glow logo (gold + white gradients)
+│   │   ├── CartDrawer.tsx            # Slide-in cart drawer with AnimatePresence, quantity controls, checkout link
+│   │   ├── ToastContainer.tsx        # Fixed toast notifications (success/error/info/warning) with premium animations
+│   │   ├── SearchOverlay.tsx         # Full-screen search with keyboard shortcut, live product filtering
+│   │   ├── Breadcrumbs.tsx           # Navigation breadcrumbs with home icon + separator
+│   │   ├── SizeGuideModal.tsx        # Modal with size table (XS-XXL, bust/waist/hips in cm)
+│   │   └── BackToTop.tsx            # Floating back-to-top button, visible after 600px scroll
+│   ├── sections/
+│   │   └── HeroSlider.tsx            # Full-screen hero with 6 photos, crossfade + ken-burns, CTA buttons, promo card (SK10)
+│   └── product/
+│       ├── ProductCard.tsx           # Product card with wishlist heart, quick-add-to-cart, image zoom
+│       ├── ColorSwatches.tsx         # Circular color swatches with tooltip + gold ring on active
+│       └── SizeSelector.tsx          # Size grid with gold states + framer-motion
 │
-├── context/                      # React Context providers
-│   └── FavoritesContext.js       # Favorites/wishlist state (localStorage persisted)
+├── context/                          # React Context providers (4 files)
+│   ├── Providers.tsx                 # Composes CartProvider + ToastProvider + WishlistProvider
+│   ├── CartContext.tsx               # Cart state with localStorage persistence, add/remove/update/clear
+│   ├── ToastContext.tsx              # Toast notification state with auto-dismiss (3.5s)
+│   └── WishlistContext.tsx           # Wishlist state with localStorage persistence, toggle/isWishlisted
 │
-├── data/                         # Static data files
-│   ├── products.js               # 5 products with prices, sizes, colors, descriptions
-│   └── translations.js           # Full AR/EN translation dictionary (~145 keys per language)
+├── lib/                              # Data + types
+│   ├── types.ts                      # TypeScript interfaces (Product, Perfume, ProductColor, etc.)
+│   ├── products.ts                   # 8 products with colors, sizes, descriptions, shipping
+│   └── perfumes.ts                   # 8 perfumes with notes, volume, categories
 │
-├── lib/                          # Utility functions
-│   └── utils.js                  # Price calc, discount codes, card formatters, order ID, confetti
+├── scripts/                          # Build/utility scripts
+│   ├── process-perfumes.js           # Sharp image processor for perfume .webp generation
+│   └── optimize-images.js            # Sharp image optimizer (85% quality, 1200px max)
 │
-├── public/                       # Static assets
-│   ├── assets/                   # All images (74 files)
-│   │   ├── logo_gold.png         # Gold logo
-│   │   ├── logo_white.png        # White logo
-│   │   ├── sk.png                # Hero background image
-│   │   ├── hero.png              # Hero alternative
-│   │   ├── feedback-1.webp .. 17 # Customer feedback photos (both .jpg and .webp)
-│   │   ├── sk_boutique977-*      # Product images (photo + thumbnail, .jpg and .webp)
-│   │   └── (legacy PNGs)         # Unused legacy product images (cashmere_blazer, velvet_abaya, etc.)
-│   └── sitemap.xml               # Points to Netlify URL (outdated)
+├── public/                           # Static assets (51 files total)
+│   ├── clothing/                     # 30 product images (.webp, 6 full-size + 24 thumbnails)
+│   ├── perfumes/                     # 9 perfume images (.webp)
+│   ├── logo/                         # sk-logo.png + sk-logo.webp
+│   ├── icons/                        # PWA icons (icon-192.svg, icon-512.svg)
+│   ├── manifest.json                 # PWA manifest
+│   ├── sw.js                         # Service worker (generated by next-pwa)
+│   └── workbox-*.js                  # Workbox runtime (generated by next-pwa)
 │
-├── .opencode/                    # OpenCode configuration
-│   ├── config.json               # OpenCode agent config
-│   └── rules.md                  # Permanent session rules
-├── .vscode/                      # VS Code workspace settings
-│   ├── settings.json             # Formatter, ESLint, Tailwind CSS settings
-│   └── extensions.json           # Recommended extensions
-│
-├── package.json                  # Dependencies & scripts
-├── next.config.mjs               # Next.js config (output: 'export', images unoptimized)
-├── postcss.config.mjs            # PostCSS with @tailwindcss/postcss
-├── eslint.config.mjs             # ESLint flat config with next/core-web-vitals
-├── jsconfig.json                 # Path alias: @/* → ./*
-├── opencode.json                 # OpenCode agent config
-├── opencode.bat                  # Launch opencode in project dir
-├── تشغيل_المتجر.bat              # Launch dev server + public URL via PowerShell
-├── .pagesignore                  # Cloudflare Pages ignore rules
-└── AGENTS.md                     # THIS FILE — permanent project memory
+├── context/                          # React Context providers (4 files)
+├── .opencode/                        # OpenCode configuration
+├── .vscode/                          # VS Code workspace settings
+├── package.json                      # Dependencies (v2.0.0)
+├── next.config.js                    # Next.js config (PWA, images, security headers, bundle analyzer)
+├── tailwind.config.ts                # Tailwind v3 config (luxury colors, animations, fonts)
+├── postcss.config.js                 # PostCSS (tailwindcss + autoprefixer)
+├── tsconfig.json                     # TypeScript config
+├── opencode.json                     # OpenCode agent config
+├── opencode.bat                      # Launch opencode in project dir
+└── AGENTS.md                         # THIS FILE — permanent project memory
 ```
 
 ---
 
 ## 3. COMPONENTS MAP
 
-| Component | Purpose | Props |
-|-----------|---------|-------|
-| `Navbar` | Top navigation bar with logo, links, search, cart/wishlist buttons, theme/language toggles | `isEnglish`, `isThemeDark`, `searchQuery`, `cartCount`, `cartWobble`, `onToggleTheme`, `onToggleLang`, `onSearchChange`, `onCartOpen`, `onSizeGuideOpen`, `onWishlistOpen`, `searchInputRef` |
-| `HeroSection` | Hero banner with background image, CTA buttons, promo card (10% off SK10) | `isEnglish` |
-| `CatalogSection` | Product grid with category tabs (All/Sets/Outerwear/Blouses), sort dropdown, search filtering | `isEnglish`, `wishlist`, `searchQuery`, `activeCategory`, `sortBy`, `onSetActiveCategory`, `onSetSortBy`, `onToggleWishlist`, `onAddToCart`, `onOpenDetails` |
-| `CartDrawer` | Slide-in cart with items, quantity controls, promo code input, subtotal/discount/total | `isOpen`, `isEnglish`, `cart`, `promoInput`, `appliedPromo`, `cartSubtotal`, `cartDiscountAmount`, `cartTotalPrice`, `cartCount`, `onClose`, `onSetPromoInput`, `onApplyPromo`, `onChangeQty`, `onRemoveItem`, `onProceedCheckout` |
-| `ProductModal` | Product detail modal with size/color/qty selection, features & shipping tabs | `product`, `isEnglish`, `onClose`, `onAddToCart` |
-| `CheckoutModal` | 3-step checkout: Shipping form → Payment method (COD/Card) → Order confirmation with confetti | `isOpen`, `isEnglish`, `cartTotalPrice`, `onClose`, `onOrderSuccess`, `onTriggerConfetti` |
-| `FavoritesDrawer` | Slide-in wishlist with favorited products, add-to-cart, remove | `isOpen`, `onClose`, `isEnglish`, `onOpenDetails`, `onAddToCart` |
-| `WelcomeSplash` | First-visit welcome screen with logo, brand message, enter button | `visible`, `isEnglish`, `onEnter` |
-| `Footer` | Full footer: brand info, links, customer service, newsletter, social, payment badges | `isEnglish`, `onNewsletterSubscribe` |
-| `BottomNav` | Mobile bottom navigation (Home/Shop/Cart/Search/Theme) | `isEnglish`, `isThemeDark`, `cartCount`, `onCartOpen`, `onToggleTheme`, `onMobileSearchOpen` |
-| `AnimatedBackground` | Parallax floating orbs with mouse tracking and scroll parallax | (none — self-contained) |
-| `FeaturesStrip` | 4-column feature grid (Delivery, COD, Returns, EU Certified) | `isEnglish` |
-| `VideoSection` | YouTube video embed + promo code card (10% SK10) | `isEnglish` |
-| `AboutSection` | Brand identity section with features grid and logo display | `isEnglish` |
-| `FeedbackSection` | Customer reviews gallery (17 images, desktop dual-view + mobile horizontal scroll) | `isEnglish`, `feedbackPage`, `onSetFeedbackPage` |
-| `SizeGuideModal` | Size chart table (S/M/L/XL, bust/waist/hips/length in cm) | `isOpen`, `isEnglish`, `onClose` |
-| `MobileSearch` | Full-screen mobile search overlay with auto-focus | `isOpen`, `isEnglish`, `searchQuery`, `onSearchChange`, `onClose` |
-| `ToastNotifications` | Stack of toast notifications (success green, danger red, info gold) | `toasts` |
-| `ProductSkeleton` | Loading skeleton cards (animated shimmer) | `count` (default 4) |
-| `ConfettiOverlay` | Confetti particle animation on order success | `particles` |
-| `InstagramFAB` | Floating Instagram button with gradient background | (none) |
-| `BackToTop` | Floating scroll-to-top button with visibility toggle | (none) |
+| Component | File | Purpose | Props |
+|-----------|------|---------|-------|
+| `Navbar` | `components/ui/Navbar.tsx` | Top nav — SK BOUTIQUE logo, 3 links (Home/Shop/Perfumes), search bar, theme/lang toggles | `isEnglish`, `isDark`, `searchQuery`, `onSearchChange`, `onToggleLang`, `onToggleTheme` |
+| `Hero` | `components/sections/Hero.tsx` | Full-screen hero — tagline, description, 2 CTA buttons (Collection/Perfumes), promo card SK10 | `isEnglish` |
+| `Footer` | `components/ui/Footer.tsx` | Footer section | `isEnglish` |
+| `Logo` | `components/ui/Logo.tsx` | Animated logo — dual glow effect via framer-motion, gold SK + white BOUTIQUE gradient text | `className?`, `showText?`, `size?` (sm/md/lg) |
+| `ProductCard` | `components/product/ProductCard.tsx` | Product card — links to `/product/[id]`, shows sizes + color swatches | `product: Product`, `isEnglish` |
+
+### Page Components (in `app/`)
+
+| Page | Route | Features |
+|------|-------|----------|
+| `HomePage` | `/` | Navbar + Hero + Footer |
+| `ShopPage` | `/shop` | Navbar + category filter (All/Sets/Outerwear/Blouses) + ProductCard grid (2→3→4 cols) + Footer |
+| `PerfumesPage` | `/perfumes` | Navbar + category filter (All/Musk/Perfumes/Samples) + perfume cards with notes + Footer |
+| `ProductDetailPage` | `/product/[id]` | Navbar + product detail (image placeholder, title, description, sizes, details, shipping) + Footer |
+| `NotFoundPage` | `/*` | Basic 404 |
 
 ---
 
 ## 4. DATA STRUCTURE
 
-### Products (5 active)
-
-| ID | Name (AR) | Name (EN) | Category | Base Price | Sizes | Colors |
-|----|-----------|-----------|----------|-----------|-------|--------|
-| `prod-pearl-set` | طقم اللؤلؤ المخملي الفاخر | Luxury Velvet Pearl Set | `sets` | 15 JD | S/M/L/XL | Royal Burgundy (+1.5 JD) |
-| `prod-wrap-set` | طقم الغزال الكلاسيكي بلفة جانبية | Elegant Side-Wrap Trousers Set | `sets` | 14 JD | S/M/L | Petroleum Blue (+0), Royal Black (+1.5) |
-| `prod-belted-blazer` | بليزر الحزام المخملي الكلاسيكي | Classic Belted Wrap Blazer | `outerwear` | 15 JD | S/M/L/XL | Dark Brown (+1.0 JD) |
-| `prod-satin-blouse` | بلوزة الساتان الفاخرة بربطة الخصر | Luxury Satin Mock-Neck Blouse | `blouses` | 12 JD | S/M/L/XL | Champagne Beige (+0), Royal Black (+2.0), Royal Blue (+1.5), Pearl White (+1.0) |
-| `prod-side-tie-blouse` | قميص الكلاسيك بربطة جانبية وسلاسل | Side-Tie Classic Wrap Shirt | `blouses` | 10 JD | S/M/L | Chocolate Brown (+0), Royal Burgundy (+2.0), Classic Beige (+1.0) |
-
-**Size surcharges:** S=+0, M=+1, L=+2, XL=+3, XXL=+4
-
-### Promo Codes
-| Code | Discount | Status |
-|------|----------|--------|
-| `SK10` | 10% | Active |
-| `JORDAN` | 10% | Active |
-| `WELCOME10` | 10% | Active |
-
-### Cities for Shipping
-**AR:** عمان, إربد, الزرقاء, العقبة, البلقاء, مادبا, الكرك, معان, المفرق, جرش, عجلون, الطفيلة
-**EN:** Amman, Irbid, Zarqa, Aqaba, Balqa, Madaba, Karak, Ma'an, Mafraq, Jerash, Ajloun, Tafilah
-
-### FavoritesContext State Shape
-```js
-{
-  favorites: string[],        // Array of product IDs
-  toggleFavorite: (id) => void,
-  isFavorite: (id) => boolean
-}
+### Types (lib/types.ts)
+```typescript
+interface ProductColor { name, englishName, hex, images[], surcharge? }
+interface Product { id, title, englishTitle, description, englishDescription,
+  category: "sets"|"outerwear"|"blouses", basePrice, sizes[], colors[],
+  details, englishDetails, shipping, englishShipping, inStock, createdAt }
+interface Perfume { id, title, englishTitle, description, englishDescription,
+  image, category: "musk"|"perfume"|"sample", basePrice, volume, inStock,
+  notes?: { top?[], middle?[], base?[] }, createdAt }
 ```
-- Persisted to `localStorage` key: `sk_wishlist` (also reads legacy key `favorites`)
 
-### Cart State Shape (in page.js)
-```js
-{
-  id: string,
-  title: string,
-  price: number,
-  image: string,
-  size: string,
-  color: string,
-  quantity: number
-}[]
-```
-- Persisted to `localStorage` key: `sk_cart`
+### Products (8 active, 30 images)
+
+| ID | AR Name | EN Name | Category | Price | Sizes | Colors |
+|----|---------|---------|----------|-------|-------|--------|
+| `luxury-velvet-set` | طقم اللؤلؤ المخملي الفاخر | Luxury Velvet Pearl Set | sets | 15 JD | S/M/L/XL | Royal Burgundy (+1.5), Deep Black |
+| `elegant-wrap-set` | طقم الغزال الكلاسيكي بلفة جانبية | Elegant Side-Wrap Trousers Set | sets | 14 JD | S/M/L | Petroleum Blue, Royal Black (+1.5) |
+| `belted-wrap-blazer` | بليزر الحزام المخملي الكلاسيكي | Classic Belted Wrap Blazer | outerwear | 15 JD | S/M/L/XL | Dark Brown (+1.0) |
+| `satin-mockneck-blouse` | بلوزة الساتان الفاخرة بربطة الخصر | Luxury Satin Mock-Neck Blouse | blouses | 12 JD | S/M/L/XL | Champagne Beige, Royal Black (+2.0), Pearl White (+1.0) |
+| `side-tie-wrap-shirt` | قميص الكلاسيك بربطة جانبية وسلاسل | Side-Tie Classic Wrap Shirt | blouses | 10 JD | S/M/L | Chocolate Brown, Royal Burgundy (+2.0), Classic Beige (+1.0) |
+| `floral-evening-dress` | فستان سهرة أنيق بتصميم عصري | Elegant Modern Evening Dress | sets | 18 JD | S/M/L | Navy Blue |
+| `classic-blazer-set` | طقم بليزر وتنورة رسمي | Classic Blazer & Skirt Set | sets | 20 JD | S/M/L | Charcoal |
+| `printed-top-set` | طوق أنيق بموديلات متنوعة | Stylish Printed Top Set | blouses | 8 JD | S/M/L | Sapphire Blue |
+
+**Color surcharges** are per-variant (not per-size). Size surcharges are handled at display level only.
+
+### Perfumes (8 products, 9 images)
+
+| ID | AR Name | EN Name | Category | Volume | Notes |
+|----|---------|---------|----------|--------|-------|
+| `perf-vaya-rose` | عطر Vaya Rose | Vaya Rose Perfume | perfume | 50ml | Top: كرامبولا/فاوانيا/منديرن, Heart: لوتس/ورد, Base: عنبر/خشب الصندل/باتشولي |
+| `perf-berry-musk` | مسك التوت | Berry Musk | musk | 30ml | — |
+| `perf-pomegranate-musk` | مسك الرمان | Pomegranate Musk | musk | 30ml | — |
+| `perf-bride-musk` | مسك العروس | Bride's Musk | musk | 30ml | — |
+| `perf-rose-musk` | مسك الورد | Rose Musk | musk | 30ml | — |
+| `perf-berry-blend` | مخمرية برائحة التوت | Berry Blend Perfume Oil | perfume | 12ml | — |
+| `perf-bergamot-violet` | مخمريه البرغموت والفانيليا وأوراق البنفسج | Bergamot Vanilla Violet | perfume | 12ml | — |
+| `perf-vaya-samples` | عينات عطرية من SK | SK Perfume Samples | sample | 2ml | — |
+
+### Perfume Image Mapping
+| Image file → | Perfume ID |
+|--------------|-----------|
+| `vaya-rose.webp` + `vaya-rose-notes.webp` | `perf-vaya-rose` |
+| `berry-musk.webp` | `perf-berry-musk` |
+| `pomegranate-musk.webp` | `perf-pomegranate-musk` |
+| `brides-musk.webp` | `perf-bride-musk` |
+| `rose-musk.webp` | `perf-rose-musk` |
+| `berry-blend.webp` | `perf-berry-blend` |
+| `bergamot-vanilla-violet.webp` | `perf-bergamot-violet` |
+| `perfume-samples.webp` | `perf-vaya-samples` |
+
+### Source Images (from `C:\Users\osama\Desktop\SK V.1\`)
+- **Clothing:** 30 images (6 `photo-*` + 24 `thumbnail-*`) → 8 products
+- **Perfumes:** 9 images (Arabic filenames with emojis) → 8 perfumes + 1 notes infographic
+- **Logo:** `SK V.1.png` → `public/logo/sk-logo.webp`
 
 ---
 
 ## 5. DESIGN SYSTEM
 
-### CSS Custom Properties
-
-**Dark Theme (Default: `:root`)**
-```css
---bg-primary: #0a0a0a
---bg-secondary: #121212
---bg-tertiary: #0d0d0d
---bg-elevated: #1a1a1a
---bg-glass: rgba(10, 10, 10, 0.75)
---bg-subtle: rgba(255, 255, 255, 0.05)
---bg-subtle-hover: rgba(255, 255, 255, 0.1)
---text-primary: #ffffff
---text-secondary: #d4d4d8
---text-muted: #a1a1aa
---text-dim: #71717a
---border-subtle: rgba(255, 255, 255, 0.05)
---border-light: rgba(255, 255, 255, 0.08)
-```
-
-**Light Theme (`.light-theme`)**
-```css
---bg-primary: #FDFBF7
---bg-secondary: #ffffff
---bg-tertiary: #f6f3ed
---bg-elevated: #fffefa
---bg-glass: rgba(253, 251, 247, 0.82)
---bg-subtle: rgba(207, 168, 80, 0.05)
---bg-subtle-hover: rgba(207, 168, 80, 0.1)
---text-primary: #1a1612
---text-secondary: #4a4236
---text-muted: #7a7062
---text-dim: #a89e8e
---border-subtle: rgba(207, 168, 80, 0.1)
---border-light: rgba(207, 168, 80, 0.18)
-```
-
-**Named Colors (via `@theme` in CSS — Tailwind v4)**
-```css
---color-gold: #cfa850
---color-gold-light: #e8d5a3
---color-champagne: #f7e7ce
---color-shemagh-red: #cc0000
---color-petra-red: #b53a2b
---color-desert-sand: #d4b896
---color-obsidian: #050505
+### Tailwind Custom Colors (tailwind.config.ts)
+```js
+colors: {
+  luxury: {
+    black:  "#0A0A0A",
+    white:  "#FFFFFF",
+    gold:   "#C9A84C",
+    gold-light: "#E8C97A",
+    gold-dark:  "#A07830",
+  },
+}
 ```
 
 ### Fonts
 | Font | Usage | CSS Variable |
 |------|-------|-------------|
-| **Cairo** | Arabic body text, headings | `--font-cairo` |
-| **Outfit** | English body text | `--font-outfit` |
-| **Cinzel** | Brand logo "BOUTIQUE", luxury serif headings | `--font-cinzel` |
-| **Playfair Display** | Elegant serif text, light theme headings | `--font-playfair` |
-| **Font Awesome 6** | Icons (CDN) | via CDN |
+| **Alexandria** | Arabic body, headings | `--font-alexandria` |
+| **Inter** | English body, headings | `--font-inter` |
+| **Font Awesome 6** | Icons (CDN) | via `<link>` in layout |
 
-### Custom CSS Classes (in globals.css)
+### Tailwind Animations (keyframes)
+| Name | Purpose | Duration |
+|------|---------|----------|
+| `fade-in` | Fade in | 0.5s |
+| `fade-up` | Fade + slide up | 0.6s |
+| `shimmer` | Skeleton loading | 2s infinite |
+| `float` | Hover float | 6s infinite |
+| `pulse-glow` | Gold glow pulse | 2s infinite |
+| `slide-in-right` | Slide from right | 0.4s |
+| `slide-in-left` | Slide from left | 0.4s |
+| `scale-in` | Scale in | 0.3s |
+
+### CSS Component Classes (in globals.css)
 | Class | Purpose |
 |-------|---------|
-| `.glass-effect` | Glassmorphism with backdrop blur |
-| `.gold-divider` | Horizontal gold gradient divider |
-| `.card-elegant` | Card with border, shadow, hover glow |
-| `.skeleton-shimmer` | Loading skeleton with moving gradient |
-| `.toast-animation` | Toast slide-in + fade-out animation |
-| `.color-cycle-gradient` | Animated gold gradient |
-| `.color-cycle-logo` | Logo hue shift animation |
-| `.font-luxury-serif` | Playfair Display serif |
-| `.font-luxury-mono` | Cinzel monospace |
-| `.min-touch-target` | Minimum 48x48px touch target |
-| `.pt-safe`, `.pb-safe`, etc. | Safe area insets for iOS notch |
-| `.ios-safe-area` | `env(safe-area-inset-*)` support |
-| `.apple-modal-scroll` | iOS smooth scroll within modals |
-| `.hover-lift` | Hover lift effect (desktop only) |
+| `.glass` | Backdrop blur nav bar |
+| `.glass-card` | Glassmorphism card |
+| `.gold-gradient` | Gold gradient text/background |
+| `.btn-primary` | Gold gradient button |
+| `.btn-secondary` | Glass border button |
+| `.section-padding` | Responsive horizontal padding |
+| `.scrollbar-none` | Hide scrollbar |
+| `.min-touch-target` | 48px minimum touch target |
+| `.pt-safe` / `.pb-safe` | Safe area insets |
 
-### Animations (via `@theme` + `@keyframes`)
-| Name | Keyframes | Duration |
-|------|-----------|----------|
-| `wobble` | Cart icon shake | 0.6s |
-| `pulse-glow` | Scale + gold glow | 2s infinite |
-| `fade-in` | Opacity 0→1 | 0.4s |
-| `slide-up` | TranslateY 30px→0 + opacity | 0.5s |
-| `slide-in-right` | TranslateX 100%→0 | 0.4s |
-| `confetti-fall` | Top→bottom + rotation | 3s linear |
-| `scale-in` | Scale 0.95→1 + opacity | 0.3s |
-| `shimmer` | Background position shift | 2s infinite |
-| `orb-float` | Floating orb parallax | continuous |
-| `heart-pulse` | Heart icon scale bounce | 0.4s |
-| `counter-bounce` | Counter badge scale | 0.3s |
-| `logo-hue-shift` | Logo filter animation | 8s infinite |
-| `skeleton-slide` | Skeleton shimmer | 1.8s infinite |
-| `toast-slide-in` | Toast enter | 0.3s |
-| `toast-fade-out` | Toast exit | 0.3s (delayed 3.7s) |
-
-### Easing
-```css
---ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
---duration-luxury: 0.6s;
-```
+### Layout Conventions
+- All pages: `min-h-screen bg-luxury-black text-luxury-white` with conditional `dir={isEnglish ? "ltr" : "rtl"}`
+- Page structure: `Navbar` → `main` (pt-28 pb-20) → `Footer`
+- Product grid: `grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6`
+- Cards: `glass-card` with `hover:border-luxury-gold/20 transition-all duration-500`
 
 ---
 
 ## 6. KNOWN ISSUES
 
-### Bugs Found
-1. **Wishlist broken — heart button doesn't work on first click in CatalogSection**
-   - The `onToggleWishlist` prop calls `e.stopPropagation()` then `toggleFavorite(id)` from context
-   - Context `toggleFavorite` updates state but the heart icon only switches from `far fa-heart` to `fas fa-heart` based on `wishlist.includes(prod.id)` — the `wishlist` prop comes from `favorites` in page.js
-   - The issue is that the heart icon animation class `animate-heart-pulse` is added based on `isLiked` which relies on the `wishlist` array passed from page.js
-   - If favorites persists to localStorage correctly but the UI doesn't update, it could be a stale closure issue in the `toggleWishlist` callback
+### Minor / Non-Critical
+- ❌ No feedback section / customer reviews display
+- ❌ No about page
+- ❌ No Instagram floating button
+- ❌ No mobile bottom navigation
+- ❌ No animated background
+- ❌ Arabic/English language toggle exists but no full translation dictionary (inline throughout)
+- `vaya-rose-notes.webp` image generated but not referenced in any data file (notes infographic, not a product)
 
-2. **~~Sitemap references old Netlify URL~~** ✅ **FIXED** — updated to Vercel URL
-
-3. **Unused legacy product images in `public/assets/`**
-   - PNG files like `cashmere_blazer.png`, `velvet_abaya.png`, `wool_coat.png`, `silk_dress.png`, `leather_jacket.png`, `linen_shirt.png`, `tailored_trousers.png`, `shemagh_shawl.png` are NOT referenced in the current product data — they are legacy assets
-
-4. **~~`preload` attribute on `<Image>` in HeroSection~~** ✅ **FIXED** — changed to `priority`
-
-5. **`localStorage` errors silently caught**
-   - If localStorage throws (e.g. private browsing), errors are silently swallowed with empty catch blocks
-
-6. **~~CSS `scrollbar-none` class used but not defined~~** ✅ **FIXED** — added to globals.css
-
-7. **Footer Privacy Policy / Terms links point to `#hero`**
-   - Not real pages — placeholder anchors
-
-8. **Mobile feedback horizontal scroll has no drag indicator/dots**
-   - Only has "swipe to view" text hint
-
-### No TypeScript Errors
-- Project uses JavaScript (.js files), no TypeScript config exists (tsconfig.json was attempted but not found)
-
-### No Build Warnings (currently)
-- Project builds successfully with `next build` (static export to `/out`)
+### Build Status
+- `npm run build` — **0 errors, 0 warnings, 11/11 pages generated** (no static export, uses Node server)
 
 ---
 
 ## 7. CURRENT STATE
 
 ### Working Features
-- ✅ Dark/Light theme toggle (persisted to localStorage)
-- ✅ Arabic/English language toggle (persisted to localStorage)
-- ✅ Product catalog with category filters (All/Sets/Outerwear/Blouses)
-- ✅ Product sorting (Featured/Price Low-High/Price High-Low)
-- ✅ Product search (desktop inline + mobile fullscreen)
-- ✅ Product detail modal (size, color, quantity selection)
-- ✅ Shopping cart (add, remove, change quantity, persisted to localStorage)
-- ✅ Promo codes (SK10, JORDAN, WELCOME10 — 10% off)
-- ✅ Wishlist/favorites (add/remove, persisted to localStorage)
-- ✅ Checkout flow (shipping form → payment method → order confirmation)
-- ✅ Cash on Delivery + Credit Card payment options
-- ✅ Card number formatting (Visa/MasterCard detection)
-- ✅ Confetti animation on order success
-- ✅ Toast notifications (success, danger, info)
-- ✅ Welcome splash screen (first-time visitors only)
-- ✅ Customer feedback gallery (17 images, desktop dual-view + mobile scroll)
-- ✅ Size guide modal (S/M/L/XL in cm)
-- ✅ Scroll-to-top button
-- ✅ Instagram FAB button
-- ✅ Mobile bottom navigation
-- ✅ Newsletter subscription (toast only — no backend)
-- ✅ Animated background (parallax floating orbs)
-- ✅ YouTube video embed
-- ✅ Responsive design (mobile/tablet/desktop)
+- ✅ Next.js 14 App Router with 11 pages (Home, Shop, Perfumes, Product Detail, Cart, Checkout, Order Confirmation, Wishlist, 404, API route)
+- ✅ TypeScript throughout (all components/pages are .tsx)
+- ✅ Tailwind CSS v3 with luxury gold/black design system
+- ✅ Alexandria + Inter Google Fonts
+- ✅ PWA support via next-pwa (service worker, manifest, icons)
+- ✅ Full OG metadata, schema.org JSON-LD, SEO tags
+- ✅ Security headers (X-Frame-Options, X-Content-Type, Referrer-Policy, XSS)
+- ✅ Image caching headers (1 year immutable for media)
+- ✅ 30 clothing images processed and mapped to 8 products
+- ✅ 9 perfume images processed (8 perfume products + 1 notes infographic)
+- ✅ Dual-glow animated logo component (framer-motion)
+- ✅ glass-card / glass / btn-primary / btn-secondary CSS components
+- ✅ Reduced motion support (CSS-level)
 - ✅ iOS safe area support
-- ✅ Reduced motion support
-- ✅ Schema.org JSON-LD structured data
-- ✅ Open Graph meta tags
-- ✅ Static export (output: 'export')
-
-### Incomplete / Missing Features
-- ❌ **Wishlist heart button unreliable** — see Known Issues
-- ❌ No real backend/API — cart, orders, newsletter are client-side only
-- ❌ No payment gateway integration (card form is UI-only, no real processing)
-- ❌ No order tracking system
-- ❌ No admin panel
-- ❌ No product inventory management
-- ❌ No real privacy policy / terms pages (placeholder anchors)
-- ❌ No analytics/tracking
-- ❌ Sitemap URL outdated (points to old Netlify)
-- ❌ No PWA support (no service worker, no manifest)
-
-### Recently Changed (this session)
-→ **Part 1:** Created AGENTS.md + .opencode/rules.md
-→ **Part 2 (Cleanup):**
-- Created `.opencode/config.json` — agent config with deploy/dev/build commands
-- Created `.vscode/settings.json` — formatter, ESLint, Tailwind CSS settings
-- Created `.vscode/extensions.json` — recommended VS Code extensions
-- Fixed `preload` → `priority` in HeroSection.js (Next.js Image prop fix)
-- Added `.scrollbar-none` CSS class to globals.css (was missing — used in CatalogSection & FeedbackSection)
-- Fixed `sitemap.xml` URL from old Netlify to current Vercel URL
-- Built successfully with `npm run build` — **zero errors, zero warnings**
-- Verified all imports in all 27 source files — no unused imports, no wrong paths
+- ✅ Responsive product grid (2→3→4 columns)
+- ✅ Language toggle (isEnglish/isDark) via useState on each page
+- ✅ Scrollbar hiding utility class
+- ✅ **Cart system** — Context + localStorage + drawer + full cart page + quantity controls
+- ✅ **Checkout flow** — Shipping form → validation → WhatsApp redirect → API order logging → confirmation page
+- ✅ **Wishlist** — Context + localStorage + heart toggle + dedicated wishlist page
+- ✅ **Search** — Full-screen overlay with live product filtering
+- ✅ **Toast notifications** — Auto-dismiss (3.5s), 4 types (success/error/info/warning), premium animations
+- ✅ **Breadcrumbs** — Navigation with home icon + separator on all pages
+- ✅ **Size guide** — Modal with XS-XXL measurements in cm
+- ✅ **Back-to-top** — Floating button after 600px scroll
+- ✅ **Product recommendations** — Related products (same category) on detail page
+- ✅ **Recently viewed** — localStorage tracking, shown on detail page
+- ✅ **Add-to-cart** from ProductCard, product detail, wishlist, and perfumes pages
+- ✅ **Wishlist heart** on ProductCard + product detail with red active state
+- ✅ 3 React Contexts (Cart, Toast, Wishlist) with localStorage persistence
+- ✅ Perfume add-to-cart with cart drawer open on add
 
 ---
 
@@ -398,19 +319,18 @@ sk-boutique/
 | Command | What it does |
 |---------|-------------|
 | `npm run dev` | Start Next.js dev server (http://localhost:3000) |
-| `npm run build` | Build for production (static export to `/out`) |
+| `npm run build` | Build for production |
 | `npm run start` | Start production server |
 | `npm run lint` | Run ESLint |
-| `.\تشغيل_المتجر.bat` | Launch dev server (Arabic-friendly batch script) |
-| `git push` | Deploy to Cloudflare Pages (auto-deploys from GitHub) |
+| `npm run format` | Run Prettier |
+| `node scripts/process-perfumes.js` | Process perfume images to .webp |
 | `opencode` | Launch OpenCode CLI (use `opencode.bat` shortcut) |
 
 ### Build Notes
-- Project uses `output: 'export'` in `next.config.mjs`
-- Images must be unoptimized (`images.unoptimized: true`)
-- No API routes or server components (fully static SPA)
-- Cloudflare Pages deploys automatically on git push to main branch
-- Deployment config: `opencode.json` has `deploy` and `deploy-draft` commands
+- No `output: 'export'` in next.config.js — needs Node.js server (Vercel) or Cloudflare adapter
+- Images are optimized by default (Next.js built-in optimizer)
+- PWA service worker generated at build time by next-pwa
+- Build output goes to `.next/` (default Next.js output)
 
 ### Testing
 - No testing framework configured
@@ -420,30 +340,59 @@ sk-boutique/
 
 ## 9. SESSION HISTORY
 
-### Session 1 — Tue Jun 9, 2026 (Part 1)
-- **Task:** Create permanent memory system for SK BOUTIQUE project
-- **Files read:** All 27 source files (4 pages, 22 components, 1 context, 2 data files, 1 lib, 9 config files, plus public assets)
-- **Created:** `AGENTS.md` — comprehensive project documentation
-- **Created:** `.opencode/rules.md` — permanent session rules
-- **Key findings documented:**
-  - 5 products with full pricing structure (base + size surcharges + color surcharges)
-  - 3 active promo codes (SK10, JORDAN, WELCOME10 — all 10%)
-  - 7 known issues including wishlist bug and legacy assets
-  - Full design system with dark/light themes, 4 fonts, 12 animations
-  - Complete component map with props for all 22 components
-      - Full translation dictionary (~145 keys AR/EN)
+### Session 1 (Retroactive) — Old Project
+- Original SK BOUTIQUE project built as SPA with glassmorphism design
+- Next.js 16, React 19, Tailwind v4, TypeScript, framer-motion, 22 JS components
+- Static export on Cloudflare Pages
+- Deleted and replaced with clean Next.js 14 project
 
-### Session 1 — Tue Jun 9, 2026 (Part 2 — Cleanup)
-- **Task:** Clean up project — add missing configs, fix bugs, clean imports
-- **Added:**
-  - `.opencode/config.json` — OpenCode agent configuration
-  - `.vscode/settings.json` — VS Code workspace settings
-  - `.vscode/extensions.json` — recommended extensions
-- **Fixed:**
-  - `HeroSection.js:44` — changed `preload` to `priority` (valid Next.js Image prop)
-  - `globals.css:413-419` — added `.scrollbar-none` class (was missing — breaks scrollbar hiding on mobile catalog/feedback)
-  - `sitemap.xml:4` — updated URL from old Netlify `sk-boutique-977.netlify.app` to current Cloudflare `sk-boutique.pages.dev`
-- **Verified:**
-  - `npm run build` — **0 errors, 0 warnings** — all pages generate statically
-  - All 27 source files' imports checked — **no unused imports, no wrong paths**
-- **Deleted:** none (no junk files found — no .DS_Store, thumbs.db, or temp files in source)
+### Session 2 — Wed Jun 10, 2026 (Part 1 — New Project Foundation)
+- **Task:** Replace old project with clean Next.js 14 project with PWA, TypeScript, and imagery from SK V.1
+- **Source images:** `C:\Users\osama\Desktop\SK V.1\` (30 clothing + 9 perfume + 1 logo)
+- **Clothing images:** processed via sharp → `public/clothing/*.webp` (600×800, quality 90, effort 6)
+- **Logo:** `SK V.1.png` → `public/logo/sk-logo.webp` (via manual conversion, 80px)
+- **Created:**
+  - `lib/types.ts` — TypeScript interfaces for Product, Perfume, ProductColor, NavLink, Translations
+  - `lib/products.ts` — 8 products grouped from 30 images with colors, sizes, descriptions
+  - `lib/perfumes.ts` — 8 perfumes with notes, volumes, categories (image refs fixed to .webp)
+  - `components/ui/Logo.tsx` — Animated dual-glow logo with framer-motion
+  - `components/ui/Navbar.tsx` — Top nav with search, theme/lang toggles, 3 links
+  - `components/sections/Hero.tsx` — Full-screen hero with CTA + promo card
+  - `components/product/ProductCard.tsx` — Product card linking to detail page
+  - `app/shop/page.tsx` — Product grid page with category filter
+  - `app/perfumes/page.tsx` — Perfume page with category filter + notes display
+  - `app/product/[id]/page.tsx` — Product detail page with sizes/details/shipping
+  - `scripts/process-perfumes.js` — Sharp-based perfume image processor
+  - `tailwind.config.ts` — Luxury color scheme + animations
+  - `postcss.config.js`, `next.config.js` — Build configs (PWA, images, security)
+- **Verified:** `npm run build` — **0 errors, 6/6 pages generate**
+
+### Session 3 — Thu Jun 11, 2026 (Part 2 — Complete Store Features)
+- **Task:** Build all missing store functionality — cart, checkout, toasts, search, wishlist, breadcrumbs, size guide, back-to-top, recently viewed, recommendations
+- **New architecture:** React Context API — `context/CartContext.tsx`, `context/ToastContext.tsx`, `context/WishlistContext.tsx` composed by `context/Providers.tsx` wrapping root layout
+- **Pages created (4):**
+  - `app/cart/page.tsx` — Full cart with quantity controls, order summary, clear cart, AnimatePresence
+  - `app/checkout/page.tsx` — Shipping form (name/phone/address/city/notes) with validation, WhatsApp redirect + order API logging
+  - `app/order-confirmation/page.tsx` — Success page with WhatsApp redirect confirmation
+  - `app/wishlist/page.tsx` — Wishlist grid supporting both products + perfumes, add-to-cart button
+- **API route:**
+  - `app/api/create-order/route.ts` — POST endpoint logging order data
+- **Components created (5):**
+  - `components/ui/CartDrawer.tsx` — Slide-in drawer with AnimatePresence, quantity controls, cart badge sync, checkout link
+  - `components/ui/ToastContainer.tsx` — Centered auto-dismiss toasts (success/error/info/warning) with premium animations
+  - `components/ui/SearchOverlay.tsx` — Full-screen search with live product filtering (title/englishTitle)
+  - `components/ui/Breadcrumbs.tsx` — Navigation breadcrumbs with home icon
+  - `components/ui/SizeGuideModal.tsx` — Modal with XS-XXL size table (bust/waist/hips in cm) + measuring tips
+  - `components/ui/BackToTop.tsx` — Floating button visible after 600px scroll, smooth scroll
+- **Existing components enhanced:**
+  - `Navbar.tsx` — Search button, wishlist link with badge, cart badge from real CartContext, mobile menu now has wishlist/cart links
+  - `ProductCard.tsx` — Wishlist heart toggle with red state, "Add to Cart" quick-add button opening drawer, toast feedback
+  - `product/[id]/page.tsx` — Real add-to-cart with size validation, wishlist heart, "Buy Now" opens drawer, "in cart" badge, size guide trigger, recently viewed (localStorage), related products (same category), breadcrumbs, BackToTop
+- **Existing pages enhanced:**
+  - `app/layout.tsx` — Wraps with `<Providers>` for Cart/Toast/Wishlist contexts
+  - `app/page.tsx` — CartDrawer, SearchOverlay, ToastContainer, BackToTop, search-open Navbar
+  - `app/shop/page.tsx` — Same + Breadcrumbs
+  - `app/perfumes/page.tsx` — Same + Breadcrumbs + add-to-cart for perfumes
+- **State management:** 3 React Contexts with localStorage persistence, auto-dismiss toasts (3.5s), cart with add/remove/update/clear
+- **Data flow:** Cart drawer opens on add-item, toasts appear at top center, search filters 8 products, wishlist syncs heart state across ProductCard + detail + wishlist page
+- **Verified:** `npx tsc --noEmit` = **0 errors** | `npm run build` = **0 errors, 0 warnings, 11/11 pages generated**
