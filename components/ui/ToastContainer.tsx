@@ -6,8 +6,8 @@ import { useToast, type ToastType } from "@/context/ToastContext";
 const STYLES: Record<ToastType, { bg: string; border: string; icon: string; defaultIcon: string }> = {
   success: { bg: "bg-green-500/10", border: "border-green-500/20", icon: "text-green-400", defaultIcon: "fa-check-circle" },
   error: { bg: "bg-red-500/10", border: "border-red-500/20", icon: "text-red-400", defaultIcon: "fa-exclamation-circle" },
-  info: { bg: "bg-luxury-gold/10", border: "border-luxury-gold/20", icon: "text-luxury-gold", defaultIcon: "fa-info-circle" },
-  warning: { bg: "bg-yellow-500/10", border: "border-yellow-500/20", icon: "text-yellow-400", defaultIcon: "fa-triangle-exclamation" },
+  info: { bg: "bg-accent-gold-muted", border: "border-accent-gold-muted", icon: "text-accent-gold", defaultIcon: "fa-info-circle" },
+  warning: { bg: "bg-yellow-500/10", border: "border-yellow-500/20", icon: "text-accent-gold", defaultIcon: "fa-triangle-exclamation" },
 };
 
 export default function ToastContainer() {
@@ -29,10 +29,10 @@ export default function ToastContainer() {
               style={{ background: "rgba(10,10,10,0.9)" }}
             >
               <i className={`fas ${toast.icon || style.defaultIcon} ${style.icon} text-sm`} />
-              <p className="text-xs text-luxury-white/80 flex-1">{toast.message}</p>
+              <p className="text-xs text-content-primary flex-1">{toast.message}</p>
               <button
                 onClick={() => removeToast(toast.id)}
-                className="text-luxury-gold/30 hover:text-luxury-gold/60 transition-colors"
+                className="text-accent-gold/30 hover:text-accent-gold/60 transition-colors"
               >
                 <i className="fas fa-times text-[10px]" />
               </button>

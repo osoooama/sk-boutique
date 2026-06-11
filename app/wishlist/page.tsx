@@ -54,7 +54,7 @@ export default function WishlistPage() {
 
         <h1 className={`text-2xl font-bold mb-8 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
           {isEnglish ? "My Wishlist" : "المفضلة"}
-          {wishlist.length > 0 && <span className="text-luxury-gold/40 text-sm mr-2">({wishlist.length})</span>}
+          {wishlist.length > 0 && <span className="text-accent-gold/40 text-sm mr-2">({wishlist.length})</span>}
         </h1>
 
         {wishlist.length === 0 ? (
@@ -63,8 +63,8 @@ export default function WishlistPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center py-20 space-y-6"
           >
-            <i className="fas fa-heart text-5xl text-luxury-gold/20 block" />
-            <p className="text-sm text-luxury-gold/40">
+            <i className="fas fa-heart text-5xl text-accent-gold/20 block" />
+            <p className="text-sm text-accent-gold/40">
               {isEnglish ? "Your wishlist is empty" : "قائمة المفضلة فارغة"}
             </p>
             <Link href="/shop" className="btn-primary text-xs px-8 py-3.5 inline-block">
@@ -96,18 +96,18 @@ export default function WishlistPage() {
                       <i className="fas fa-heart text-xs" />
                     </button>
                     <Link href={`/product/${product.id}`} className="block" style={{ textDecoration: "none" }}>
-                      <div className="aspect-[3/4] bg-luxury-black overflow-hidden">
+                      <div className="aspect-[3/4] bg-surface-primary overflow-hidden">
                         {imgSrc ? (
                           <img src={imgSrc} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center"><i className="fas fa-tshirt text-2xl text-luxury-gold/20" /></div>
+                          <div className="w-full h-full flex items-center justify-center"><i className="fas fa-tshirt text-2xl text-accent-gold/20" /></div>
                         )}
                       </div>
                       <div className="p-3 space-y-1">
                         <p className={`text-xs font-bold truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                           {isEnglish ? product.englishTitle : product.title}
                         </p>
-                        <p className="text-[10px] text-luxury-gold/40">{product.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
+                        <p className="text-[10px] text-accent-gold/40">{product.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
                       </div>
                     </Link>
                     <div className="px-3 pb-3">
@@ -127,7 +127,7 @@ export default function WishlistPage() {
                             addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
                           }
                         }}
-                        className="w-full py-2.5 rounded-xl border border-luxury-gold/20 text-luxury-gold text-[10px] font-medium hover:bg-luxury-gold/10 transition-all"
+                        className="w-full py-2.5 rounded-xl border border-accent-gold-muted text-accent-gold text-[10px] font-medium hover:bg-accent-gold-muted transition-all"
                       >
                         <i className="fas fa-shopping-bag mr-1" />
                         {isEnglish ? "Add to Cart" : "أضف للسلة"}
@@ -154,14 +154,14 @@ export default function WishlistPage() {
                   >
                     <i className="fas fa-heart text-xs" />
                   </button>
-                  <div className="aspect-[3/4] bg-luxury-black overflow-hidden">
+                  <div className="aspect-[3/4] bg-surface-primary overflow-hidden">
                     <img src={perfume.image} alt={perfume.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   </div>
                   <Link href="/perfumes" className="block p-3" style={{ textDecoration: "none" }}>
                     <p className={`text-xs font-bold truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                       {isEnglish ? perfume.englishTitle : perfume.title}
                     </p>
-                    <p className="text-[10px] text-luxury-gold/40">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "د.أ"} · {perfume.volume}</p>
+                    <p className="text-[10px] text-accent-gold/40">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "د.أ"} · {perfume.volume}</p>
                   </Link>
                 </motion.div>
               ))}

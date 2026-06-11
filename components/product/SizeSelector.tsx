@@ -28,8 +28,8 @@ export default function SizeSelector({
             onClick={() => onSizeChange(size)}
             className={`w-11 h-11 rounded-xl text-xs font-bold border transition-all duration-200 ${
               isSelected
-                ? "bg-luxury-gold text-luxury-black border-luxury-gold"
-                : "border-white/10 text-luxury-gold bg-white/5 hover:bg-luxury-gold/10 hover:border-luxury-gold/30"
+                ? "bg-accent-gold text-surface-primary border-accent-gold"
+                : "border-border text-accent-gold bg-white/5 hover:bg-accent-gold-muted hover:border-accent-gold/30"
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

@@ -217,9 +217,35 @@ colors: {
     gold:   "#C9A84C",
     gold-light: "#E8C97A",
     gold-dark:  "#A07830",
+    cream:  "#F5F0E8",
+    charcoal: "#1A1A1A",
+    beige:  "#EDE7DC",
   },
+  gold: {
+    DEFAULT: "#C9A84C",
+    light:  "#E8C96B",
+    dark:   "#A8873A",
+  },
+  surface: { primary, secondary, card, "card-hover", nav, footer, page },
+  content: { primary, secondary, muted, "on-accent" },
+  accent:  { gold, "gold-hover", "gold-muted" },
+  border:  { DEFAULT, strong },
+  input:   { bg, border, text, placeholder },
+  button:  { "primary-bg", "primary-text", "secondary-bg", "secondary-border", "secondary-text" },
 }
 ```
+
+### CSS Variables (globals.css)
+All component colors use CSS variables defined in `:root` (dark) + `.light` (warm cream). Key variables:
+- `--bg-primary` / `--bg-secondary` / `--bg-card` / `--bg-card-hover` — backgrounds
+- `--text-primary` / `--text-secondary` / `--text-muted` / `--text-on-accent` — text
+- `--accent-gold` / `--accent-gold-hover` / `--accent-gold-muted` — gold accents
+- `--border-color` / `--border-color-strong` — borders
+- `--button-primary-bg` / `--button-primary-text` — primary buttons
+- `--nav-bg` / `--nav-border` / `--footer-bg` — navigation + footer
+- `--input-bg` / `--input-border` / `--input-text` / `--input-placeholder` — form inputs
+- `--shadow-card` / `--shadow-button` — shadows
+- `--success-bg` / `--success-text` / `--success-border` — success states
 
 ### Fonts
 | Font | Usage | CSS Variable |
@@ -431,3 +457,19 @@ colors: {
 - **Discount code:** SK30 — 20% off, persists in localStorage, shown in drawer/cart/checkout/WhatsApp
 - **RTL preserved:** All Arabic layout and dir attributes maintained
 - **Verified:** `npm run build` = **0 errors, 0 warnings, 11/11 pages**
+
+### Session 6 — Thu Jun 11, 2026 (Part 5 — CSS Variable Dark Theme Refactor)
+- **Task:** Replace ALL hardcoded color values (luxury-black/white/gold, border-white/*, text-gray-*, hex colors) with semantic CSS variables across all 11 pages and 12+ components
+- **Foundation:** `app/globals.css` rewritten with 35+ CSS variables in `:root` (dark) + `.light` (warm cream) for backgrounds, text, borders, accents, inputs, buttons, nav, footer, cards, badges, shadows, success states
+- **Tailwind config:** Added 6 new semantic color groups (`surface`, `content`, `accent`, `border`, `input`, `button`) mapped to `var(--...)` for use in component className attributes
+- **Body tag cleanup:** Removed `bg-luxury-black text-luxury-white selection:bg-luxury-gold/30` from `layout.tsx` — CSS variables in globals.css handle these
+- **Component updates (parallel via task agents):**
+  - `components/ui/` (9 files): Navbar, Footer, Logo, CartDrawer, ToastContainer, SearchOverlay, Breadcrumbs, SizeGuideModal, BackToTop
+  - `components/sections/` (2 files): HeroSlider, Hero (promo card + badge colors)
+  - `components/product/` (3 files): ProductCard, ColorSwatches, SizeSelector
+  - `components/FeedbackGallery.tsx` — card bgs, hover borders, nav buttons
+- **Page updates (7 files):** Home, Shop, Perfumes, Product Detail, Cart, Checkout, Wishlist, Order Confirmation, 404
+- **Replacement patterns:** ~150+ color classes replaced across all files with patterns like `bg-luxury-black→bg-surface-primary`, `text-luxury-gold→text-accent-gold`, `border-white/10→border-border`, `bg-luxury-gold/10→bg-accent-gold-muted`, `text-gray-400→text-content-secondary`
+- **Built-in globals.css component classes:** `glass`, `glass-card`, `btn-primary`, `btn-secondary`, `card-product`, `size-btn`, `filter-btn`, `add-to-cart-btn`, `gold-divider`, `pill-badge`, `gold-gradient`, `aurora-bg`, custom scrollbar, selection color
+- **Opacity overlays kept:** `bg-black/50`, `bg-black/60`, `bg-black/80`, `bg-black/85` for lightbox modals and image overlays (these overlay images, not theme backgrounds)
+- **Verified:** `npm run build` = **0 errors, 0 warnings, 11/11 pages** | `npm run lint` = **0 warnings/errors** | `npx tsc --noEmit` = **0 errors**

@@ -52,13 +52,13 @@ export default function HomePage() {
 
         <section className="py-20 section-padding max-w-7xl mx-auto">
           <div className="text-center space-y-4 mb-12">
-            <span className="inline-block bg-luxury-gold/10 text-luxury-gold px-4 py-1.5 rounded-full text-xs font-bold border border-luxury-gold/15">
+            <span className="inline-block bg-accent-gold-muted text-accent-gold px-4 py-1.5 rounded-full text-xs font-bold border border-accent-gold-muted">
               {isEnglish ? "Featured Collection" : "مختارات الملابس"}
             </span>
             <h2 className={`text-3xl md:text-4xl font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
               {isEnglish ? "Latest Trends" : "أحدث الصيحات"}
             </h2>
-            <p className="text-luxury-gold/60 text-sm max-w-xl mx-auto">
+            <p className="text-accent-gold/60 text-sm max-w-xl mx-auto">
               {isEnglish ? "Handpicked pieces from our latest collection" : "قطعة مختارة بعناية من أحدث تشكيلاتنا"}
             </p>
           </div>
@@ -78,18 +78,18 @@ export default function HomePage() {
         </section>
 
         <section className="relative py-20 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-luxury-gold/[0.02] to-transparent pointer-events-none" />
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-luxury-gold/5 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent-gold/[0.02] to-transparent pointer-events-none" />
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-gold-muted rounded-full blur-[120px] pointer-events-none" />
 
           <div className="relative max-w-7xl mx-auto px-4 md:px-8">
             <div className="text-center space-y-4 mb-12">
-              <span className="inline-block bg-luxury-gold/10 text-luxury-gold px-4 py-1.5 rounded-full text-xs font-bold border border-luxury-gold/15">
+              <span className="inline-block bg-accent-gold-muted text-accent-gold px-4 py-1.5 rounded-full text-xs font-bold border border-accent-gold-muted">
                 {isEnglish ? "Premium Fragrances" : "عالم العطور"}
               </span>
               <h2 className={`text-3xl md:text-4xl font-bold gold-gradient bg-clip-text text-transparent ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                 {isEnglish ? "Discover Our Perfumes" : "اكتشف عطورنا الفاخرة"}
               </h2>
-              <p className="text-luxury-gold/60 text-sm max-w-xl mx-auto">
+              <p className="text-accent-gold/60 text-sm max-w-xl mx-auto">
                 {isEnglish ? "Exclusive musk oils and fine fragrances from around the world" : "مسك وعطور فاخرة من أجود الخامات العالمية"}
               </p>
             </div>
@@ -102,13 +102,13 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.15 }}
-                  className="group glass-card overflow-hidden hover:border-luxury-gold/20 transition-all duration-500 hover:-translate-y-1"
+                  className="group glass-card overflow-hidden hover:border-accent-gold-muted transition-all duration-500 hover:-translate-y-1"
                 >
-                  <div className="relative aspect-square overflow-hidden bg-luxury-black">
+                  <div className="relative aspect-square overflow-hidden bg-surface-primary">
                     <img src={perfume.image} alt={perfume.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/60 to-transparent" />
                     <div className="absolute bottom-3 left-3 right-3">
-                      <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-luxury-gold/20 text-luxury-gold border border-luxury-gold/20 backdrop-blur-sm">
+                      <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted backdrop-blur-sm">
                         {perfume.volume}
                       </span>
                     </div>
@@ -117,13 +117,13 @@ export default function HomePage() {
                     <h3 className={`font-bold text-sm ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                       {isEnglish ? perfume.englishTitle : perfume.title}
                     </h3>
-                    <p className="text-xs text-luxury-gold/40 line-clamp-2">
+                    <p className="text-xs text-accent-gold/40 line-clamp-2">
                       {isEnglish ? perfume.englishDescription : perfume.description}
                     </p>
                     {perfume.notes?.top && (
                       <div className="flex items-center gap-1 flex-wrap pt-1">
                         {perfume.notes.top.slice(0, 3).map((note) => (
-                          <span key={note} className="text-[9px] px-2 py-0.5 rounded-full bg-luxury-gold/10 text-luxury-gold/60 border border-luxury-gold/10">
+                          <span key={note} className="text-[9px] px-2 py-0.5 rounded-full bg-accent-gold-muted text-accent-gold/60 border border-accent-gold-muted">
                             {note}
                           </span>
                         ))}
@@ -143,7 +143,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-border">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {FEATURES.map((feature, i) => (
@@ -155,10 +155,10 @@ export default function HomePage() {
                   transition={{ duration: 0.4, delay: i * 0.1 }}
                   className="text-center space-y-3"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-luxury-gold/10 border border-luxury-gold/20 flex items-center justify-center mx-auto">
-                    <i className={`fas ${feature.icon} text-luxury-gold text-xl`} />
+                  <div className="w-14 h-14 rounded-2xl bg-accent-gold-muted border border-accent-gold-muted flex items-center justify-center mx-auto">
+                    <i className={`fas ${feature.icon} text-accent-gold text-xl`} />
                   </div>
-                  <p className={`text-xs md:text-sm font-bold text-luxury-gold/80 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                  <p className={`text-xs md:text-sm font-bold text-accent-gold/80 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                     {isEnglish ? feature.en : feature.ar}
                   </p>
                 </motion.div>
@@ -167,19 +167,19 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-20 border-t border-white/5 overflow-hidden">
-          <div className="absolute left-1/4 w-96 h-96 bg-luxury-gold/5 rounded-full blur-[120px] pointer-events-none" />
+        <section className="py-20 border-t border-border overflow-hidden">
+          <div className="absolute left-1/4 w-96 h-96 bg-accent-gold-muted rounded-full blur-[120px] pointer-events-none" />
           <div className="relative max-w-7xl mx-auto px-4 md:px-8">
             <div className="text-center space-y-4 mb-14">
-              <span className="inline-flex items-center gap-2 bg-luxury-gold/10 text-luxury-gold px-4 py-1.5 rounded-full text-xs font-bold border border-luxury-gold/15">
+              <span className="inline-flex items-center gap-2 bg-accent-gold-muted text-accent-gold px-4 py-1.5 rounded-full text-xs font-bold border border-accent-gold-muted">
                 <i className="fas fa-camera text-[10px]" />
                 {isEnglish ? "Client Feedback" : "آراء العملاء"}
               </span>
               <h2 className={`text-3xl md:text-4xl font-bold gold-gradient bg-clip-text text-transparent ${isEnglish ? "font-inter" : "font-alexandria"}`}>
-                <i className="fas fa-camera mr-2 text-luxury-gold/40" />
+                <i className="fas fa-camera mr-2 text-accent-gold/40" />
                 {isEnglish ? "What Our Clients Say" : "ماذا قالوا عنا؟"}
               </h2>
-              <p className="text-luxury-gold/60 text-sm max-w-xl mx-auto">
+              <p className="text-accent-gold/60 text-sm max-w-xl mx-auto">
                 {isEnglish ? "Real moments from our valued customers" : "لحظات حقيقية من عملائنا الكرام"}
               </p>
             </div>

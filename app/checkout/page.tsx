@@ -130,10 +130,10 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
   };
 
   const inputClass = (hasError: boolean) =>
-    `w-full rounded-xl border px-4 py-3 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#C9A84C]/50 ${
+    `w-full rounded-xl border px-4 py-3 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent-gold-muted ${
       hasError
         ? "border-red-400 bg-red-50 dark:bg-red-900/10"
-        : "border-[#C9A84C]/20 bg-white dark:bg-zinc-900 text-luxury-white"
+        : "border-accent-gold-muted bg-surface-card text-content-primary"
     }`;
 
   return (
@@ -169,12 +169,12 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
 
         {items.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-sm text-luxury-gold/40">{isEnglish ? "Your cart is empty" : "سلتك فارغة"}</p>
+            <p className="text-sm text-accent-gold/40">{isEnglish ? "Your cart is empty" : "سلتك فارغة"}</p>
           </div>
         ) : (
           <div className="space-y-6">
             {/* Shipping Information */}
-            <div className="p-5 rounded-2xl bg-white/[0.03] dark:bg-white/[0.03] border border-white/5 space-y-4">
+            <div className="p-5 rounded-2xl bg-white/[0.03] dark:bg-white/[0.03] border border-border space-y-4">
               <h3 className={`font-bold text-sm ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                 {isEnglish ? "Shipping Information" : "معلومات الشحن"}
               </h3>
@@ -182,33 +182,33 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {/* Name */}
                 <div>
-                  <div className="flex items-center gap-2 border border-white/10 rounded-xl px-3 h-10 focus-within:border-[#C9A84C]/30 transition-all bg-white/[0.03]">
-                    <i className="fas fa-user text-luxury-gold/30 text-[10px]" />
+                  <div className="flex items-center gap-2 border border-border rounded-xl px-3 h-10 focus-within:border-accent-gold-muted transition-all bg-white/[0.03]">
+                    <i className="fas fa-user text-accent-gold/30 text-[10px]" />
                     <input
                       type="text"
                       placeholder={isEnglish ? "Full Name" : "الاسم الكامل"}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="bg-transparent border-none outline-none text-xs text-luxury-white flex-1 placeholder:text-luxury-gold/30"
+                      className="bg-transparent border-none outline-none text-xs text-content-primary flex-1 placeholder:text-accent-gold/30"
                     />
                   </div>
                 </div>
 
                 {/* City Select */}
                 <div>
-                  <div className="flex items-center gap-2 border border-white/10 rounded-xl px-3 h-10 focus-within:border-[#C9A84C]/30 transition-all bg-white/[0.03]">
-                    <i className="fas fa-building text-luxury-gold/30 text-[10px]" />
+                  <div className="flex items-center gap-2 border border-border rounded-xl px-3 h-10 focus-within:border-accent-gold-muted transition-all bg-white/[0.03]">
+                    <i className="fas fa-building text-accent-gold/30 text-[10px]" />
                     <select
                       value={selectedCity}
                       onChange={(e) => handleCityChange(e.target.value)}
-                      className="bg-transparent border-none outline-none text-xs text-luxury-gold flex-1 appearance-none cursor-pointer"
+                      className="bg-transparent border-none outline-none text-xs text-accent-gold flex-1 appearance-none cursor-pointer"
                       style={{ direction: isEnglish ? "ltr" : "rtl" }}
                     >
                       <option value="" disabled>
                         {isEnglish ? "— Select City —" : "— اختر مدينتك —"}
                       </option>
                       {JORDAN_CITIES.map((city) => (
-                        <option key={city.name} value={city.name} className="bg-luxury-black">
+                        <option key={city.name} value={city.name} className="bg-surface-primary">
                           {city.name}
                         </option>
                       ))}
@@ -218,14 +218,14 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
 
                 {/* Address (full width) */}
                 <div className="md:col-span-2">
-                  <div className="flex items-center gap-2 border border-white/10 rounded-xl px-3 h-10 focus-within:border-[#C9A84C]/30 transition-all bg-white/[0.03]">
-                    <i className="fas fa-location-dot text-luxury-gold/30 text-[10px]" />
+                  <div className="flex items-center gap-2 border border-border rounded-xl px-3 h-10 focus-within:border-accent-gold-muted transition-all bg-white/[0.03]">
+                    <i className="fas fa-location-dot text-accent-gold/30 text-[10px]" />
                     <input
                       type="text"
                       placeholder={isEnglish ? "Full Address" : "العنوان الكامل"}
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
-                      className="bg-transparent border-none outline-none text-xs text-luxury-white flex-1 placeholder:text-luxury-gold/30"
+                      className="bg-transparent border-none outline-none text-xs text-content-primary flex-1 placeholder:text-accent-gold/30"
                     />
                   </div>
                 </div>
@@ -233,11 +233,11 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
                 {/* Primary Phone */}
                 <div>
                   <div
-                    className={`flex items-center gap-2 border rounded-xl px-3 h-10 focus-within:border-[#C9A84C]/30 transition-all bg-white/[0.03] ${
-                      phoneError ? "border-red-500/30" : "border-white/10"
+                    className={`flex items-center gap-2 border rounded-xl px-3 h-10 focus-within:border-accent-gold-muted transition-all bg-white/[0.03] ${
+                      phoneError ? "border-red-500/30" : "border-border"
                     }`}
                   >
-                    <i className="fas fa-phone text-luxury-gold/30 text-[10px]" />
+                    <i className="fas fa-phone text-accent-gold/30 text-[10px]" />
                     <input
                       type="tel"
                       placeholder={isEnglish ? "Phone Number" : "رقم الهاتف"}
@@ -245,21 +245,21 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
                       onChange={(e) => setPhone(e.target.value)}
                       onBlur={handlePhoneBlur}
                       dir="ltr"
-                      className="bg-transparent border-none outline-none text-xs text-luxury-white flex-1 placeholder:text-luxury-gold/30 text-left"
+                      className="bg-transparent border-none outline-none text-xs text-content-primary flex-1 placeholder:text-accent-gold/30 text-left"
                     />
                   </div>
                   {phoneError && (
                     <p className="text-[10px] text-red-400/60 mt-1 mr-2">{phoneError}</p>
                   )}
-                  <p className="text-[9px] text-luxury-gold/30 mt-1 mr-2">
+                  <p className="text-[9px] text-accent-gold/30 mt-1 mr-2">
                     {isEnglish ? "Accepted: 077 / 078 / 079" : "أرقام مقبولة: 077 / 078 / 079"}
                   </p>
                 </div>
 
                 {/* Backup Phone */}
                 <div>
-                  <div className="flex items-center gap-2 border border-white/10 rounded-xl px-3 h-10 focus-within:border-[#C9A84C]/30 transition-all bg-white/[0.03]">
-                    <i className="fas fa-phone-volume text-luxury-gold/30 text-[10px]" />
+                  <div className="flex items-center gap-2 border border-border rounded-xl px-3 h-10 focus-within:border-accent-gold-muted transition-all bg-white/[0.03]">
+                    <i className="fas fa-phone-volume text-accent-gold/30 text-[10px]" />
                     <input
                       type="tel"
                       placeholder={isEnglish ? "Backup Phone (optional)" : "رقم احتياطي (اختياري)"}
@@ -267,27 +267,27 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
                       onChange={(e) => setBackupPhone(e.target.value)}
                       onBlur={handleBackupPhoneBlur}
                       dir="ltr"
-                      className="bg-transparent border-none outline-none text-xs text-luxury-white flex-1 placeholder:text-luxury-gold/30 text-left"
+                      className="bg-transparent border-none outline-none text-xs text-content-primary flex-1 placeholder:text-accent-gold/30 text-left"
                     />
                   </div>
                   {backupPhoneError && (
                     <p className="text-[10px] text-red-400/60 mt-1 mr-2">{backupPhoneError}</p>
                   )}
-                  <p className="text-[9px] text-luxury-gold/30 mt-1 mr-2">
+                  <p className="text-[9px] text-accent-gold/30 mt-1 mr-2">
                     {isEnglish ? "Optional" : "اختياري"}
                   </p>
                 </div>
 
                 {/* Notes (full width) */}
                 <div className="md:col-span-2">
-                  <div className="flex items-center gap-2 border border-white/10 rounded-xl px-3 h-10 focus-within:border-[#C9A84C]/30 transition-all bg-white/[0.03]">
-                    <i className="fas fa-pen text-luxury-gold/30 text-[10px]" />
+                  <div className="flex items-center gap-2 border border-border rounded-xl px-3 h-10 focus-within:border-accent-gold-muted transition-all bg-white/[0.03]">
+                    <i className="fas fa-pen text-accent-gold/30 text-[10px]" />
                     <input
                       type="text"
                       placeholder={isEnglish ? "Order Notes (optional)" : "ملاحظات (اختياري)"}
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
-                      className="bg-transparent border-none outline-none text-xs text-luxury-white flex-1 placeholder:text-luxury-gold/30"
+                      className="bg-transparent border-none outline-none text-xs text-content-primary flex-1 placeholder:text-accent-gold/30"
                     />
                   </div>
                 </div>
@@ -299,19 +299,16 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
               <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2 rounded-xl border border-[#C9A84C]/30 px-4 py-3 text-sm"
-                style={{
-                  background: "rgba(201,168,76,0.08)",
-                }}
+                className="flex items-center gap-2 rounded-xl border border-accent-gold-muted px-4 py-3 text-sm bg-accent-gold-muted"
               >
                 <span>🚚</span>
-                <span className="font-semibold text-[#C9A84C]">
+                <span className="font-semibold text-accent-gold">
                   {isEnglish ? "Delivery to " : "رسوم التوصيل إلى "}
                   {selectedCity}:
                 </span>
-                <span className="font-bold text-[#C9A84C] text-base">{deliveryFee} {isEnglish ? "JD" : "د.أ"}</span>
+                <span className="font-bold text-accent-gold text-base">{deliveryFee} {isEnglish ? "JD" : "د.أ"}</span>
                 {deliveryFee === 2 && (
-                  <span className="mr-auto text-xs bg-[#C9A84C] text-luxury-black rounded-full px-2 py-0.5 font-bold">
+                  <span className="mr-auto text-xs bg-accent-gold text-content-on-accent rounded-full px-2 py-0.5 font-bold">
                     {isEnglish ? "Inside Capital ✓" : "داخل العاصمة ✓"}
                   </span>
                 )}
@@ -319,7 +316,7 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
             )}
 
             {/* Order Summary */}
-            <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-3">
+            <div className="p-5 rounded-2xl bg-white/[0.03] border border-border space-y-3">
               <h3 className={`font-bold text-sm ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                 {isEnglish ? "Order Summary" : "ملخص الطلب"}
               </h3>
@@ -327,9 +324,9 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
               {items.map((item) => (
                 <div
                   key={`${item.productId}-${item.size}-${item.color}`}
-                  className="flex items-center gap-3 text-xs text-luxury-gold/60"
+                  className="flex items-center gap-3 text-xs text-accent-gold/60"
                 >
-                  <span className="font-bold text-luxury-white">{item.quantity}×</span>
+                  <span className="font-bold text-content-primary">{item.quantity}×</span>
                   <span className="flex-1 truncate">{isEnglish ? item.englishTitle : item.title}</span>
                   <span>
                     {item.price * item.quantity} {isEnglish ? "JD" : "د.أ"}
@@ -337,8 +334,8 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
                 </div>
               ))}
 
-              <div className="border-t border-white/10 pt-3 space-y-1">
-                <div className="flex items-center justify-between text-xs text-luxury-gold/60">
+              <div className="border-t border-border pt-3 space-y-1">
+                <div className="flex items-center justify-between text-xs text-accent-gold/60">
                   <span>{isEnglish ? "Subtotal" : "المجموع الفرعي"}</span>
                   <span>
                     {subtotal.toFixed(2)} {isEnglish ? "JD" : "د.أ"}
@@ -355,7 +352,7 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
                 )}
 
                 {selectedCity && (
-                  <div className="flex items-center justify-between text-xs text-luxury-gold/60">
+                  <div className="flex items-center justify-between text-xs text-accent-gold/60">
                     <span>
                       {isEnglish ? `Delivery (${deliveryFee === 2 ? "Inside Capital" : "Outside Capital"})` : `التوصيل (${deliveryFee === 2 ? "داخل العاصمة" : "خارج العاصمة"})`}
                     </span>
@@ -364,9 +361,9 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
                     </span>
                   </div>
                 )}
-                <div className="flex items-center justify-between text-sm font-bold pt-2 border-t border-white/10">
+                <div className="flex items-center justify-between text-sm font-bold pt-2 border-t border-border">
                   <span>{isEnglish ? "Total" : "الإجمالي"}</span>
-                  <span className="text-[#C9A84C]">
+                  <span className="text-accent-gold">
                     {total.toFixed(2)} {isEnglish ? "JD" : "د.أ"}
                   </span>
                 </div>
@@ -378,11 +375,7 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
               onClick={handleSubmit}
               disabled={submitting}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-4 rounded-xl font-bold text-xs tracking-wide transition-all disabled:opacity-40"
-              style={{
-                background: "linear-gradient(135deg, #C9A84C, #E8C96B)",
-                color: "#1A1208",
-              }}
+              className="w-full py-4 rounded-xl font-bold text-xs tracking-wide transition-all disabled:opacity-40 gold-gradient text-content-on-accent"
             >
               {submitting
                 ? isEnglish
@@ -393,7 +386,7 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
                   : "تأكيد الطلب عبر واتساب"}
             </motion.button>
 
-            <p className={`text-[10px] text-luxury-gold/30 text-center ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+            <p className={`text-[10px] text-accent-gold/30 text-center ${isEnglish ? "font-inter" : "font-alexandria"}`}>
               <i className="fas fa-shield-alt mr-1" />
               {isEnglish
                 ? "You will be redirected to WhatsApp to confirm your order. We accept cash on delivery."

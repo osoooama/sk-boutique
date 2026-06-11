@@ -30,7 +30,7 @@ export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
   }, [next]);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-luxury-black">
+    <section className="relative h-screen w-full overflow-hidden bg-surface-primary">
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
@@ -62,7 +62,7 @@ export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="inline-flex items-center gap-2 bg-luxury-gold/10 text-luxury-gold px-4 py-1.5 rounded-full text-xs font-semibold border border-luxury-gold/15 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 bg-accent-gold-muted text-accent-gold px-4 py-1.5 rounded-full text-xs font-semibold border border-accent-gold-muted backdrop-blur-sm"
           >
             <i className="fas fa-sparkles text-[10px]" />
             {isEnglish ? "European Design · Locally Crafted" : "تصميم أوروبي · صناعة محلية"}
@@ -78,7 +78,7 @@ export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
             <span
               className="bg-clip-text text-transparent"
               style={{
-                backgroundImage: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
+                backgroundImage: "linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-hover) 50%, var(--accent-gold) 100%)",
               }}
             >
               {isEnglish ? "SK Exclusive Collection" : "مجموعة SK الحصرية"}
@@ -90,7 +90,7 @@ export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="text-luxury-gold/60 text-sm md:text-base max-w-xl mx-auto font-light"
+            className="text-accent-gold/60 text-sm md:text-base max-w-xl mx-auto font-light"
           >
             {isEnglish
               ? "Modern European designs, locally handcrafted with premium Italian and French materials."
@@ -105,7 +105,7 @@ export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
             key={i}
             onClick={() => setCurrent(i)}
             className={`h-1.5 rounded-full transition-all duration-500 ${
-              i === current ? "w-8 bg-luxury-gold" : "w-1.5 bg-white/30 hover:bg-white/50"
+              i === current ? "w-8 bg-accent-gold" : "w-1.5 bg-white/30 hover:bg-white/50"
             }`}
             aria-label={`Slide ${i + 1}`}
           />

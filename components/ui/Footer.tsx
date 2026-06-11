@@ -12,14 +12,14 @@ export default function Footer({ isEnglish }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer id="contact" className="relative pt-16 pb-8 border-t border-white/5 bg-luxury-black">
-      <div className="absolute inset-0 bg-gradient-to-b from-luxury-gold/[0.02] to-transparent pointer-events-none" />
+    <footer id="contact" className="relative pt-16 pb-8 border-t border-border bg-surface-primary">
+      <div className="absolute inset-0 bg-gradient-to-b from-accent-gold/[0.02] to-transparent pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
           <div className="md:col-span-4 space-y-4">
             <Logo showText size="sm" />
-            <p className="text-sm font-light leading-relaxed max-w-xs text-luxury-gold/40">
+            <p className="text-sm font-light leading-relaxed max-w-xs text-accent-gold/40">
               {isEnglish
                 ? "A contemporary fashion house blending modern European design with local craftsmanship."
                 : "بيت أزياء معاصر يجمع بين التصميم الأوروبي الحديث والصناعة المحلية الحرفية."}
@@ -29,7 +29,7 @@ export default function Footer({ isEnglish }: FooterProps) {
                 href="https://www.instagram.com/sk_boutique977/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-luxury-gold/10 hover:border-luxury-gold/30 transition-all"
+                className="w-10 h-10 rounded-full flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted hover:border-accent-gold/30 transition-all"
                 aria-label="Instagram"
               >
                 <i className="fab fa-instagram" />
@@ -38,14 +38,14 @@ export default function Footer({ isEnglish }: FooterProps) {
                 href="https://api.whatsapp.com/send/?phone=962798921123"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-luxury-gold/10 hover:border-luxury-gold/30 transition-all"
+                className="w-10 h-10 rounded-full flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted hover:border-accent-gold/30 transition-all"
                 aria-label="WhatsApp"
               >
                 <i className="fab fa-whatsapp" />
               </a>
               <a
                 href="mailto:sk_boutique977@outlook.com"
-                className="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-luxury-gold/10 hover:border-luxury-gold/30 transition-all"
+                className="w-10 h-10 rounded-full flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted hover:border-accent-gold/30 transition-all"
                 aria-label="Email"
               >
                 <i className="fas fa-envelope" />
@@ -54,7 +54,7 @@ export default function Footer({ isEnglish }: FooterProps) {
           </div>
 
           <div className="md:col-span-2 space-y-4">
-            <h3 className="text-xs font-bold text-luxury-white tracking-wider uppercase">
+            <h3 className="text-xs font-bold text-content-primary tracking-wider uppercase">
               {isEnglish ? "Links" : "روابط"}
             </h3>
             <ul className="space-y-3 text-sm">
@@ -66,7 +66,7 @@ export default function Footer({ isEnglish }: FooterProps) {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="inline-block py-1 text-luxury-gold/40 hover:text-luxury-gold transition-colors duration-300"
+                    className="inline-block py-1 text-accent-gold/40 hover:text-accent-gold transition-colors duration-300"
                     style={{ textDecoration: "none" }}
                   >
                     {isEnglish ? link.en : link.ar}
@@ -77,7 +77,7 @@ export default function Footer({ isEnglish }: FooterProps) {
           </div>
 
           <div className="md:col-span-3 space-y-4">
-            <h3 className="text-xs font-bold text-luxury-white tracking-wider uppercase">
+            <h3 className="text-xs font-bold text-content-primary tracking-wider uppercase">
               {isEnglish ? "Customer Service" : "خدمة العملاء"}
             </h3>
             <ul className="space-y-3 text-sm">
@@ -87,8 +87,8 @@ export default function Footer({ isEnglish }: FooterProps) {
                 { ar: "إرجاع مجاني خلال 7 أيام", en: "7-day free returns" },
                 { ar: "خامات إيطالية وفرنسية", en: "Italian & French materials" },
               ].map((item, i) => (
-                <li key={i} className="flex items-center gap-2 text-luxury-gold/40">
-                  <i className="fas fa-check text-luxury-gold/60 text-[8px]" />
+                <li key={i} className="flex items-center gap-2 text-accent-gold/40">
+                  <i className="fas fa-check text-accent-gold/60 text-[8px]" />
                   {isEnglish ? item.en : item.ar}
                 </li>
               ))}
@@ -96,45 +96,45 @@ export default function Footer({ isEnglish }: FooterProps) {
           </div>
 
           <div className="md:col-span-3 space-y-4">
-            <h3 className="text-xs font-bold text-luxury-white tracking-wider uppercase">
+            <h3 className="text-xs font-bold text-content-primary tracking-wider uppercase">
               {isEnglish ? "Contact" : "معلومات الاتصال"}
             </h3>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-center gap-2 text-luxury-gold/40">
-                <i className="fas fa-phone text-luxury-gold/60 w-4 text-center" />
+              <li className="flex items-center gap-2 text-accent-gold/40">
+                <i className="fas fa-phone text-accent-gold/60 w-4 text-center" />
                 +962 7 9892 1123
               </li>
-              <li className="flex items-center gap-2 text-luxury-gold/40">
-                <i className="fas fa-envelope text-luxury-gold/60 w-4 text-center" />
+              <li className="flex items-center gap-2 text-accent-gold/40">
+                <i className="fas fa-envelope text-accent-gold/60 w-4 text-center" />
                 sk_boutique977@outlook.com
               </li>
-              <li className="flex items-center gap-2 text-luxury-gold/40">
-                <i className="fas fa-map-marker-alt text-luxury-gold/60 w-4 text-center" />
+              <li className="flex items-center gap-2 text-accent-gold/40">
+                <i className="fas fa-map-marker-alt text-accent-gold/60 w-4 text-center" />
                 {isEnglish ? "Amman, Jordan" : "عمّان، الأردن"}
               </li>
-              <li className="flex items-center gap-2 text-luxury-gold/40">
-                <i className="fab fa-instagram text-luxury-gold/60 w-4 text-center" />
+              <li className="flex items-center gap-2 text-accent-gold/40">
+                <i className="fab fa-instagram text-accent-gold/60 w-4 text-center" />
                 @sk_boutique977
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="h-px bg-gradient-to-r from-transparent via-luxury-gold/20 to-transparent" />
+        <div className="h-px bg-gradient-to-r from-transparent via-accent-gold/20 to-transparent" />
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-xs text-luxury-gold/40">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-xs text-accent-gold/40">
             <p>
               &copy; {currentYear} SK BOUTIQUE —{" "}
               {isEnglish ? "All rights reserved" : "جميع الحقوق محفوظة"}
             </p>
             <div className="flex items-center gap-3">
-              <span className="text-[10px] font-bold px-2.5 py-1 border border-white/10 rounded-full">
+              <span className="text-[10px] font-bold px-2.5 py-1 border border-border rounded-full">
                 COD
               </span>
-              <span className="text-[10px] font-bold px-2.5 py-1 border border-luxury-gold/30 text-luxury-gold rounded-full">
+              <span className="text-[10px] font-bold px-2.5 py-1 border border-accent-gold/30 text-accent-gold rounded-full">
                 EU Quality
               </span>
-              <span className="text-[10px] font-bold px-2.5 py-1 border border-white/10 rounded-full">
+              <span className="text-[10px] font-bold px-2.5 py-1 border border-border rounded-full">
                 JO
               </span>
             </div>
@@ -142,13 +142,13 @@ export default function Footer({ isEnglish }: FooterProps) {
 
           {/* Credit Line */}
           <motion.div
-            className="mt-6 pt-4 border-t border-white/5 text-center"
+            className="mt-6 pt-4 border-t border-border text-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
             <motion.p
-              className="text-xs text-luxury-gold/50"
+              className="text-xs text-accent-gold/50"
               animate={{ opacity: [0.4, 0.8, 0.4] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
@@ -157,7 +157,7 @@ export default function Footer({ isEnglish }: FooterProps) {
                 href="https://www.instagram.com/osamakreishan?igsh=MW9yYWtrODhyZWs2NA%3D%3D&utm_source=qr"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#C9A84C] hover:text-[#E8C97A] transition-colors font-semibold"
+                className="text-accent-gold hover:text-accent-gold-hover transition-colors font-semibold"
               >
                 @osamakreishan
               </a>

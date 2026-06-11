@@ -61,7 +61,7 @@ export default function Logo({ className = "", showText = true, size = "md" }: L
         <span
           className={`font-bold tracking-wider ${s.text}`}
           style={{
-            background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
+            background: "linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-hover) 50%, var(--accent-gold) 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",

@@ -5,18 +5,18 @@ const threeSizes = ["S", "M", "L"];
 
 const velvetSetColors: ProductColor[] = [
   {
-    name: "عنابي ملكي",
-    englishName: "Royal Burgundy",
-    hex: "#6B1D2F",
+    name: "بني كلاسيكي",
+    englishName: "Classic Brown",
+    hex: "#4A2C1A",
     images: [
       "/clothing/sk_boutique977-photo-DHgKbsmNsb7-20250322_160119_485626926.webp",
     ],
     surcharge: 1.5,
   },
   {
-    name: "أسود عميق",
-    englishName: "Deep Black",
-    hex: "#1A1A1A",
+    name: "زهري لؤلؤي",
+    englishName: "Pearl Pink",
+    hex: "#E090A0",
     images: [
       "/clothing/sk_boutique977-photo-DHgrFOOs96l-20250322_204636_485743576.webp",
     ],
@@ -30,6 +30,7 @@ const wrapSetColors: ProductColor[] = [
     hex: "#2A5C6E",
     images: [
       "/clothing/sk_boutique977-thumbnail-DQKeh-EjLQA-20251023_223639_567438507.webp",
+      "/clothing/sk_boutique977-thumbnail-DJrjkNxM6Rr-20250515_191546_497842882.webp",
     ],
   },
   {
@@ -40,6 +41,22 @@ const wrapSetColors: ProductColor[] = [
       "/clothing/sk_boutique977-thumbnail-DQKfmC0jODi-20251023_224554_569566349.webp",
     ],
     surcharge: 1.5,
+  },
+  {
+    name: "رمادي داكن",
+    englishName: "Charcoal Grey",
+    hex: "#3A3B3C",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DQCsQDtjJF9-20251020_220359_568702593.webp",
+    ],
+  },
+  {
+    name: "بني شوكولاتة",
+    englishName: "Chocolate Brown",
+    hex: "#5C4033",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DQCtUnLDHuX-20251020_221157_567405318.webp",
+    ],
   },
 ];
 
@@ -70,6 +87,7 @@ const satinBlouseColors: ProductColor[] = [
     hex: "#1A1A1A",
     images: [
       "/clothing/sk_boutique977-thumbnail-DYpsmnEMJA--20260522_214717_704427197.webp",
+      "/clothing/sk_boutique977-thumbnail-DYpP0rfM1CN-20260522_173531_705374921.webp",
     ],
     surcharge: 2.0,
   },
@@ -81,6 +99,30 @@ const satinBlouseColors: ProductColor[] = [
       "/clothing/sk_boutique977-thumbnail-DYpwc68sOWc-20260522_222040_704653143.webp",
     ],
     surcharge: 1.0,
+  },
+  {
+    name: "أزرق ياقوتي",
+    englishName: "Sapphire Blue",
+    hex: "#2B5C8F",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DYpCvLeMtXL-20260522_154123_703455572.webp",
+    ],
+  },
+  {
+    name: "أزرق سماوي",
+    englishName: "Light Blue",
+    hex: "#8CA9C4",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DYpcKsfMuPR-20260522_192333_705293588.webp",
+    ],
+  },
+  {
+    name: "وردي مغبر",
+    englishName: "Dusty Rose",
+    hex: "#B59A9A",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DYpDy9NsFUg-20260522_155032_703009358.webp",
+    ],
   },
 ];
 
@@ -99,7 +141,7 @@ const sideTieColors: ProductColor[] = [
     hex: "#6B1D2F",
     images: [
       "/clothing/sk_boutique977-thumbnail-DXhY4GyjJn8-20260424_194941_672357180.webp",
-      "/clothing/sk_boutique977-thumbnail-DXhXRfejHth-20260424_193611_672347469.webp",
+      "/clothing/sk_boutique977-thumbnail-DXPbRR6DObQ-20260417_202411_670566012.webp",
     ],
     surcharge: 2.0,
   },
@@ -112,37 +154,102 @@ const sideTieColors: ProductColor[] = [
     ],
     surcharge: 1.0,
   },
+  {
+    name: "بنفسجي فاتح",
+    englishName: "Lavender Mauve",
+    hex: "#8C7380",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DXMzdUcjKHJ-20260416_200225_670642277.webp",
+      "/clothing/sk_boutique977-thumbnail-DXhXRfejHth-20260424_193611_672347469.webp",
+    ],
+  },
+  {
+    name: "أزرق ياقوتي",
+    englishName: "Sapphire Blue",
+    hex: "#2B5C8F",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DXPay-JjCxX-20260417_202000_672357384.webp",
+    ],
+  },
+  {
+    name: "خمري داكن",
+    englishName: "Dark Burgundy",
+    hex: "#5A1E2F",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DYFjVQUsaY6-20260508_205337_695817335.webp",
+    ],
+  },
 ];
 
 const dressColors: ProductColor[] = [
   {
-    name: "كحلي",
-    englishName: "Navy Blue",
-    hex: "#1B2A4A",
+    name: "عنابي ملكي",
+    englishName: "Royal Burgundy",
+    hex: "#6B1D2F",
     images: [
       "/clothing/sk_boutique977-photo-DMdcVqDs9oL-20250723_211701_523124697.webp",
+    ],
+  },
+  {
+    name: "كحلي أنيق",
+    englishName: "Elegant Navy",
+    hex: "#1B2A4A",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DKAaV66M1IH-20250523_213858_500083846.webp",
     ],
   },
 ];
 
 const blazerSetColors: ProductColor[] = [
   {
+    name: "أبيض لؤلؤي",
+    englishName: "Pearl White",
+    hex: "#F5F5F0",
+    images: [
+      "/clothing/sk_boutique977-photo-DNOLea3MMcE-20250811_193226_530569642.webp",
+    ],
+  },
+  {
     name: "رمادي داكن",
     englishName: "Charcoal",
     hex: "#3A3B3C",
     images: [
-      "/clothing/sk_boutique977-photo-DNOLea3MMcE-20250811_193226_530569642.webp",
+      "/clothing/sk_boutique977-thumbnail-DPpBLl_jMJs-20251010_224643_563597840.webp",
     ],
   },
 ];
 
 const topSetColors: ProductColor[] = [
   {
-    name: "أزرق ياقوتي",
-    englishName: "Sapphire Blue",
-    hex: "#0f52ba",
+    name: "بيج لؤلؤي داكن",
+    englishName: "Dark Pearl Beige",
+    hex: "#8C7C70",
     images: [
       "/clothing/sk_boutique977-photo-DPmVJN7jICH-20251009_214130_561922161.webp",
+    ],
+  },
+  {
+    name: "أسود ملكي",
+    englishName: "Royal Black",
+    hex: "#1A1A1A",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DPmYW7FDD4E-20251009_221050_560553149.webp",
+    ],
+  },
+  {
+    name: "رمادي كلاسيكي",
+    englishName: "Classic Grey",
+    hex: "#7F7F7F",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DPpBLl_jMJs-20251010_224643_563597840.webp",
+    ],
+  },
+  {
+    name: "خمري أنيق",
+    englishName: "Elegant Burgundy",
+    hex: "#8A1C2E",
+    images: [
+      "/clothing/sk_boutique977-thumbnail-DPyjt96jLX_-20251014_154051_563386864.webp",
     ],
   },
 ];

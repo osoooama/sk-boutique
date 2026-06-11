@@ -29,13 +29,13 @@ export default function ColorSwatches({
           <div
             className={`w-7 h-7 rounded-full border-2 transition-all duration-200 ${
               selectedColor === color.name
-                ? "border-[#C9A84C] ring-2 ring-[rgba(201,168,76,0.4)]"
-                : "border-transparent hover:border-white/30"
+                ? "border-accent-gold ring-2 ring-accent-gold/40"
+                : "border-transparent hover:border-border-strong"
             }`}
             style={{ backgroundColor: color.hex }}
           />
           <span
-            className="absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] text-luxury-gold bg-luxury-black/90 backdrop-blur-sm px-2 py-1 rounded-lg border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+            className="absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] text-accent-gold bg-surface-primary/90 backdrop-blur-sm px-2 py-1 rounded-lg border border-border opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
           >
             {isEnglish ? color.englishName : color.name}
           </span>

@@ -24,6 +24,43 @@ const config: Config = {
           light: "#E8C96B",
           dark: "#A8873A",
         },
+        surface: {
+          primary: "var(--bg-primary)",
+          secondary: "var(--bg-secondary)",
+          card: "var(--bg-card)",
+          "card-hover": "var(--bg-card-hover)",
+          nav: "var(--nav-bg)",
+          footer: "var(--footer-bg)",
+          page: "var(--page-bg)",
+        },
+        content: {
+          primary: "var(--text-primary)",
+          secondary: "var(--text-secondary)",
+          muted: "var(--text-muted)",
+          "on-accent": "var(--text-on-accent)",
+        },
+        accent: {
+          gold: "var(--accent-gold)",
+          "gold-hover": "var(--accent-gold-hover)",
+          "gold-muted": "var(--accent-gold-muted)",
+        },
+        border: {
+          DEFAULT: "var(--border-color)",
+          strong: "var(--border-color-strong)",
+        },
+        input: {
+          bg: "var(--input-bg)",
+          border: "var(--input-border)",
+          text: "var(--input-text)",
+          placeholder: "var(--input-placeholder)",
+        },
+        button: {
+          "primary-bg": "var(--button-primary-bg)",
+          "primary-text": "var(--button-primary-text)",
+          "secondary-bg": "var(--button-secondary-bg)",
+          "secondary-border": "var(--button-secondary-border)",
+          "secondary-text": "var(--button-secondary-text)",
+        },
       },
       boxShadow: {
         "gold-sm": "0 2px 12px rgba(201,168,76,0.15)",

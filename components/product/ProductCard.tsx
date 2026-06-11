@@ -65,16 +65,16 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
     >
       <Link
         href={`/product/${product.id}`}
-        className="group block glass-card rounded-2xl overflow-hidden hover:border-luxury-gold/20 transition-all duration-500 hover:-translate-y-1"
+        className="group block glass-card rounded-2xl overflow-hidden hover:border-accent-gold-muted transition-all duration-500 hover:-translate-y-1"
         style={{ textDecoration: "none" }}
       >
-        <div className="relative aspect-[3/4] overflow-hidden bg-luxury-black">
+        <div className="relative aspect-[3/4] overflow-hidden bg-surface-primary">
           <button
             onClick={handleToggleWishlist}
             className={`absolute top-3 right-3 z-10 w-8 h-8 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${
               wishlisted
                 ? "bg-red-500/20 text-red-400"
-                : "bg-black/50 text-luxury-gold/40 hover:text-red-400 hover:bg-red-500/20"
+                : "bg-black/50 text-accent-gold/40 hover:text-red-400 hover:bg-red-500/20"
             }`}
           >
             <i className={`fas fa-heart ${wishlisted ? "text-xs" : "text-xs"}`} />
@@ -91,17 +91,17 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
               onError={() => setImgError(true)}
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-4xl text-luxury-gold/10">
+            <div className="absolute inset-0 flex items-center justify-center text-4xl text-accent-gold/10">
               <i className="fas fa-tshirt" />
             </div>
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-surface-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
           <div className="absolute inset-x-0 bottom-0 p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
             <button
               onClick={handleQuickAdd}
-              className="w-full py-2.5 rounded-xl bg-luxury-gold text-luxury-black text-xs font-bold text-center tracking-wide"
+              className="w-full py-2.5 rounded-xl bg-accent-gold text-surface-primary text-xs font-bold text-center tracking-wide"
             >
               <i className="fas fa-shopping-bag ml-1" />
               {isEnglish ? "Add to Cart" : "أضف للسلة"}
@@ -119,14 +119,14 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
           </h3>
 
           <div className="flex items-center justify-between">
-            <span className="font-bold text-luxury-gold text-sm">
+            <span className="font-bold text-accent-gold text-sm">
               {product.basePrice} {isEnglish ? "JD" : "د.أ"}
             </span>
             <div className="flex gap-1">
               {product.sizes.slice(0, 3).map((s) => (
                 <span
                   key={s}
-                  className="w-6 h-5 rounded text-[9px] font-bold border border-white/10 text-luxury-gold/60 flex items-center justify-center"
+                  className="w-6 h-5 rounded text-[9px] font-bold border border-border text-accent-gold/60 flex items-center justify-center"
                 >
                   {s}
                 </span>
@@ -139,13 +139,13 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
               {previewColors.map((c) => (
                 <span
                   key={c.name}
-                  className="w-4 h-4 rounded-full border border-white/20"
+                  className="w-4 h-4 rounded-full border border-border-strong"
                   style={{ backgroundColor: c.hex }}
                   title={isEnglish ? c.englishName : c.name}
                 />
               ))}
               {product.colors.length > 3 && (
-                <span className="text-[9px] text-luxury-gold/40 mr-1">
+                <span className="text-[9px] text-accent-gold/40 mr-1">
                   +{product.colors.length - 3}
                 </span>
               )}

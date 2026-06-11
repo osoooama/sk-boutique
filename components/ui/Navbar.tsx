@@ -96,7 +96,7 @@ export default function Navbar({
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setMobileOpen(true)}
-                className="md:hidden w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all"
+                className="md:hidden w-9 h-9 rounded-xl flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all"
                 aria-label={isEnglish ? "Menu" : "القائمة"}
               >
                 <i className="fas fa-bars text-xs" />
@@ -105,7 +105,7 @@ export default function Navbar({
               {onToggleTheme && (
                 <button
                   onClick={onToggleTheme}
-                  className="hidden md:flex w-9 h-9 rounded-xl items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all"
+                  className="hidden md:flex w-9 h-9 rounded-xl items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all"
                   aria-label={isEnglish ? "Toggle theme" : "تغيير المظهر"}
                 >
                   <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-xs`} />
@@ -118,11 +118,11 @@ export default function Navbar({
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="relative text-luxury-gold/60 hover:text-luxury-gold transition-colors duration-300 py-2 tracking-wide"
+                  className="relative text-accent-gold/60 hover:text-accent-gold transition-colors duration-300 py-2 tracking-wide"
                   style={{ textDecoration: "none" }}
                 >
                   {isEnglish ? link.en : link.ar}
-                  <span className="absolute -bottom-0.5 inset-x-0 h-[2px] bg-luxury-gold scale-x-0 hover:scale-x-100 transition-transform duration-300 origin-right" />
+                  <span className="absolute -bottom-0.5 inset-x-0 h-[2px] bg-accent-gold scale-x-0 hover:scale-x-100 transition-transform duration-300 origin-right" />
                 </Link>
               ))}
             </nav>
@@ -131,7 +131,7 @@ export default function Navbar({
               {onSearchOpen && (
                 <button
                   onClick={onSearchOpen}
-                  className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all"
                   aria-label={isEnglish ? "Search" : "بحث"}
                 >
                   <i className="fas fa-search text-xs" />
@@ -139,7 +139,7 @@ export default function Navbar({
               )}
 
               <Link href="/wishlist" className="relative hidden md:block" style={{ textDecoration: "none" }}>
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all">
                   <i className="fas fa-heart text-xs" />
                 </div>
                 {wishlistCount > 0 && (
@@ -150,14 +150,14 @@ export default function Navbar({
               </Link>
 
               <button onClick={openCart} className="relative" style={{ textDecoration: "none" }}>
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all">
                   <i className="fas fa-shopping-bag text-xs" />
                 </div>
                 {totalItems > 0 && (
                   <span
                     className="absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full flex items-center justify-center text-[9px] font-extrabold animate-badge-pop"
                     style={{
-                      background: "linear-gradient(135deg, #C9A84C, #E8C96B)",
+                      background: "linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover))",
                       color: "#1A1208",
                     }}
                   >
@@ -173,7 +173,7 @@ export default function Navbar({
               {onToggleLang && (
                 <button
                   onClick={onToggleLang}
-                  className="w-9 h-9 rounded-xl border border-white/10 text-luxury-gold hover:bg-white/5 transition-all flex items-center justify-center font-semibold text-[10px]"
+                  className="w-9 h-9 rounded-xl border border-border text-accent-gold hover:bg-accent-gold-muted transition-all flex items-center justify-center font-semibold text-[10px]"
                   aria-label={isEnglish ? "العربية" : "English"}
                 >
                   {isEnglish ? "AR" : "EN"}
@@ -195,7 +195,7 @@ export default function Navbar({
               onClick={() => setMobileOpen(false)}
             />
             <motion.aside
-              className="fixed top-0 bottom-0 z-50 w-72 bg-black/90 backdrop-blur-xl border-r border-white/10 flex flex-col"
+              className="fixed top-0 bottom-0 z-50 w-72 bg-surface-primary backdrop-blur-xl border-r border-border flex flex-col"
               dir={isEnglish ? "ltr" : "rtl"}
               style={{ left: 0 }}
               initial={{ x: "-100%" }}
@@ -203,11 +203,11 @@ export default function Navbar({
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
             >
-              <div className="flex items-center justify-between p-4 border-b border-white/10">
+              <div className="flex items-center justify-between p-4 border-b border-border">
                 <Logo showText={false} size="sm" />
                 <button
                   onClick={() => setMobileOpen(false)}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center border border-border text-accent-gold"
                   aria-label="Close"
                 >
                   <i className="fas fa-times text-sm" />
@@ -225,18 +225,18 @@ export default function Navbar({
                     <Link
                       href={link.href}
                       onClick={() => setMobileOpen(false)}
-                      className="block px-4 py-3 rounded-xl text-luxury-gold/70 hover:text-luxury-gold hover:bg-white/5 transition-all text-sm font-medium"
+                      className="block px-4 py-3 rounded-xl text-accent-gold/70 hover:text-accent-gold hover:bg-accent-gold-muted transition-all text-sm font-medium"
                       style={{ textDecoration: "none" }}
                     >
                       {isEnglish ? link.en : link.ar}
                     </Link>
                   </motion.div>
                 ))}
-                <div className="border-t border-white/10 my-2" />
+                <div className="border-t border-border my-2" />
                 <Link
                   href="/wishlist"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-luxury-gold/70 hover:text-luxury-gold hover:bg-white/5 transition-all text-sm font-medium"
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-accent-gold/70 hover:text-accent-gold hover:bg-accent-gold-muted transition-all text-sm font-medium"
                   style={{ textDecoration: "none" }}
                 >
                   <i className="fas fa-heart text-xs" />
@@ -248,22 +248,22 @@ export default function Navbar({
                 <Link
                   href="/cart"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-luxury-gold/70 hover:text-luxury-gold hover:bg-white/5 transition-all text-sm font-medium"
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-accent-gold/70 hover:text-accent-gold hover:bg-accent-gold-muted transition-all text-sm font-medium"
                   style={{ textDecoration: "none" }}
                 >
                   <i className="fas fa-shopping-bag text-xs" />
                   {isEnglish ? "Cart" : "السلة"}
                   {totalItems > 0 && (
-                    <span className="text-[10px] text-luxury-gold">({totalItems})</span>
+                    <span className="text-[10px] text-accent-gold">({totalItems})</span>
                   )}
                 </Link>
               </nav>
 
-              <div className="p-4 border-t border-white/10 flex items-center gap-3">
+              <div className="p-4 border-t border-border flex items-center gap-3">
                 {onToggleTheme && (
                   <button
                     onClick={onToggleTheme}
-                    className="flex-1 h-10 rounded-xl border border-white/10 text-luxury-gold hover:bg-white/5 transition-all text-xs"
+                    className="flex-1 h-10 rounded-xl border border-border text-accent-gold hover:bg-accent-gold-muted transition-all text-xs"
                   >
                     <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} ml-2`} />
                     {isEnglish ? "Theme" : "المظهر"}
@@ -272,7 +272,7 @@ export default function Navbar({
                 {onToggleLang && (
                   <button
                     onClick={onToggleLang}
-                    className="flex-1 h-10 rounded-xl border border-white/10 text-luxury-gold hover:bg-white/5 transition-all text-xs font-semibold"
+                    className="flex-1 h-10 rounded-xl border border-border text-accent-gold hover:bg-accent-gold-muted transition-all text-xs font-semibold"
                   >
                     {isEnglish ? "AR" : "EN"}
                   </button>

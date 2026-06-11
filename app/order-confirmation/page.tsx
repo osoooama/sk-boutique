@@ -43,13 +43,13 @@ export default function OrderConfirmationPage() {
             {isEnglish ? "Order Placed Successfully!" : "تم تأكيد الطلب بنجاح!"}
           </h1>
 
-          <p className="text-sm text-luxury-gold/60 leading-relaxed">
+          <p className="text-sm text-accent-gold/60 leading-relaxed">
             {isEnglish
               ? "Thank you! Your order has been received. You will be redirected to WhatsApp to confirm your order details. We will contact you within 24 hours to arrange delivery."
               : "شكراً لك! تم استلام طلبك. سيتم تحويلك إلى واتساب لتأكيد تفاصيل الطلب. سنتواصل معك خلال 24 ساعة لترتيب التوصيل."}
           </p>
 
-          <div className="text-xs text-luxury-gold/40 space-y-1">
+          <div className="text-xs text-accent-gold/40 space-y-1">
             <p><i className="fas fa-truck mr-1" /> {isEnglish ? "Delivery within 2-5 business days" : "التوصيل خلال 2-5 أيام عمل"}</p>
             <p><i className="fas fa-phone mr-1" /> {isEnglish ? "Call us: +962 7 9892 1123" : "اتصل بنا: +962 7 9892 1123"}</p>
           </div>

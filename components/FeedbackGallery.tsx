@@ -62,13 +62,13 @@ export default function FeedbackGallery({ isEnglish }: FeedbackGalleryProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: i * 0.04 }}
             onClick={() => setLightboxIndex(i)}
-            className="group relative aspect-square rounded-2xl overflow-hidden bg-luxury-black border border-white/5 focus:outline-none"
+            className="group relative aspect-square rounded-2xl overflow-hidden bg-surface-primary border border-border focus:outline-none"
           >
             <img
               src={src}
               alt={isEnglish ? "SK BOUTIQUE customer experience" : "تجربة عميل SK BOUTIQUE"}
               loading="lazy"
-              className="w-full h-full object-cover transition-all duration-300 group-hover:scale-104 group-hover:border-2 group-hover:border-[#C9A84C] group-hover:shadow-[0_8px_25px_rgba(201,168,76,0.3)]"
+              className="w-full h-full object-cover transition-all duration-300 group-hover:scale-104 group-hover:border-2 group-hover:border-accent-gold group-hover:shadow-[0_8px_25px_rgba(201,168,76,0.3)]"
             />
           </motion.button>
         ))}
@@ -80,7 +80,7 @@ export default function FeedbackGallery({ isEnglish }: FeedbackGalleryProps) {
             <button
               key={src}
               onClick={() => setLightboxIndex(i)}
-              className="flex-shrink-0 w-64 aspect-square rounded-2xl overflow-hidden bg-luxury-black border border-white/5 focus:outline-none group"
+              className="flex-shrink-0 w-64 aspect-square rounded-2xl overflow-hidden bg-surface-primary border border-border focus:outline-none group"
             >
               <img
                 src={src}
@@ -105,7 +105,7 @@ export default function FeedbackGallery({ isEnglish }: FeedbackGalleryProps) {
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-luxury-white hover:text-luxury-gold transition-colors"
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-content-primary hover:text-accent-gold transition-colors"
               aria-label="Close"
             >
               <i className="fas fa-times text-sm" />
@@ -114,7 +114,7 @@ export default function FeedbackGallery({ isEnglish }: FeedbackGalleryProps) {
             {lightboxIndex > 0 && (
               <button
                 onClick={(e) => { e.stopPropagation(); setLightboxIndex(lightboxIndex - 1); }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-luxury-white hover:text-luxury-gold transition-colors z-10"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-content-primary hover:text-accent-gold transition-colors z-10"
                 aria-label="Previous"
               >
                 <i className="fas fa-chevron-left text-sm" />
@@ -124,7 +124,7 @@ export default function FeedbackGallery({ isEnglish }: FeedbackGalleryProps) {
             {lightboxIndex < IMAGES.length - 1 && (
               <button
                 onClick={(e) => { e.stopPropagation(); setLightboxIndex(lightboxIndex + 1); }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-luxury-white hover:text-luxury-gold transition-colors z-10"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-content-primary hover:text-accent-gold transition-colors z-10"
                 aria-label="Next"
               >
                 <i className="fas fa-chevron-right text-sm" />
@@ -147,7 +147,7 @@ export default function FeedbackGallery({ isEnglish }: FeedbackGalleryProps) {
               />
             </motion.div>
 
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] text-luxury-white/40">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] text-content-muted">
               {lightboxIndex + 1} / {IMAGES.length}
             </div>
           </motion.div>

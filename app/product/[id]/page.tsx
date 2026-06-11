@@ -52,8 +52,8 @@ export default function ProductDetailPage() {
     return (
       <div className="min-h-screen bg-[var(--page-bg)] text-[var(--page-text)] flex items-center justify-center">
         <div className="text-center space-y-4">
-          <i className="fas fa-tshirt text-4xl text-luxury-gold/20 block" />
-          <p className="text-luxury-gold/60">{isEnglish ? "Product not found" : "المنتج غير موجود"}</p>
+          <i className="fas fa-tshirt text-4xl text-accent-gold/20 block" />
+          <p className="text-accent-gold/60">{isEnglish ? "Product not found" : "المنتج غير موجود"}</p>
         </div>
       </div>
     );
@@ -122,7 +122,7 @@ export default function ProductDetailPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           <div className="space-y-4">
-            <div className="relative aspect-[3/4] rounded-3xl overflow-hidden glass-card bg-luxury-black">
+            <div className="relative aspect-[3/4] rounded-3xl overflow-hidden glass-card bg-surface-primary">
               <button
                 onClick={() => {
                   toggleItem(product.id);
@@ -137,7 +137,7 @@ export default function ProductDetailPage() {
                 className={`absolute top-4 right-4 z-10 w-10 h-10 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${
                   wishlisted
                     ? "bg-red-500/20 text-red-400"
-                    : "bg-black/50 text-luxury-gold/40 hover:text-red-400 hover:bg-red-500/20"
+                    : "bg-black/50 text-accent-gold/40 hover:text-red-400 hover:bg-red-500/20"
                 }`}
               >
                 <i className={`fas fa-heart ${wishlisted ? "text-sm" : "text-sm"}`} />
@@ -156,7 +156,7 @@ export default function ProductDetailPage() {
                     <img src={images[selectedImage]} alt={isEnglish ? product.englishTitle : product.title} className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <i className="fas fa-tshirt text-6xl text-luxury-gold/20" />
+                      <i className="fas fa-tshirt text-6xl text-accent-gold/20" />
                     </div>
                   )}
                 </motion.div>
@@ -167,7 +167,7 @@ export default function ProductDetailPage() {
                 </span>
               )}
               {cartQty > 0 && (
-                <span className="absolute bottom-4 left-4 text-[10px] font-bold px-3 py-1.5 rounded-full bg-luxury-gold/20 text-luxury-gold border border-luxury-gold/20 backdrop-blur-sm z-10">
+                <span className="absolute bottom-4 left-4 text-[10px] font-bold px-3 py-1.5 rounded-full bg-accent-gold-muted text-accent-gold border border-accent-gold-muted backdrop-blur-sm z-10">
                   {cartQty} {isEnglish ? "in cart" : "في السلة"}
                 </span>
               )}
@@ -180,7 +180,7 @@ export default function ProductDetailPage() {
                     key={i}
                     onClick={() => setSelectedImage(i)}
                     className={`relative w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 ${
-                      selectedImage === i ? "border-luxury-gold scale-105" : "border-white/10 hover:border-white/30"
+                      selectedImage === i ? "border-accent-gold scale-105" : "border-border hover:border-border-strong"
                     }`}
                   >
                     <img src={img} alt={`${product.title} ${i + 1}`} className="w-full h-full object-cover" />
@@ -196,26 +196,26 @@ export default function ProductDetailPage() {
                 {isEnglish ? product.englishTitle : product.title}
               </h1>
               <div className="flex items-center gap-4">
-                <span className="text-2xl md:text-3xl font-bold text-luxury-gold">
+                <span className="text-2xl md:text-3xl font-bold text-accent-gold">
                   {finalPrice} {isEnglish ? "JD" : "د.أ"}
                 </span>
                 {sizeSurcharge > 0 && (
-                  <span className="text-xs text-luxury-gold/40 line-through">
+                  <span className="text-xs text-accent-gold/40 line-through">
                     {product.basePrice} {isEnglish ? "JD" : "د.أ"}
                   </span>
                 )}
               </div>
             </div>
 
-            <p className="text-sm text-luxury-gold/60 leading-relaxed">
+            <p className="text-sm text-accent-gold/60 leading-relaxed">
               {isEnglish ? product.englishDescription : product.description}
             </p>
 
             {product.colors.length > 0 && (
               <div className="space-y-2">
-                <h3 className="text-xs font-bold text-luxury-white/60">
+                <h3 className="text-xs font-bold text-content-secondary">
                   {isEnglish ? "Color" : "اللون"}
-                  <span className="text-luxury-gold mr-2">{isEnglish ? activeColor?.englishName : activeColor?.name}</span>
+                  <span className="text-accent-gold mr-2">{isEnglish ? activeColor?.englishName : activeColor?.name}</span>
                 </h3>
                 <ColorSwatches
                   colors={product.colors}
@@ -228,10 +228,10 @@ export default function ProductDetailPage() {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold text-luxury-white/60">{isEnglish ? "Size" : "المقاس"}</h3>
+                <h3 className="text-xs font-bold text-content-secondary">{isEnglish ? "Size" : "المقاس"}</h3>
                 <button
                   onClick={() => setSizeGuideOpen(true)}
-                  className="text-[10px] text-luxury-gold/40 hover:text-luxury-gold transition-colors flex items-center gap-1"
+                  className="text-[10px] text-accent-gold/40 hover:text-accent-gold transition-colors flex items-center gap-1"
                 >
                   <i className="fas fa-ruler" />
                   {isEnglish ? "Size Guide" : "دليل المقاسات"}
@@ -243,7 +243,7 @@ export default function ProductDetailPage() {
             <div className="flex gap-3">
               <motion.button
                 onClick={handleAddToCart}
-                className="flex-1 py-4 rounded-2xl bg-luxury-gold text-luxury-black font-bold text-sm tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-luxury-gold/20"
+                className="flex-1 py-4 rounded-2xl bg-accent-gold text-surface-primary font-bold text-sm tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-accent-gold/20"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -255,7 +255,7 @@ export default function ProductDetailPage() {
               </motion.button>
               <motion.button
                 onClick={handleBuyNow}
-                className="py-4 px-6 rounded-2xl border border-luxury-gold/30 text-luxury-gold font-bold text-sm transition-all"
+                className="py-4 px-6 rounded-2xl border border-accent-gold/30 text-accent-gold font-bold text-sm transition-all"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -263,30 +263,30 @@ export default function ProductDetailPage() {
               </motion.button>
             </div>
 
-            <div className="flex items-center gap-4 text-[10px] text-luxury-gold/30">
-              <span className="flex items-center gap-1"><i className="fas fa-truck text-luxury-gold/40" />{isEnglish ? "Free Shipping" : "شحن مجاني"}</span>
-              <span className="flex items-center gap-1"><i className="fas fa-rotate-left text-luxury-gold/40" />{isEnglish ? "7-Day Returns" : "إرجاع 7 أيام"}</span>
-              <span className="flex items-center gap-1"><i className="fas fa-shield text-luxury-gold/40" />{isEnglish ? "COD" : "دفع عند الاستلام"}</span>
+            <div className="flex items-center gap-4 text-[10px] text-accent-gold/30">
+              <span className="flex items-center gap-1"><i className="fas fa-truck text-accent-gold/40" />{isEnglish ? "Free Shipping" : "شحن مجاني"}</span>
+              <span className="flex items-center gap-1"><i className="fas fa-rotate-left text-accent-gold/40" />{isEnglish ? "7-Day Returns" : "إرجاع 7 أيام"}</span>
+              <span className="flex items-center gap-1"><i className="fas fa-shield text-accent-gold/40" />{isEnglish ? "COD" : "دفع عند الاستلام"}</span>
             </div>
 
-            <div className="pt-4 border-t border-white/5 space-y-4">
+            <div className="pt-4 border-t border-border space-y-4">
               <div>
-                <h3 className="text-xs font-bold text-luxury-white/60 mb-2">{isEnglish ? "Details" : "التفاصيل"}</h3>
-                <p className="text-xs text-luxury-gold/40 leading-relaxed">{isEnglish ? product.englishDetails : product.details}</p>
+                <h3 className="text-xs font-bold text-content-secondary mb-2">{isEnglish ? "Details" : "التفاصيل"}</h3>
+                <p className="text-xs text-accent-gold/40 leading-relaxed">{isEnglish ? product.englishDetails : product.details}</p>
               </div>
               <div>
-                <h3 className="text-xs font-bold text-luxury-white/60 mb-2">{isEnglish ? "Shipping & Returns" : "الشحن والإرجاع"}</h3>
-                <ul className="space-y-2 text-xs text-luxury-gold/40">
+                <h3 className="text-xs font-bold text-content-secondary mb-2">{isEnglish ? "Shipping & Returns" : "الشحن والإرجاع"}</h3>
+                <ul className="space-y-2 text-xs text-accent-gold/40">
                   <li className="flex items-center gap-2">
-                    <i className="fas fa-truck text-luxury-gold/60 text-[8px]" />
+                    <i className="fas fa-truck text-accent-gold/60 text-[8px]" />
                     {isEnglish ? product.englishShipping : product.shipping}
                   </li>
                   <li className="flex items-center gap-2">
-                    <i className="fas fa-rotate-left text-luxury-gold/60 text-[8px]" />
+                    <i className="fas fa-rotate-left text-accent-gold/60 text-[8px]" />
                     {isEnglish ? "Free returns within 7 days" : "إرجاع مجاني خلال 7 أيام"}
                   </li>
                   <li className="flex items-center gap-2">
-                    <i className="fas fa-shield text-luxury-gold/60 text-[8px]" />
+                    <i className="fas fa-shield text-accent-gold/60 text-[8px]" />
                     {isEnglish ? "Cash on delivery available" : "الدفع عند الاستلام متوفر"}
                   </li>
                 </ul>
@@ -296,19 +296,19 @@ export default function ProductDetailPage() {
         </div>
 
         {relatedProducts.length > 0 && (
-          <section className="mt-20 pt-10 border-t border-white/5">
+          <section className="mt-20 pt-10 border-t border-border">
             <h2 className={`text-xl font-bold mb-6 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
               {isEnglish ? "You May Also Like" : "قد يعجبك أيضاً"}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {relatedProducts.map((p, i) => (
-                <Link key={p.id} href={`/product/${p.id}`} className="group block glass-card rounded-xl overflow-hidden hover:border-luxury-gold/20 transition-all" style={{ textDecoration: "none" }}>
-                  <div className="aspect-[3/4] bg-luxury-black overflow-hidden">
+                <Link key={p.id} href={`/product/${p.id}`} className="group block glass-card rounded-xl overflow-hidden hover:border-accent-gold-muted transition-all" style={{ textDecoration: "none" }}>
+                  <div className="aspect-[3/4] bg-surface-primary overflow-hidden">
                     <img src={p.colors[0]?.images[0] || ""} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="p-2.5 space-y-1">
                     <p className={`text-xs font-bold truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p.englishTitle : p.title}</p>
-                    <p className="text-[10px] text-luxury-gold/40">{p.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
+                    <p className="text-[10px] text-accent-gold/40">{p.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
                   </div>
                 </Link>
               ))}
@@ -317,20 +317,20 @@ export default function ProductDetailPage() {
         )}
 
         {recentProducts.length > 0 && (
-          <section className="mt-12 pt-10 border-t border-white/5">
+          <section className="mt-12 pt-10 border-t border-border">
             <h2 className={`text-xl font-bold mb-6 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
-              <i className="fas fa-clock-rotate text-luxury-gold/40 mr-2" />
+              <i className="fas fa-clock-rotate text-accent-gold/40 mr-2" />
               {isEnglish ? "Recently Viewed" : "مُشاهَد مؤخراً"}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {recentProducts.map((p) => (
-                <Link key={p!.id} href={`/product/${p!.id}`} className="group block glass-card rounded-xl overflow-hidden hover:border-luxury-gold/20 transition-all" style={{ textDecoration: "none" }}>
-                  <div className="aspect-[3/4] bg-luxury-black overflow-hidden">
+                <Link key={p!.id} href={`/product/${p!.id}`} className="group block glass-card rounded-xl overflow-hidden hover:border-accent-gold-muted transition-all" style={{ textDecoration: "none" }}>
+                  <div className="aspect-[3/4] bg-surface-primary overflow-hidden">
                     <img src={p!.colors[0]?.images[0] || ""} alt={p!.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="p-2.5 space-y-1">
                     <p className={`text-xs font-bold truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p!.englishTitle : p!.title}</p>
-                    <p className="text-[10px] text-luxury-gold/40">{p!.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
+                    <p className="text-[10px] text-accent-gold/40">{p!.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
                   </div>
                 </Link>
               ))}
@@ -339,19 +339,19 @@ export default function ProductDetailPage() {
         )}
       </main>
 
-      <div className="fixed bottom-0 inset-x-0 z-40 md:hidden bg-black/80 backdrop-blur-xl border-t border-white/10 p-4">
+      <div className="fixed bottom-0 inset-x-0 z-40 md:hidden bg-black/80 backdrop-blur-xl border-t border-border p-4">
         <div className="flex items-center gap-4">
           <div className="flex-1 min-w-0">
             <p className={`font-bold text-sm truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>
               {isEnglish ? product.englishTitle : product.title}
             </p>
-            <p className="text-luxury-gold font-bold text-sm">
+            <p className="text-accent-gold font-bold text-sm">
               {finalPrice} {isEnglish ? "JD" : "د.أ"}
             </p>
           </div>
           <motion.button
             onClick={handleAddToCart}
-            className="px-8 py-3 rounded-xl bg-luxury-gold text-luxury-black font-bold text-xs whitespace-nowrap"
+            className="px-8 py-3 rounded-xl bg-accent-gold text-surface-primary font-bold text-xs whitespace-nowrap"
             whileTap={{ scale: 0.95 }}
           >
             {addedToCart ? <><i className="fas fa-check ml-1" />{isEnglish ? "Done" : "تم"}</> : <><i className="fas fa-shopping-bag ml-1" />{isEnglish ? "Add" : "أضف"}</>}

@@ -120,7 +120,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="font-inter h-full bg-luxury-black text-luxury-white antialiased overflow-x-hidden selection:bg-luxury-gold/30">
+      <body className="font-inter h-full antialiased overflow-x-hidden">
         <Providers>{children}</Providers>
       </body>
     </html>

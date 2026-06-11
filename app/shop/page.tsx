@@ -48,8 +48,8 @@ export default function ShopPage() {
 
       <main>
         <section className="relative pt-28 pb-16 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-luxury-gold/10 via-transparent to-luxury-black pointer-events-none" />
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-radial from-luxury-gold/[0.06] to-transparent rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-accent-gold/10 via-transparent to-surface-primary pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-radial from-accent-gold/[0.06] to-transparent rounded-full blur-[100px] pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-radial from-purple-500/[0.04] to-transparent rounded-full blur-[80px] pointer-events-none" />
 
           <div className="relative text-center space-y-4 section-padding max-w-7xl mx-auto">
@@ -60,13 +60,13 @@ export default function ShopPage() {
               ]}
               isEnglish={isEnglish}
             />
-            <span className="inline-block bg-luxury-gold/10 text-luxury-gold px-4 py-1.5 rounded-full text-xs font-bold border border-luxury-gold/15 backdrop-blur-sm">
+            <span className="inline-block bg-accent-gold-muted text-accent-gold px-4 py-1.5 rounded-full text-xs font-bold border border-accent-gold-muted backdrop-blur-sm">
               {isEnglish ? "Our Collection" : "تشكيلتنا"}
             </span>
             <h1 className={`text-4xl md:text-5xl font-bold gold-gradient bg-clip-text text-transparent ${isEnglish ? "font-inter" : "font-alexandria"}`}>
               {isEnglish ? "Women's Fashion" : "أزياء نسائية عصرية"}
             </h1>
-            <p className="text-luxury-gold/60 text-sm max-w-xl mx-auto">
+            <p className="text-accent-gold/60 text-sm max-w-xl mx-auto">
               {isEnglish ? "Modern European designs, locally crafted with premium materials" : "تصاميم أوروبية عصرية، تُصنع محلياً بأفضل الخامات"}
             </p>
           </div>
@@ -80,8 +80,8 @@ export default function ShopPage() {
                 onClick={() => setActiveCategory(cat.id)}
                 className={`px-5 py-2.5 rounded-xl text-xs font-medium transition-all duration-300 whitespace-nowrap min-touch-target ${
                   activeCategory === cat.id
-                    ? "bg-luxury-gold text-luxury-black shadow-lg shadow-luxury-gold/25"
-                    : "glass-card text-luxury-gold hover:bg-white/10 hover:border-luxury-gold/30"
+                    ? "bg-accent-gold text-surface-primary shadow-lg shadow-accent-gold/25"
+                    : "glass-card text-accent-gold hover:bg-accent-gold-muted hover:border-accent-gold/30"
                 }`}
                 style={{ border: activeCategory !== cat.id ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent" }}
               >
@@ -99,8 +99,8 @@ export default function ShopPage() {
                 exit={{ opacity: 0 }}
                 className="text-center py-24 glass-card"
               >
-                <i className="fas fa-search-minus text-3xl text-luxury-gold/40 mb-4 block" />
-                <p className="text-luxury-gold/60 text-sm">{isEnglish ? "No products found" : "لا توجد منتجات"}</p>
+                <i className="fas fa-search-minus text-3xl text-accent-gold/40 mb-4 block" />
+                <p className="text-accent-gold/60 text-sm">{isEnglish ? "No products found" : "لا توجد منتجات"}</p>
               </motion.div>
             ) : (
               <motion.div
