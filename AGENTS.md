@@ -414,3 +414,20 @@ colors: {
 - **Perfume pricing:** Updated to 5–10 JD range (musk 5 JD, perfume 6–8 JD, samples 3 JD)
 - **Pages domain cleanup:** Deleted old `sk-boutique` Pages project; final URL is `sk-boutique.osamakreshan352.workers.dev`
 - **Verified:** `npm run build` = **0 errors, 0 warnings, 11/11 pages** | Worker deployed & serving correctly
+
+### Session 5 — Thu Jun 11, 2026 (Part 4 — UI Polish + Checkout Upgrade)
+- **Task:** 6 sections of modifications: photo gallery feedback, warm cream light mode, color swatch refinement, floating pill header, checkout upgrade, cart behavior + discount code + credit line
+- **Section 1 — Feedback Gallery:** Replaced text reviews with `FeedbackGallery.tsx` (20 customer photos, lightbox modal, mobile carousel, 2→3→4 cols)
+- **Section 2 — Light Mode:** Warm cream (#FFFDF7) CSS variables, gold shadows, premium buttons/cards, gold dividers
+- **Section 3 — Color Swatches:** 28px circles, gold ring selection, tooltip above
+- **Section 4 — Floating Pill Header:** Rounded pill (20px), scroll detection at 60px, dynamic bg/blur/border/shadow, gold gradient cart badge with pop animation
+- **Section 5 — Checkout Upgrade:** 36 Jordan cities dropdown with delivery fees (2/3 JD), phone validation (077/078/079 only), backup phone field, delivery fee badge in summary
+- **Section 6 — Cart + Discount + Credit:**
+  - Cart drawer opens ONLY on icon click (removed auto-open from ProductCard, perfumes, product detail, wishlist)
+  - Discount code SK30 = 20% off in CartContext with localStorage persistence, applied in CartDrawer, CartPage, Checkout (with WhatsApp message)
+  - Footer credit line: animated "قام بإنشاء هذه الصفحة @osamakreishan" with Instagram link
+- **New files:** `components/FeedbackGallery.tsx`, `lib/jordan-cities.ts`, `lib/phone-validation.ts`, `hooks/useTheme.ts`, `public/feedback/` (20 images)
+- **Modified files (16):** `app/cart/page.tsx`, `app/checkout/page.tsx`, `app/globals.css`, `app/page.tsx`, `app/perfumes/page.tsx`, `app/product/[id]/page.tsx`, `app/wishlist/page.tsx`, `components/product/ColorSwatches.tsx`, `components/product/ProductCard.tsx`, `components/ui/CartDrawer.tsx`, `components/ui/Footer.tsx`, `components/ui/Navbar.tsx`, `context/CartContext.tsx`, `tailwind.config.ts`, `public/sw.js`, `scripts/extract-colors.js`
+- **Discount code:** SK30 — 20% off, persists in localStorage, shown in drawer/cart/checkout/WhatsApp
+- **RTL preserved:** All Arabic layout and dir attributes maintained
+- **Verified:** `npm run build` = **0 errors, 0 warnings, 11/11 pages**

@@ -19,8 +19,19 @@ export default function CartPage() {
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
 
-  const { items, removeItem, updateQuantity, subtotal, clearCart } = useCart();
+  const { items, removeItem, updateQuantity, subtotal, clearCart, discountCode, discountPercent, discountedSubtotal, applyDiscount, removeDiscount } = useCart();
   const { addToast } = useToast();
+  const [discountInput, setDiscountInput] = useState("");
+
+  const handleApplyDiscount = () => {
+    if (!discountInput.trim()) return;
+    if (applyDiscount(discountInput.trim())) {
+      addToast("success", isEnglish ? "Discount applied — 20% off!" : "تم تطبيق الخصم — خصم 20%!", "fa-tag");
+      setDiscountInput("");
+    } else {
+      addToast("error", isEnglish ? "Invalid discount code" : "رمز خصم غير صالح", "fa-times");
+    }
+  };
 
   return (
     <div className={`min-h-screen bg-[var(--page-bg)] text-[var(--page-text)] ${isEnglish ? "font-inter" : "font-alexandria"}`} dir={isEnglish ? "ltr" : "rtl"}>
@@ -140,18 +151,58 @@ export default function CartPage() {
               <h3 className={`font-bold text-sm ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                 {isEnglish ? "Order Summary" : "ملخص الطلب"}
               </h3>
+
+              {/* Discount Code */}
+              {discountCode ? (
+                <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[rgba(201,168,76,0.08)] border border-[#C9A84C]/20">
+                  <div className="flex items-center gap-2">
+                    <i className="fas fa-tag text-[#C9A84C] text-xs" />
+                    <span className="text-xs font-bold text-[#C9A84C]">SK30</span>
+                    <span className="text-[10px] text-luxury-gold/60">-20%</span>
+                  </div>
+                  <button onClick={removeDiscount} className="text-[10px] text-red-400/60 hover:text-red-400 transition-colors">
+                    <i className="fas fa-times" />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={discountInput}
+                    onChange={(e) => setDiscountInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleApplyDiscount()}
+                    placeholder={isEnglish ? "Discount code" : "رمز الخصم"}
+                    className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-luxury-white placeholder:text-luxury-gold/30 outline-none focus:border-[#C9A84C]/30 transition-all"
+                  />
+                  <button
+                    onClick={handleApplyDiscount}
+                    className="px-3 py-2 rounded-xl bg-[#C9A84C]/20 text-[#C9A84C] text-xs font-bold hover:bg-[#C9A84C]/30 transition-all"
+                  >
+                    {isEnglish ? "Apply" : "تطبيق"}
+                  </button>
+                </div>
+              )}
+
               <div className="space-y-2 text-xs">
                 <div className="flex items-center justify-between text-luxury-gold/60">
                   <span>{isEnglish ? "Subtotal" : "المجموع الفرعي"}</span>
                   <span>{subtotal} {isEnglish ? "JD" : "د.أ"}</span>
                 </div>
+
+                {discountPercent > 0 && (
+                  <div className="flex items-center justify-between text-green-400/80">
+                    <span>{isEnglish ? "Discount (20%)" : "الخصم (20%)"}</span>
+                    <span className="font-bold text-green-400">-{(subtotal - discountedSubtotal).toFixed(2)} {isEnglish ? "JD" : "د.أ"}</span>
+                  </div>
+                )}
+
                 <div className="flex items-center justify-between text-luxury-gold/60">
                   <span>{isEnglish ? "Shipping" : "الشحن"}</span>
                   <span className="text-green-400/60">{isEnglish ? "Free" : "مجاني"}</span>
                 </div>
                 <div className="border-t border-white/10 pt-2 flex items-center justify-between font-bold text-sm">
                   <span>{isEnglish ? "Total" : "المجموع"}</span>
-                  <span className="text-luxury-gold">{subtotal} {isEnglish ? "JD" : "د.أ"}</span>
+                  <span className="text-luxury-gold">{discountedSubtotal} {isEnglish ? "JD" : "د.أ"}</span>
                 </div>
               </div>
               <Link

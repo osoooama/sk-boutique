@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
@@ -33,9 +33,17 @@ export default function Navbar({
   const { totalItems, openCart } = useCart();
   const { count: wishlistCount } = useWishlist();
   const [hidden, setHidden] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { scrollY } = useScroll();
   const lastScroll = useRef(0);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const diff = latest - lastScroll.current;
@@ -44,37 +52,68 @@ export default function Navbar({
     lastScroll.current = latest;
   });
 
+  const pillBg = isDark
+    ? isScrolled
+      ? "rgba(10,10,10,0.88)"
+      : "rgba(10,10,10,0.4)"
+    : isScrolled
+      ? "rgba(255,253,247,0.88)"
+      : "rgba(255,253,247,0.6)";
+
+  const pillBlur = isScrolled ? "blur(16px)" : "blur(8px)";
+  const pillPy = isScrolled ? "py-2" : "py-4";
+  const pillBorder = isScrolled
+    ? "rgba(201,168,76,0.35)"
+    : "rgba(201,168,76,0.15)";
+  const pillShadow = isScrolled
+    ? "0 4px 24px rgba(201,168,76,0.18)"
+    : "none";
+
   return (
     <>
-      <motion.header
-        className="fixed top-0 inset-x-0 z-50 bg-black/20 backdrop-blur-xl border-b border-white/10"
-        dir="ltr"
-        animate={{ y: hidden ? -120 : 0 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+      <div
+        className="fixed top-0 inset-x-0 z-50 pointer-events-none"
+        style={{ padding: "12px 16px 4px 16px" }}
       >
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
+        <motion.div
+          className="mx-auto pointer-events-auto"
+          style={{ maxWidth: "1200px", borderRadius: "20px" }}
+          dir="ltr"
+          animate={{ y: hidden ? -130 : 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          <div
+            className={`flex items-center justify-between ${pillPy} px-3 md:px-5 transition-all duration-300`}
+            style={{
+              background: pillBg,
+              backdropFilter: pillBlur,
+              WebkitBackdropFilter: pillBlur,
+              border: `1px solid ${pillBorder}`,
+              boxShadow: pillShadow,
+              borderRadius: "20px",
+            }}
+          >
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setMobileOpen(true)}
-                className="md:hidden w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all"
+                className="md:hidden w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all"
                 aria-label={isEnglish ? "Menu" : "القائمة"}
               >
-                <i className="fas fa-bars text-sm" />
+                <i className="fas fa-bars text-xs" />
               </button>
 
               {onToggleTheme && (
                 <button
                   onClick={onToggleTheme}
-                  className="hidden md:flex w-10 h-10 rounded-xl items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all"
+                  className="hidden md:flex w-9 h-9 rounded-xl items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all"
                   aria-label={isEnglish ? "Toggle theme" : "تغيير المظهر"}
                 >
-                  <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-sm`} />
+                  <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-xs`} />
                 </button>
               )}
             </div>
 
-            <nav className="hidden md:flex items-center gap-8 text-sm">
+            <nav className="hidden md:flex items-center gap-6 text-sm">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
@@ -88,34 +127,40 @@ export default function Navbar({
               ))}
             </nav>
 
-            <div className="flex items-center gap-3" dir={isEnglish ? "ltr" : "rtl"}>
+            <div className="flex items-center gap-2.5" dir={isEnglish ? "ltr" : "rtl"}>
               {onSearchOpen && (
                 <button
                   onClick={onSearchOpen}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all"
                   aria-label={isEnglish ? "Search" : "بحث"}
                 >
-                  <i className="fas fa-search text-sm" />
+                  <i className="fas fa-search text-xs" />
                 </button>
               )}
 
               <Link href="/wishlist" className="relative hidden md:block" style={{ textDecoration: "none" }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all">
-                  <i className="fas fa-heart text-sm" />
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all">
+                  <i className="fas fa-heart text-xs" />
                 </div>
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-400 text-luxury-black text-[10px] font-bold flex items-center justify-center">
+                  <span className="absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full bg-red-400 text-[#1A1208] text-[9px] font-extrabold flex items-center justify-center animate-badge-pop">
                     {wishlistCount > 9 ? "9+" : wishlistCount}
                   </span>
                 )}
               </Link>
 
               <button onClick={openCart} className="relative" style={{ textDecoration: "none" }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all">
-                  <i className="fas fa-shopping-bag text-sm" />
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 text-luxury-gold hover:bg-white/5 transition-all">
+                  <i className="fas fa-shopping-bag text-xs" />
                 </div>
                 {totalItems > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-luxury-gold text-luxury-black text-[10px] font-bold flex items-center justify-center">
+                  <span
+                    className="absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full flex items-center justify-center text-[9px] font-extrabold animate-badge-pop"
+                    style={{
+                      background: "linear-gradient(135deg, #C9A84C, #E8C96B)",
+                      color: "#1A1208",
+                    }}
+                  >
                     {totalItems > 9 ? "9+" : totalItems}
                   </span>
                 )}
@@ -128,7 +173,7 @@ export default function Navbar({
               {onToggleLang && (
                 <button
                   onClick={onToggleLang}
-                  className="w-10 h-10 rounded-xl border border-white/10 text-luxury-gold hover:bg-white/5 transition-all flex items-center justify-center font-semibold text-xs"
+                  className="w-9 h-9 rounded-xl border border-white/10 text-luxury-gold hover:bg-white/5 transition-all flex items-center justify-center font-semibold text-[10px]"
                   aria-label={isEnglish ? "العربية" : "English"}
                 >
                   {isEnglish ? "AR" : "EN"}
@@ -136,8 +181,8 @@ export default function Navbar({
               )}
             </div>
           </div>
-        </div>
-      </motion.header>
+        </motion.div>
+      </div>
 
       <AnimatePresence>
         {mobileOpen && (

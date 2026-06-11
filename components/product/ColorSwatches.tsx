@@ -17,26 +17,25 @@ export default function ColorSwatches({
   isEnglish = false,
 }: ColorSwatchesProps) {
   return (
-    <div className="flex items-center gap-2 flex-wrap" dir={isEnglish ? "ltr" : "rtl"}>
+    <div className="flex items-center gap-2.5 flex-wrap" dir={isEnglish ? "ltr" : "rtl"}>
       {colors.map((color) => (
         <motion.button
           key={color.name}
           onClick={() => onColorChange(color.name)}
           className="relative group"
-          whileHover={{ scale: 1.15 }}
+          whileHover={{ scale: 1.12 }}
           whileTap={{ scale: 0.95 }}
-          title={isEnglish ? color.englishName : color.name}
         >
           <div
-            className={`w-8 h-8 rounded-full border-2 transition-all duration-300 ${
+            className={`w-7 h-7 rounded-full border-2 transition-all duration-200 ${
               selectedColor === color.name
-                ? "ring-2 ring-luxury-gold scale-110 border-luxury-gold"
-                : "border-white/20 hover:border-white/40"
+                ? "border-[#C9A84C] ring-2 ring-[rgba(201,168,76,0.4)]"
+                : "border-transparent hover:border-white/30"
             }`}
             style={{ backgroundColor: color.hex }}
           />
           <span
-            className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] text-luxury-gold/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+            className="absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] text-luxury-gold bg-luxury-black/90 backdrop-blur-sm px-2 py-1 rounded-lg border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
           >
             {isEnglish ? color.englishName : color.name}
           </span>

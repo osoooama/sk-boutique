@@ -19,6 +19,16 @@ const config: Config = {
           charcoal: "#1A1A1A",
           beige: "#EDE7DC",
         },
+        gold: {
+          DEFAULT: "#C9A84C",
+          light: "#E8C96B",
+          dark: "#A8873A",
+        },
+      },
+      boxShadow: {
+        "gold-sm": "0 2px 12px rgba(201,168,76,0.15)",
+        "gold-md": "0 4px 20px rgba(201,168,76,0.25)",
+        "gold-lg": "0 8px 35px rgba(201,168,76,0.35)",
       },
       fontFamily: {
         alexandria: ["var(--font-alexandria)"],
@@ -33,6 +43,7 @@ const config: Config = {
         "slide-in-right": "slide-in-right 0.4s ease-out forwards",
         "slide-in-left": "slide-in-left 0.4s ease-out forwards",
         "scale-in": "scale-in 0.3s ease-out forwards",
+        "badge-pop": "badge-pop 0.4s ease-out forwards",
       },
       keyframes: {
         "fade-in": {
@@ -66,6 +77,11 @@ const config: Config = {
         "scale-in": {
           "0%": { opacity: "0", transform: "scale(0.95)" },
           "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        "badge-pop": {
+          "0%": { transform: "scale(0.5)", opacity: "0" },
+          "70%": { transform: "scale(1.2)" },
+          "100%": { transform: "scale(1)", opacity: "1" },
         },
       },
     },

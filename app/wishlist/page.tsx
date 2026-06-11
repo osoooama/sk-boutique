@@ -23,7 +23,7 @@ export default function WishlistPage() {
   const { isDark, toggleTheme } = useTheme();
 
   const { items: wishlist, toggleItem } = useWishlist();
-  const { addItem, openCart } = useCart();
+  const { addItem } = useCart();
   const { addToast } = useToast();
 
   const wishlistedProducts = products.filter((p) => wishlist.includes(p.id));
@@ -125,7 +125,6 @@ export default function WishlistPage() {
                               image: product.colors[0].images[0] || "",
                             });
                             addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
-                            openCart();
                           }
                         }}
                         className="w-full py-2.5 rounded-xl border border-luxury-gold/20 text-luxury-gold text-[10px] font-medium hover:bg-luxury-gold/10 transition-all"

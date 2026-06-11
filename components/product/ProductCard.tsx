@@ -20,7 +20,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
   const firstColor = product.colors[0];
   const previewColors = product.colors.slice(0, 3);
   const imageSrc = firstColor?.images[0];
-  const { addItem, openCart } = useCart();
+  const { addItem } = useCart();
   const { isWishlisted, toggleItem } = useWishlist();
   const { addToast } = useToast();
   const wishlisted = isWishlisted(product.id);
@@ -40,7 +40,6 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
         image: firstColor.images[0] || "",
       });
       addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
-      openCart();
     }
   };
 

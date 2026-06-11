@@ -14,15 +14,7 @@ import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import { products } from "@/lib/products";
 import { perfumes } from "@/lib/perfumes";
-
-const REVIEWS = [
-  { nameAr: "نور", nameEn: "Noor", initials: "N", rating: 5, platform: "instagram" as const, textAr: "قطع روعة وخامات فاخرة جداً، التوصيل كان سريع والتغليف أنيق. صرت عميلة دائمة ❤️", textEn: "Amazing pieces with luxurious fabrics, fast delivery and elegant packaging. I'm now a regular customer ❤️" },
-  { nameAr: "سارة", nameEn: "Sara", initials: "S", rating: 5, platform: "whatsapp" as const, textAr: "الطقم اللي طلبته فاق توقعاتي، المقاس مضبوط والقماش ناعم. أنصح الكل يجرب SK", textEn: "The set I ordered exceeded my expectations, perfect fit and soft fabric. I recommend everyone try SK" },
-  { nameAr: "مريم", nameEn: "Mariam", initials: "M", rating: 5, platform: "instagram" as const, textAr: "عطر Vaya Rose ثابت وريحته تجنن الكل يسألني عنه. تسلم الأيادي", textEn: "Vaya Rose perfume lasts all day and smells amazing, everyone asks about it. Well done" },
-  { nameAr: "لينا", nameEn: "Layna", initials: "L", rating: 4, platform: "whatsapp" as const, textAr: "طلب ثاني من SK ومازالت الجودة ممتازة. البليزر المخملي قطعة لا غنى عنها", textEn: "Second order from SK and the quality is still excellent. The velvet blazer is a must-have piece" },
-  { nameAr: "رنا", nameEn: "Rana", initials: "R", rating: 5, platform: "instagram" as const, textAr: "التعامل راقي والتوصيل على الوقت. العطور musk ثابتة وفخمة. شكراً SK", textEn: "Professional service and on-time delivery. The musk perfumes are long-lasting and luxurious. Thank you SK" },
-  { nameAr: "هدى", nameEn: "Huda", initials: "H", rating: 5, platform: "whatsapp" as const, textAr: "فستان السهرة كان تحفة، ناس يطلبوا من وين جبتيه. مستعدة اطلب تاني", textEn: "The evening dress was a masterpiece, people asked where I got it from. Ready to order again" },
-];
+import FeedbackGallery from "@/components/FeedbackGallery";
 
 const FEATURES = [
   { icon: "fa-truck-fast", ar: "شحن سريع لكل الأردن", en: "Fast Shipping Across Jordan" },
@@ -179,58 +171,20 @@ export default function HomePage() {
           <div className="absolute left-1/4 w-96 h-96 bg-luxury-gold/5 rounded-full blur-[120px] pointer-events-none" />
           <div className="relative max-w-7xl mx-auto px-4 md:px-8">
             <div className="text-center space-y-4 mb-14">
-              <span className="inline-block bg-luxury-gold/10 text-luxury-gold px-4 py-1.5 rounded-full text-xs font-bold border border-luxury-gold/15">
+              <span className="inline-flex items-center gap-2 bg-luxury-gold/10 text-luxury-gold px-4 py-1.5 rounded-full text-xs font-bold border border-luxury-gold/15">
+                <i className="fas fa-camera text-[10px]" />
                 {isEnglish ? "Client Feedback" : "آراء العملاء"}
               </span>
               <h2 className={`text-3xl md:text-4xl font-bold gold-gradient bg-clip-text text-transparent ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                <i className="fas fa-camera mr-2 text-luxury-gold/40" />
                 {isEnglish ? "What Our Clients Say" : "ماذا قالوا عنا؟"}
               </h2>
               <p className="text-luxury-gold/60 text-sm max-w-xl mx-auto">
-                {isEnglish ? "Real feedback from our valued customers" : "آراء حقيقية من زبائننا الكرام"}
+                {isEnglish ? "Real moments from our valued customers" : "لحظات حقيقية من عملائنا الكرام"}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-              {REVIEWS.map((review, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="glass-card p-5 md:p-6 space-y-4 hover:border-luxury-gold/20 transition-all duration-500"
-                >
-                  <div className="flex items-center gap-2">
-                    {Array.from({ length: 5 }).map((_, s) => (
-                      <i
-                        key={s}
-                        className={`fas fa-star text-[10px] ${s < review.rating ? "text-luxury-gold" : "text-luxury-gold/20"}`}
-                      />
-                    ))}
-                  </div>
-                  <p className="text-xs md:text-sm text-luxury-gold/60 leading-relaxed line-clamp-4">
-                    &ldquo;{isEnglish ? review.textEn : review.textAr}&rdquo;
-                  </p>
-                  <div className="flex items-center gap-3 pt-2 border-t border-white/5">
-                    <div className="w-10 h-10 rounded-full bg-luxury-gold/20 border border-luxury-gold/30 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs font-bold text-luxury-gold">{review.initials}</span>
-                    </div>
-                    <div className="min-w-0">
-                      <p className={`text-xs font-bold truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>
-                        {isEnglish ? review.nameEn : review.nameAr}
-                      </p>
-                      <p className="text-[10px] text-luxury-gold/40">
-                        {review.platform === "instagram"
-                          ? `Instagram${isEnglish ? "" : "انستغرام"}`
-                          : `WhatsApp${isEnglish ? "" : "واتساب"}`
-                        }
-                      </p>
-                    </div>
-                    <i className={`fas ${review.platform === "instagram" ? "fa-instagram" : "fa-whatsapp"} text-luxury-gold/30 text-xs mr-auto`} />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            <FeedbackGallery isEnglish={isEnglish} />
           </div>
         </section>
       </main>

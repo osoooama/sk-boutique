@@ -38,7 +38,7 @@ export default function PerfumesPage() {
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
 
-  const { addItem, openCart } = useCart();
+  const { addItem } = useCart();
   const { addToast } = useToast();
 
   const filtered =
@@ -58,7 +58,6 @@ export default function PerfumesPage() {
       image: perfume.image,
     });
     addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
-    openCart();
   };
 
   return (

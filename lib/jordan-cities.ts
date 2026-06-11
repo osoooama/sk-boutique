@@ -1,0 +1,43 @@
+export const JORDAN_CITIES = [
+  { name: "عمّان", delivery: 2 },
+  { name: "الزرقاء", delivery: 2 },
+  { name: "إربد", delivery: 3 },
+  { name: "العقبة", delivery: 3 },
+  { name: "السلط", delivery: 3 },
+  { name: "مادبا", delivery: 3 },
+  { name: "الكرك", delivery: 3 },
+  { name: "جرش", delivery: 3 },
+  { name: "عجلون", delivery: 3 },
+  { name: "المفرق", delivery: 3 },
+  { name: "الطفيلة", delivery: 3 },
+  { name: "معان", delivery: 3 },
+  { name: "الرمثا", delivery: 3 },
+  { name: "الرصيفة", delivery: 3 },
+  { name: "وادي موسى", delivery: 3 },
+  { name: "دير علا", delivery: 3 },
+  { name: "الأزرق", delivery: 3 },
+  { name: "الشونة الجنوبية", delivery: 3 },
+  { name: "الشونة الشمالية", delivery: 3 },
+  { name: "الأغوار الشمالية", delivery: 3 },
+  { name: "بيت رأس", delivery: 3 },
+  { name: "بني كنانة", delivery: 3 },
+  { name: "كفر يوبا", delivery: 3 },
+  { name: "ناعور", delivery: 2 },
+  { name: "الجيزة", delivery: 2 },
+  { name: "سحاب", delivery: 2 },
+  { name: "الموقر", delivery: 3 },
+  { name: "القويسمة", delivery: 2 },
+  { name: "مرج الحمام", delivery: 2 },
+  { name: "طبربور", delivery: 2 },
+  { name: "أبو نصير", delivery: 2 },
+  { name: "شفا بدران", delivery: 2 },
+  { name: "ماركا", delivery: 2 },
+  { name: "الهاشمية", delivery: 3 },
+  { name: "الضليل", delivery: 3 },
+  { name: "الخالدية", delivery: 3 },
+];
+
+export const getDeliveryFee = (cityName: string): number => {
+  const city = JORDAN_CITIES.find((c) => c.name === cityName);
+  return city?.delivery ?? 3;
+};

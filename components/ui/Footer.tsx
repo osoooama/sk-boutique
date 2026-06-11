@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import Logo from "./Logo";
 
 interface FooterProps {
@@ -121,23 +122,47 @@ export default function Footer({ isEnglish }: FooterProps) {
 
         <div className="h-px bg-gradient-to-r from-transparent via-luxury-gold/20 to-transparent" />
 
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-xs text-luxury-gold/40">
-          <p>
-            &copy; {currentYear} SK BOUTIQUE —{" "}
-            {isEnglish ? "All rights reserved" : "جميع الحقوق محفوظة"}
-          </p>
-          <div className="flex items-center gap-3">
-            <span className="text-[10px] font-bold px-2.5 py-1 border border-white/10 rounded-full">
-              COD
-            </span>
-            <span className="text-[10px] font-bold px-2.5 py-1 border border-luxury-gold/30 text-luxury-gold rounded-full">
-              EU Quality
-            </span>
-            <span className="text-[10px] font-bold px-2.5 py-1 border border-white/10 rounded-full">
-              JO
-            </span>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-xs text-luxury-gold/40">
+            <p>
+              &copy; {currentYear} SK BOUTIQUE —{" "}
+              {isEnglish ? "All rights reserved" : "جميع الحقوق محفوظة"}
+            </p>
+            <div className="flex items-center gap-3">
+              <span className="text-[10px] font-bold px-2.5 py-1 border border-white/10 rounded-full">
+                COD
+              </span>
+              <span className="text-[10px] font-bold px-2.5 py-1 border border-luxury-gold/30 text-luxury-gold rounded-full">
+                EU Quality
+              </span>
+              <span className="text-[10px] font-bold px-2.5 py-1 border border-white/10 rounded-full">
+                JO
+              </span>
+            </div>
           </div>
-        </div>
+
+          {/* Credit Line */}
+          <motion.div
+            className="mt-6 pt-4 border-t border-white/5 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <motion.p
+              className="text-xs text-luxury-gold/50"
+              animate={{ opacity: [0.4, 0.8, 0.4] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {isEnglish ? "Built with ♥ by " : "قام بإنشاء هذه الصفحة "}
+              <a
+                href="https://www.instagram.com/osamakreishan?igsh=MW9yYWtrODhyZWs2NA%3D%3D&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#C9A84C] hover:text-[#E8C97A] transition-colors font-semibold"
+              >
+                @osamakreishan
+              </a>
+            </motion.p>
+          </motion.div>
       </div>
     </footer>
   );

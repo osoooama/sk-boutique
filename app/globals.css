@@ -13,8 +13,8 @@
   }
 
   .light {
-    --page-bg: #FFFFFF;
-    --page-text: #0A0A0A;
+    --page-bg: #FFFDF7;
+    --page-text: #1A1208;
   }
 
   html {
@@ -28,13 +28,14 @@
 
   .light body,
   body.light {
-    @apply bg-luxury-white text-luxury-black;
+    background: #FFFDF7;
+    color: #1A1208;
   }
 
   .light input,
   .light textarea,
   .light select {
-    color: #0A0A0A;
+    color: #1A1208;
   }
 
   ::selection {
@@ -42,7 +43,8 @@
   }
 
   .light ::selection {
-    @apply bg-luxury-gold/30 text-luxury-black;
+    background: rgba(201, 168, 76, 0.3);
+    color: #1A1208;
   }
 
   input,
@@ -72,8 +74,8 @@
   }
 
   .light .aurora-bg {
-    background: radial-gradient(ellipse at top, #C9A84C30, transparent),
-                radial-gradient(ellipse at bottom, #E8C97A20, transparent);
+    background: radial-gradient(ellipse at top, rgba(201, 168, 76, 0.15), transparent),
+                radial-gradient(ellipse at bottom, rgba(232, 201, 107, 0.1), transparent);
   }
 
   .glass {
@@ -84,8 +86,10 @@
   }
 
   .light .glass {
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 
   .glass-card {
@@ -94,7 +98,9 @@
   }
 
   .light .glass-card {
-    @apply bg-white/80 border-black/5;
+    background: #FFFFFF;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    box-shadow: 0 2px 12px rgba(201, 168, 76, 0.08);
   }
 
   .gold-gradient {
@@ -131,7 +137,15 @@
   }
 
   .light .btn-primary {
-    @apply shadow-luxury-gold/30;
+    background: linear-gradient(135deg, #C9A84C 0%, #E8C96B 100%);
+    color: #1A1208;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(201, 168, 76, 0.35);
+  }
+
+  .light .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(201, 168, 76, 0.5);
   }
 
   .btn-secondary {
@@ -141,7 +155,22 @@
   }
 
   .light .btn-secondary {
-    @apply border-luxury-gold/20 hover:bg-luxury-gold/5;
+    background: #FFFFFF;
+    border: 1px solid rgba(201, 168, 76, 0.25);
+    color: #C9A84C;
+    box-shadow: 0 2px 12px rgba(201, 168, 76, 0.08);
+  }
+
+  .light .btn-secondary:hover {
+    background: rgba(201, 168, 76, 0.08);
+    border-color: #C9A84C;
+    box-shadow: 0 4px 20px rgba(201, 168, 76, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .gold-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #C9A84C, transparent);
   }
 
   .scrollbar-none {

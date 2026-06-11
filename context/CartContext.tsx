@@ -25,6 +25,11 @@ interface CartContextType {
   isOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
+  discountCode: string;
+  discountPercent: number;
+  discountedSubtotal: number;
+  applyDiscount: (code: string) => boolean;
+  removeDiscount: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -35,11 +40,21 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [discountCode, setDiscountCode] = useState("");
+  const [discountPercent, setDiscountPercent] = useState(0);
 
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) setItems(JSON.parse(stored));
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        setItems(Array.isArray(parsed) ? parsed : []);
+      }
+      const code = localStorage.getItem("sk_discount_code");
+      if (code) {
+        setDiscountCode(code);
+        setDiscountPercent(code === "SK30" ? 20 : 0);
+      }
     } catch { /* ignore */ }
     setLoaded(true);
   }, []);
@@ -81,15 +96,42 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   }, []);
 
-  const clearCart = useCallback(() => setItems([]), []);
+  const clearCart = useCallback(() => {
+    setItems([]);
+    setDiscountCode("");
+    setDiscountPercent(0);
+    try { localStorage.removeItem("sk_discount_code"); } catch { /* ignore */ }
+  }, []);
+
+  const applyDiscount = useCallback((code: string): boolean => {
+    const valid = code.trim().toUpperCase() === "SK30";
+    if (valid) {
+      setDiscountCode("SK30");
+      setDiscountPercent(20);
+      try { localStorage.setItem("sk_discount_code", "SK30"); } catch { /* ignore */ }
+    } else {
+      setDiscountCode("");
+      setDiscountPercent(0);
+      try { localStorage.removeItem("sk_discount_code"); } catch { /* ignore */ }
+    }
+    return valid;
+  }, []);
+
+  const removeDiscount = useCallback(() => {
+    setDiscountCode("");
+    setDiscountPercent(0);
+    try { localStorage.removeItem("sk_discount_code"); } catch { /* ignore */ }
+  }, []);
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
   const subtotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const discountedSubtotal = discountPercent > 0 ? subtotal * (1 - discountPercent / 100) : subtotal;
 
   return (
     <CartContext.Provider value={{
       items, addItem, removeItem, updateQuantity, clearCart,
       totalItems, subtotal, isOpen, openCart: () => setIsOpen(true), closeCart: () => setIsOpen(false),
+      discountCode, discountPercent, discountedSubtotal, applyDiscount, removeDiscount,
     }}>
       {children}
     </CartContext.Provider>

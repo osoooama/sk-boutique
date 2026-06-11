@@ -32,7 +32,7 @@ export default function ProductDetailPage() {
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
 
-  const { addItem, openCart, items: cartItems } = useCart();
+  const { addItem, items: cartItems } = useCart();
   const { isWishlisted, toggleItem } = useWishlist();
   const { addToast } = useToast();
 
@@ -90,7 +90,6 @@ export default function ProductDetailPage() {
 
   const handleBuyNow = () => {
     handleAddToCart();
-    setTimeout(() => openCart(), 400);
   };
 
   const relatedProducts = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
