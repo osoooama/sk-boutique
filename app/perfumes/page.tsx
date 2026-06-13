@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { fadeLeftVariant, staggerContainer, perfumeCardVariant } from "@/lib/animations";
+import TiltCard from "@/components/product/TiltCard";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
-import ToastContainer from "@/components/ui/ToastContainer";
+import Toast from "@/components/Toast/Toast";
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
@@ -13,7 +15,7 @@ import { useTheme } from "@/hooks/useTheme";
 import { perfumes } from "@/lib/perfumes";
 import type { Perfume } from "@/lib/types";
 import { useCart } from "@/context/CartContext";
-import { useToast } from "@/context/ToastContext";
+import { useToast } from "@/components/Toast/ToastContext";
 
 const getPrice = (p: Perfume) => {
   switch (p.category) {
@@ -34,7 +36,6 @@ const CATEGORIES = [
 export default function PerfumesPage() {
   const [isEnglish, setIsEnglish] = useState(false);
   const [activeCategory, setActiveCategory] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
 
@@ -71,7 +72,7 @@ export default function PerfumesPage() {
       />
       <CartDrawer isEnglish={isEnglish} />
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} isEnglish={isEnglish} />
-      <ToastContainer />
+      <Toast />
       <BackToTop />
 
       <main>
@@ -80,7 +81,13 @@ export default function PerfumesPage() {
           <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-accent-gold/[0.05] rounded-full blur-[120px] pointer-events-none" />
           <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-purple-500/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
-          <div className="relative text-center space-y-4 section-padding max-w-7xl mx-auto">
+          <motion.div
+            variants={fadeLeftVariant}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="relative text-center space-y-4 section-padding max-w-7xl mx-auto"
+          >
             <Breadcrumbs
               items={[
                 { label: isEnglish ? "Home" : "\u0627\u0644\u0631\u0626\u064a\u0633\u064a\u0629", href: "/" },
@@ -100,7 +107,7 @@ export default function PerfumesPage() {
             <p className="text-accent-gold/60 text-sm max-w-xl mx-auto">
               {isEnglish ? "Exclusive musk oils and fine fragrances \u2014 scents that last" : "\u0639\u0637\u0648\u0631 \u0648\u0645\u0633\u0643 \u0641\u0627\u062e\u0631 \u2014 \u0631\u0648\u0627\u0626\u062d \u0627\u0633\u062a\u062b\u0646\u0627\u0626\u064a\u0629 \u062a\u062f\u0648\u0645 \u0637\u0648\u064a\u0644\u0627\u064b"}
             </p>
-          </div>
+          </motion.div>
         </section>
 
         <motion.div
@@ -143,26 +150,39 @@ export default function PerfumesPage() {
                 <p className="text-accent-gold/60 text-sm">{isEnglish ? "No perfumes found" : "\u0644\u0627 \u062a\u0648\u062c\u062f \u0639\u0637\u0648\u0631"}</p>
               </motion.div>
             ) : (
-              <motion.div key={activeCategory} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              <motion.div
+                key={activeCategory}
+                variants={staggerContainer}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"
+              >
                 {filtered.map((perfume, i) => (
-                  <motion.div key={perfume.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="group glass-card overflow-hidden hover:border-accent-gold-muted transition-all duration-500 hover:-translate-y-1">
-                    <div className="relative aspect-square overflow-hidden bg-surface-primary">
-                      <img src={perfume.image} alt={perfume.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-surface-primary/60 via-transparent to-transparent" />
-                      <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
-                        <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted backdrop-blur-sm">{perfume.volume}</span>
-                        <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-black/40 text-accent-gold border border-border backdrop-blur-sm">{isEnglish ? perfume.englishTitle : perfume.title}</span>
-                      </div>
-                    </div>
-                    <div className="p-4 space-y-2">
-                      <div className="relative">
-                        <h3 className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</h3>
-                        <div className="title-tooltip">
-                          <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</p>
+                  <motion.div
+                    key={perfume.id}
+                    variants={perfumeCardVariant}
+                    custom={i}
+                  >
+                    <TiltCard className="group glass-card overflow-hidden hover:border-accent-gold-muted transition-all duration-500">
+                      <div className="relative aspect-square overflow-hidden bg-surface-primary">
+                        <img src={perfume.image} alt={perfume.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-surface-primary/60 via-transparent to-transparent" />
+                        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+                          <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted backdrop-blur-sm">{perfume.volume}</span>
+                          <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-black/40 text-accent-gold border border-border backdrop-blur-sm">{isEnglish ? perfume.englishTitle : perfume.title}</span>
                         </div>
                       </div>
-                      <p className="text-xs text-accent-gold/40 line-clamp-2 leading-relaxed">{isEnglish ? perfume.englishDescription : perfume.description}</p>
-                      <div className="flex items-center justify-between pt-1">
+                      <div className="p-4 space-y-2">
+                        <div className="relative">
+                          <h3 className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</h3>
+                          <div className="title-tooltip">
+                            <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</p>
+                          </div>
+                        </div>
+                        <p className="text-xs text-accent-gold/40 line-clamp-2 leading-relaxed">{isEnglish ? perfume.englishDescription : perfume.description}</p>
+                        <div className="flex items-center justify-between pt-1">
                         <span className="text-xs font-bold text-accent-gold">{getPrice(perfume)} {isEnglish ? "JD" : "\u062f.\u0623"}</span>
                         <button onClick={() => handleAddPerfume(perfume)} className="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted hover:bg-accent-gold/25 transition-all">
                           <i className="fas fa-shopping-bag mr-1" />{isEnglish ? "Add" : "\u0623\u0636\u0641"}
@@ -176,7 +196,8 @@ export default function PerfumesPage() {
                         </div>
                       )}
                     </div>
-                  </motion.div>
+                  </TiltCard>
+                </motion.div>
                 ))}
               </motion.div>
             )}

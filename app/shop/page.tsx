@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { staggerContainer } from "@/lib/animations";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
-import ToastContainer from "@/components/ui/ToastContainer";
+import Toast from "@/components/Toast/Toast";
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
@@ -23,7 +24,6 @@ const CATEGORIES = [
 export default function ShopPage() {
   const [isEnglish, setIsEnglish] = useState(false);
   const [activeCategory, setActiveCategory] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
 
@@ -43,7 +43,7 @@ export default function ShopPage() {
       />
       <CartDrawer isEnglish={isEnglish} />
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} isEnglish={isEnglish} />
-      <ToastContainer />
+      <Toast />
       <BackToTop />
 
       <main>
@@ -52,7 +52,13 @@ export default function ShopPage() {
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-radial from-accent-gold/[0.06] to-transparent rounded-full blur-[100px] pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-radial from-purple-500/[0.04] to-transparent rounded-full blur-[80px] pointer-events-none" />
 
-          <div className="relative text-center space-y-4 section-padding max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="relative text-center space-y-4 section-padding max-w-7xl mx-auto"
+          >
             <Breadcrumbs
               items={[
                 { label: isEnglish ? "Home" : "الرئيسية", href: "/" },
@@ -69,7 +75,7 @@ export default function ShopPage() {
             <p className="text-accent-gold/60 text-sm max-w-xl mx-auto">
               {isEnglish ? "Modern European designs, locally crafted with premium materials" : "تصاميم أوروبية عصرية، تُصنع محلياً بأفضل الخامات"}
             </p>
-          </div>
+          </motion.div>
         </section>
 
         <section className="pb-20 section-padding max-w-7xl mx-auto -mt-6">
@@ -105,8 +111,9 @@ export default function ShopPage() {
             ) : (
               <motion.div
                 key={activeCategory}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                variants={staggerContainer}
+                initial="hidden"
+                animate="visible"
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
                 className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"

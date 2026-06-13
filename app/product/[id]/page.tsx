@@ -7,7 +7,7 @@ import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
-import ToastContainer from "@/components/ui/ToastContainer";
+import Toast from "@/components/Toast/Toast";
 import ColorSwatches from "@/components/product/ColorSwatches";
 import SizeSelector from "@/components/product/SizeSelector";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
@@ -17,7 +17,7 @@ import { useTheme } from "@/hooks/useTheme";
 import { products } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
-import { useToast } from "@/context/ToastContext";
+import { useToast } from "@/components/Toast/ToastContext";
 
 const RECENT_KEY = "sk_recently_viewed";
 
@@ -108,7 +108,7 @@ export default function ProductDetailPage() {
         onToggleTheme={toggleTheme}
       />
       <CartDrawer isEnglish={isEnglish} />
-      <ToastContainer />
+      <Toast />
 
       <main className="pt-28 pb-28 md:pb-20 section-padding max-w-7xl mx-auto">
         <Breadcrumbs

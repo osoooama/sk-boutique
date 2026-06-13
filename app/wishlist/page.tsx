@@ -6,14 +6,14 @@ import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
-import ToastContainer from "@/components/ui/ToastContainer";
+import Toast from "@/components/Toast/Toast";
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { useTheme } from "@/hooks/useTheme";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
-import { useToast } from "@/context/ToastContext";
+import { useToast } from "@/components/Toast/ToastContext";
 import { products } from "@/lib/products";
 import { perfumes, getPerfumePrice } from "@/lib/perfumes";
 
@@ -40,7 +40,7 @@ export default function WishlistPage() {
       />
       <CartDrawer isEnglish={isEnglish} />
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} isEnglish={isEnglish} />
-      <ToastContainer />
+      <Toast />
       <BackToTop />
 
       <main className="pt-28 pb-20 section-padding max-w-6xl mx-auto">

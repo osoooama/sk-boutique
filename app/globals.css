@@ -62,6 +62,9 @@
 
     --nav-bg-ghost: rgba(10, 10, 10, 0.4);
     --toast-bg: rgba(10, 10, 10, 0.9);
+    --orb-1: rgba(201, 168, 76, 0.12);
+    --orb-2: rgba(74, 0, 128, 0.10);
+    --orb-3: rgba(0, 26, 74, 0.08);
     --page-bg: var(--bg-primary);
     --page-text: var(--text-primary);
   }
@@ -115,6 +118,9 @@
 
     --nav-bg-ghost: rgba(255, 253, 247, 0.6);
     --toast-bg: rgba(255, 253, 247, 0.95);
+    --orb-1: rgba(232, 213, 163, 0.20);
+    --orb-2: rgba(255, 182, 193, 0.15);
+    --orb-3: rgba(230, 230, 250, 0.12);
     --page-bg: var(--bg-primary);
     --page-text: var(--text-primary);
   }
@@ -192,6 +198,33 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+  }
+
+  @keyframes float-orb {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -30px) scale(1.05); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
+  }
+
+  @keyframes ripple-in {
+    from {
+      clip-path: circle(0% at var(--ripple-x) var(--ripple-y));
+    }
+    to {
+      clip-path: circle(150% at var(--ripple-x) var(--ripple-y));
+    }
+  }
+
+  ::view-transition-new(root) {
+    animation: ripple-in 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  ::view-transition-old(root) {
+    animation: none;
+  }
+
+  html {
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 }
 

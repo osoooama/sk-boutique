@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
@@ -12,7 +12,7 @@ interface NavbarProps {
   isEnglish: boolean;
   isDark: boolean;
   onToggleLang?: () => void;
-  onToggleTheme?: () => void;
+  onToggleTheme?: (x?: number, y?: number) => void;
   onSearchOpen?: () => void;
 }
 
@@ -22,6 +22,15 @@ const NAV_LINKS = [
   { href: "/perfumes", ar: "العطور", en: "Perfumes" },
   { href: "/#contact", ar: "تواصل معنا", en: "Contact Us" },
 ];
+
+const menuItemVariant = {
+  hidden: { opacity: 0, x: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: i * 0.05, duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
 
 export default function Navbar({
   isEnglish,
@@ -35,24 +44,44 @@ export default function Navbar({
   const [hidden, setHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [badgeBounce, setBadgeBounce] = useState(false);
   const { scrollY } = useScroll();
   const lastScroll = useRef(0);
+  const prevTotal = useRef(totalItems);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 60);
+    const onScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (totalItems > prevTotal.current) {
+      setBadgeBounce(true);
+      setTimeout(() => setBadgeBounce(false), 400);
+    }
+    prevTotal.current = totalItems;
+  }, [totalItems]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileOpen(false);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [mobileOpen]);
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     const diff = latest - lastScroll.current;
-    if (diff > 10) setHidden(true);
+    if (diff > 5 && isScrolled) setHidden(true);
     else if (diff < -5) setHidden(false);
     lastScroll.current = latest;
   });
 
   const pillPy = isScrolled ? "py-2" : "py-4";
+  const [themeRotation, setThemeRotation] = useState(0);
 
   return (
     <>
@@ -71,9 +100,11 @@ export default function Navbar({
             className={`flex items-center justify-between ${pillPy} px-3 md:px-5 transition-all duration-300`}
             style={{
               background: isScrolled ? "var(--nav-bg)" : "var(--nav-bg-ghost)",
-              backdropFilter: isScrolled ? "blur(16px)" : "blur(8px)",
-              WebkitBackdropFilter: isScrolled ? "blur(16px)" : "blur(8px)",
-              border: isScrolled ? "1px solid var(--border-color-strong)" : "1px solid var(--border-color)",
+              backdropFilter: isScrolled ? "blur(20px)" : "blur(8px)",
+              WebkitBackdropFilter: isScrolled ? "blur(20px)" : "blur(8px)",
+              border: isScrolled
+                ? "1px solid rgba(201, 169, 110, 0.3)"
+                : "1px solid var(--border-color)",
               boxShadow: isScrolled ? "var(--shadow-card)" : "none",
               borderRadius: "20px",
             }}
@@ -81,19 +112,55 @@ export default function Navbar({
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setMobileOpen(true)}
-                className="md:hidden w-9 h-9 rounded-xl flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all"
+                className="md:hidden relative w-9 h-9 flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all rounded-xl"
                 aria-label={isEnglish ? "Menu" : "القائمة"}
               >
-                <i className="fas fa-bars text-xs" />
+                <div className="relative w-4 h-3">
+                  <motion.span
+                    className="absolute inset-x-0 h-[2px] rounded-full"
+                    style={{ background: "var(--accent-gold)", top: 0 }}
+                    animate={mobileOpen ? { rotate: 45, top: 5 } : { rotate: 0, top: 0 }}
+                    transition={{ duration: 0.25 }}
+                  />
+                  <motion.span
+                    className="absolute inset-x-0 top-[5px] h-[2px] rounded-full"
+                    style={{ background: "var(--accent-gold)" }}
+                    animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
+                    transition={{ duration: 0.15 }}
+                  />
+                  <motion.span
+                    className="absolute inset-x-0 h-[2px] rounded-full"
+                    style={{ background: "var(--accent-gold)", bottom: 0 }}
+                    animate={mobileOpen ? { rotate: -45, bottom: 5 } : { rotate: 0, bottom: 0 }}
+                    transition={{ duration: 0.25 }}
+                  />
+                </div>
               </button>
 
               {onToggleTheme && (
                 <button
-                  onClick={onToggleTheme}
-                  className="hidden md:flex w-9 h-9 rounded-xl items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all"
+                  onClick={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = rect.left + rect.width / 2;
+                    const y = rect.top + rect.height / 2;
+                    setThemeRotation((p) => p + 180);
+                    onToggleTheme(x, y);
+                  }}
+                  className="hidden md:flex w-10 h-10 rounded-full items-center justify-center border-2 transition-all duration-300 cursor-pointer hover:shadow-[0_0_16px_rgba(201,169,110,0.4)]"
+                  style={{
+                    borderColor: isDark ? "var(--border-color)" : "var(--accent-gold)",
+                    background: "var(--nav-bg-ghost)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                  }}
                   aria-label={isEnglish ? "Toggle theme" : "تغيير المظهر"}
                 >
-                  <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-xs`} />
+                  <motion.i
+                    animate={{ rotate: themeRotation }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-sm`}
+                    style={{ color: "var(--accent-gold)" }}
+                  />
                 </button>
               )}
             </div>
@@ -128,7 +195,7 @@ export default function Navbar({
                   <i className="fas fa-heart text-xs" />
                 </div>
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full bg-red-400 text-[#1A1208] text-[9px] font-extrabold flex items-center justify-center animate-badge-pop">
+                  <span className="absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full bg-red-400 text-[#1A1208] text-[9px] font-extrabold flex items-center justify-center">
                     {wishlistCount > 9 ? "9+" : wishlistCount}
                   </span>
                 )}
@@ -139,15 +206,32 @@ export default function Navbar({
                   <i className="fas fa-shopping-bag text-xs" />
                 </div>
                 {totalItems > 0 && (
-                  <span
-                    className="absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full flex items-center justify-center text-[9px] font-extrabold animate-badge-pop"
+                  <motion.span
+                    key={badgeBounce ? "bounce" : "normal"}
+                    className="absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full flex items-center justify-center text-[9px] font-extrabold"
                     style={{
-                      background: "linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover))",
-                      color: "#1A1208",
+                      background: "var(--accent-gold)",
+                      color: "var(--text-on-accent)",
                     }}
+                    animate={
+                      badgeBounce
+                        ? { scale: [1, 1.5, 1] }
+                        : { scale: 1 }
+                    }
+                    transition={{ type: "spring", stiffness: 500, damping: 15 }}
                   >
-                    {totalItems > 9 ? "9+" : totalItems}
-                  </span>
+                    <AnimatePresence mode="popLayout">
+                      <motion.span
+                        key={totalItems}
+                        initial={{ y: -10, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 10, opacity: 0 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        {totalItems > 9 ? "9+" : totalItems}
+                      </motion.span>
+                    </AnimatePresence>
+                  </motion.span>
                 )}
               </button>
 
@@ -180,12 +264,12 @@ export default function Navbar({
               onClick={() => setMobileOpen(false)}
             />
             <motion.aside
-              className="fixed top-0 bottom-0 z-50 w-72 bg-surface-primary backdrop-blur-xl border-r border-border flex flex-col"
+              className="fixed top-0 bottom-0 z-50 w-72 bg-surface-primary backdrop-blur-xl border-l border-border flex flex-col"
               dir={isEnglish ? "ltr" : "rtl"}
-              style={{ left: 0 }}
-              initial={{ x: "-100%" }}
+              style={{ right: 0 }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
+              exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
             >
               <div className="flex items-center justify-between p-4 border-b border-border">
@@ -203,9 +287,10 @@ export default function Navbar({
                 {NAV_LINKS.map((link, i) => (
                   <motion.div
                     key={link.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.08 }}
+                    variants={menuItemVariant}
+                    initial="hidden"
+                    animate="visible"
+                    custom={i}
                   >
                     <Link
                       href={link.href}
@@ -247,7 +332,10 @@ export default function Navbar({
               <div className="p-4 border-t border-border flex items-center gap-3">
                 {onToggleTheme && (
                   <button
-                    onClick={onToggleTheme}
+                    onClick={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      onToggleTheme(rect.left + rect.width / 2, rect.top + rect.height / 2);
+                    }}
                     className="flex-1 h-10 rounded-xl border border-border text-accent-gold hover:bg-accent-gold-muted transition-all text-xs"
                   >
                     <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} ml-2`} />

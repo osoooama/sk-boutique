@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
-import { useToast } from "@/context/ToastContext";
+import { useToast } from "@/components/Toast/ToastContext";
 
 interface CartDrawerProps {
   isEnglish: boolean;
@@ -32,17 +32,18 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
           <motion.div
             className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: 0.6 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
             onClick={closeCart}
           />
           <motion.aside
-            className="fixed top-0 bottom-0 z-50 w-full max-w-md bg-surface-primary backdrop-blur-xl border-r border-border flex flex-col"
-            style={{ left: 0 }}
-            initial={{ x: "-100%" }}
+            className="fixed top-0 bottom-0 z-50 w-full max-w-md bg-surface-primary backdrop-blur-xl border-l border-border flex flex-col"
+            style={{ right: 0 }}
+            initial={{ x: "100%" }}
             animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             dir={isEnglish ? "ltr" : "rtl"}
           >
             <div className="flex items-center justify-between p-4 border-b border-border">
@@ -70,83 +71,98 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
                   </button>
                 </div>
               ) : (
-                items.map((item) => (
-                  <motion.div
-                    key={`${item.productId}-${item.size}-${item.color}`}
-                    layout
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    className="flex gap-3 p-3 rounded-2xl bg-accent-gold-muted border border-border"
-                  >
-                    <div className="w-16 h-20 rounded-xl overflow-hidden bg-surface-primary flex-shrink-0">
-                      <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <div className="relative">
-                        <p className={`text-xs font-bold line-clamp-2 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
-                          {isEnglish ? item.englishTitle : item.title}
-                        </p>
-                        <div className="title-tooltip">
-                          <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                <AnimatePresence mode="popLayout">
+                  {items.map((item) => (
+                    <motion.div
+                      key={`${item.productId}-${item.size}-${item.color}`}
+                      layout
+                      initial={{ height: 0, opacity: 0, x: 100 }}
+                      animate={{ height: "auto", opacity: 1, x: 0 }}
+                      exit={{ height: 0, opacity: 0, x: 100 }}
+                      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                      className="flex gap-3 p-3 rounded-2xl bg-accent-gold-muted border border-border overflow-hidden"
+                    >
+                      <div className="w-16 h-20 rounded-xl overflow-hidden bg-surface-primary flex-shrink-0">
+                        <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0 space-y-1">
+                        <div className="relative">
+                          <p className={`text-xs font-bold line-clamp-2 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                             {isEnglish ? item.englishTitle : item.title}
                           </p>
+                          <div className="title-tooltip">
+                            <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                              {isEnglish ? item.englishTitle : item.title}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-2 text-[10px] text-accent-gold/40">
-                        <span className="flex items-center gap-1">
-                          <span className="w-2.5 h-2.5 rounded-full border border-border-strong" style={{ background: item.colorHex }} />
-                          {item.color}
-                        </span>
-                        <span>{item.size}</span>
-                      </div>
-                      <div className="flex items-center justify-between pt-1">
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => {
-                              if (item.quantity <= 1) {
+                        <div className="flex items-center gap-2 text-[10px] text-accent-gold/40">
+                          <span className="flex items-center gap-1">
+                            <span className="w-2.5 h-2.5 rounded-full border border-border-strong" style={{ background: item.colorHex }} />
+                            {item.color}
+                          </span>
+                          <span>{item.size}</span>
+                        </div>
+                        <div className="flex items-center justify-between pt-1">
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => {
+                                if (item.quantity <= 1) {
+                                  removeItem(item.productId, item.size, item.color);
+                                  addToast("info", isEnglish ? "Item removed" : "تمت إزالة المنتج", "fa-trash");
+                                } else {
+                                  updateQuantity(item.productId, item.size, item.color, -1);
+                                }
+                              }}
+                              className="w-6 h-6 rounded-lg border border-border text-accent-gold/60 hover:text-accent-gold hover:bg-accent-gold-muted transition-all text-xs flex items-center justify-center"
+                            >
+                              <i className="fas fa-minus" />
+                            </button>
+                            <div className="relative w-5 text-center overflow-hidden">
+                              <AnimatePresence mode="popLayout">
+                                <motion.span
+                                  key={item.quantity}
+                                  className="text-xs font-bold text-accent-gold block"
+                                  initial={{ y: item.quantity > 1 ? -10 : 10, opacity: 0 }}
+                                  animate={{ y: 0, opacity: 1 }}
+                                  exit={{ y: item.quantity > 1 ? 10 : -10, opacity: 0 }}
+                                  transition={{ duration: 0.15 }}
+                                >
+                                  {item.quantity}
+                                </motion.span>
+                              </AnimatePresence>
+                            </div>
+                            <button
+                              onClick={() => updateQuantity(item.productId, item.size, item.color, 1)}
+                              className="w-6 h-6 rounded-lg border border-border text-accent-gold/60 hover:text-accent-gold hover:bg-accent-gold-muted transition-all text-xs flex items-center justify-center"
+                            >
+                              <i className="fas fa-plus" />
+                            </button>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-bold text-accent-gold">
+                              {item.price * item.quantity} {isEnglish ? "JD" : "د.أ"}
+                            </span>
+                            <button
+                              onClick={() => {
                                 removeItem(item.productId, item.size, item.color);
                                 addToast("info", isEnglish ? "Item removed" : "تمت إزالة المنتج", "fa-trash");
-                              } else {
-                                updateQuantity(item.productId, item.size, item.color, -1);
-                              }
-                            }}
-                            className="w-6 h-6 rounded-lg border border-border text-accent-gold/60 hover:text-accent-gold hover:bg-accent-gold-muted transition-all text-xs flex items-center justify-center"
-                          >
-                            <i className="fas fa-minus" />
-                          </button>
-                          <span className="text-xs font-bold text-accent-gold w-5 text-center">{item.quantity}</span>
-                          <button
-                            onClick={() => updateQuantity(item.productId, item.size, item.color, 1)}
-                            className="w-6 h-6 rounded-lg border border-border text-accent-gold/60 hover:text-accent-gold hover:bg-accent-gold-muted transition-all text-xs flex items-center justify-center"
-                          >
-                            <i className="fas fa-plus" />
-                          </button>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-bold text-accent-gold">
-                            {item.price * item.quantity} {isEnglish ? "JD" : "د.أ"}
-                          </span>
-                          <button
-                            onClick={() => {
-                              removeItem(item.productId, item.size, item.color);
-                              addToast("info", isEnglish ? "Item removed" : "تمت إزالة المنتج", "fa-trash");
-                            }}
-                            className="w-6 h-6 rounded-lg border border-border text-red-400/60 hover:text-red-400 hover:bg-red-500/10 transition-all text-xs flex items-center justify-center"
-                          >
-                            <i className="fas fa-trash" />
-                          </button>
+                              }}
+                              className="w-6 h-6 rounded-lg border border-border text-red-400/60 hover:text-red-400 hover:bg-red-500/10 transition-all text-xs flex items-center justify-center"
+                            >
+                              <i className="fas fa-trash" />
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               )}
             </div>
 
             {items.length > 0 && (
               <div className="p-4 border-t border-border space-y-3">
-                {/* Discount Code */}
                 {discountCode ? (
                   <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-accent-gold-muted border border-accent-gold-muted">
                     <div className="flex items-center gap-2">
@@ -179,7 +195,15 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
 
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-accent-gold/60">{isEnglish ? "Subtotal" : "المجموع"}</span>
-                  <span className="font-bold text-accent-gold">{subtotal} {isEnglish ? "JD" : "د.أ"}</span>
+                  <motion.span
+                    key={subtotal}
+                    className="font-bold text-accent-gold"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    style={{ color: "var(--accent-gold)" }}
+                  >
+                    {subtotal} {isEnglish ? "JD" : "د.أ"}
+                  </motion.span>
                 </div>
 
                 {discountPercent > 0 && (
