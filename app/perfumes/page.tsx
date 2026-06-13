@@ -14,19 +14,10 @@ import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { useTheme } from "@/context/ThemeContext";
-import { perfumes } from "@/lib/perfumes";
+import { perfumes, getPerfumePrice } from "@/lib/perfumes";
 import type { Perfume } from "@/lib/types";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
-
-const getPrice = (p: Perfume) => {
-  switch (p.category) {
-    case "musk": return 5;
-    case "perfume": return p.volume === "50ml" ? 8 : 6;
-    case "sample": return 3;
-    default: return 0;
-  }
-};
 
 const CATEGORIES = [
   { id: "all", ar: "\u0627\u0644\u0643\u0644", en: "All" },
@@ -54,7 +45,7 @@ export default function PerfumesPage() {
       productId: perfume.id,
       title: perfume.title,
       englishTitle: perfume.englishTitle,
-      price: getPrice(perfume),
+      price: getPerfumePrice(perfume),
       size: perfume.volume,
       color: "Original",
       colorHex: "#C9A84C",
@@ -184,7 +175,7 @@ export default function PerfumesPage() {
                         </div>
                         <p className="text-xs text-accent-gold/40 line-clamp-2 leading-relaxed">{isEnglish ? perfume.englishDescription : perfume.description}</p>
                         <div className="flex items-center justify-between pt-1">
-                        <span className="text-xs font-bold text-accent-gold">{getPrice(perfume)} {isEnglish ? "JD" : "\u062f.\u0623"}</span>
+                        <span className="text-xs font-bold text-accent-gold">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "\u062f.\u0623"}</span>
                         <button onClick={() => handleAddPerfume(perfume)} className="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted hover:bg-accent-gold/25 transition-all">
                           <i className="fas fa-shopping-bag mr-1" />{isEnglish ? "Add" : "\u0623\u0636\u0641"}
                         </button>
