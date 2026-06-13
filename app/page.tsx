@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { fadeLeftVariant, staggerContainer, fadeUpVariant } from "@/lib/animations";
 import TiltCard from "@/components/product/TiltCard";
 import Navbar from "@/components/ui/Navbar";
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from "@/context/ThemeContext";
 import HeroSlider from "@/components/ui/HeroSlider";
 import ProductCard from "@/components/product/ProductCard";
 import Footer from "@/components/ui/Footer";
@@ -37,7 +37,7 @@ export default function HomePage() {
   const featuredProducts = products.slice(0, 6);
 
   return (
-    <div className="min-h-screen bg-[var(--page-bg)] text-[var(--page-text)]">
+    <div className="min-h-screen">
       <Navbar
         isEnglish={isEnglish}
         isDark={isDark}

@@ -62,11 +62,9 @@
 
     --nav-bg-ghost: rgba(10, 10, 10, 0.4);
     --toast-bg: rgba(10, 10, 10, 0.9);
-    --orb-1: rgba(201, 168, 76, 0.12);
-    --orb-2: rgba(74, 0, 128, 0.10);
-    --orb-3: rgba(0, 26, 74, 0.08);
-    --page-bg: var(--bg-primary);
-    --page-text: var(--text-primary);
+    --orb-1: rgba(201, 168, 76, 0.15);
+    --orb-2: rgba(74, 0, 128, 0.13);
+    --orb-3: rgba(0, 26, 74, 0.10);
   }
 
   .light {
@@ -93,8 +91,13 @@
     --button-secondary-border: rgba(201, 169, 110, 0.35);
     --button-secondary-text: #C9A96E;
 
+    --badge-bg: rgba(201, 169, 110, 0.1);
+    --badge-text: #C9A96E;
+    --badge-border: rgba(201, 169, 110, 0.25);
+
     --input-bg: #FFFFFF;
     --input-border: rgba(201, 169, 110, 0.2);
+    --input-focus-border: #C9A96E;
     --input-text: #1A1A1A;
     --input-placeholder: #A8A89A;
 
@@ -118,20 +121,20 @@
 
     --nav-bg-ghost: rgba(255, 253, 247, 0.6);
     --toast-bg: rgba(255, 253, 247, 0.95);
-    --orb-1: rgba(232, 213, 163, 0.20);
-    --orb-2: rgba(255, 182, 193, 0.15);
-    --orb-3: rgba(230, 230, 250, 0.12);
-    --page-bg: var(--bg-primary);
-    --page-text: var(--text-primary);
+    --orb-1: rgba(232, 213, 163, 0.25);
+    --orb-2: rgba(255, 182, 193, 0.18);
+    --orb-3: rgba(230, 230, 250, 0.15);
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
+    background: var(--bg-primary);
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   body {
-    background: var(--bg-primary);
+    background: transparent;
     color: var(--text-primary);
     -webkit-text-size-adjust: 100%;
   }
@@ -226,10 +229,6 @@
 
   ::view-transition-old(root) {
     animation: none;
-  }
-
-  html {
-    transition: background-color 0.4s ease, color 0.4s ease;
   }
 }
 

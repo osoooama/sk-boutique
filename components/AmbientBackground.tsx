@@ -41,7 +41,7 @@ const ORBS = [
 
 export default function AmbientBackground() {
   return (
-    <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden" aria-hidden="true">
+    <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
       {ORBS.map((orb, i) => (
         <div
           key={i}

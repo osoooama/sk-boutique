@@ -123,7 +123,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="font-inter h-full antialiased overflow-x-hidden">
         <AmbientBackground />
-        <Providers>{children}</Providers>
+        <div className="relative z-[1]">
+          <Providers>{children}</Providers>
+        </div>
       </body>
     </html>
   );

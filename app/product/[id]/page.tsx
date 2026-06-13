@@ -15,7 +15,7 @@ import SizeSelector from "@/components/product/SizeSelector";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import SizeGuideModal from "@/components/ui/SizeGuideModal";
 import BackToTop from "@/components/ui/BackToTop";
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from "@/context/ThemeContext";
 import { products } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -52,7 +52,7 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-[var(--page-bg)] text-[var(--page-text)] flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
           <i className="fas fa-tshirt text-4xl text-accent-gold/20 block" />
           <p className="text-accent-gold/60">{isEnglish ? "Product not found" : "المنتج غير موجود"}</p>
@@ -102,7 +102,7 @@ export default function ProductDetailPage() {
     .reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[var(--page-bg)] text-[var(--page-text)]" dir={isEnglish ? "ltr" : "rtl"}>
+    <div className="min-h-screen" dir={isEnglish ? "ltr" : "rtl"}>
       <Navbar
         isEnglish={isEnglish}
         isDark={isDark}
