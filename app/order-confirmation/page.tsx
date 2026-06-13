@@ -11,7 +11,7 @@ import BackToTop from "@/components/ui/BackToTop";
 import { useTheme } from "@/hooks/useTheme";
 
 export default function OrderConfirmationPage() {
-  const [isEnglish, setIsEnglish] = useState(true);
+  const [isEnglish, setIsEnglish] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
 

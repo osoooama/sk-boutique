@@ -106,7 +106,7 @@ export default function HomePage() {
                 >
                   <div className="relative aspect-square overflow-hidden bg-surface-primary">
                     <img src={perfume.image} alt={perfume.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-surface-primary/60 to-transparent" />
                     <div className="absolute bottom-3 left-3 right-3">
                       <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted backdrop-blur-sm">
                         {perfume.volume}
@@ -114,9 +114,16 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="p-4 space-y-2">
-                    <h3 className={`font-bold text-sm ${isEnglish ? "font-inter" : "font-alexandria"}`}>
-                      {isEnglish ? perfume.englishTitle : perfume.title}
-                    </h3>
+                    <div className="relative">
+                      <h3 className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                        {isEnglish ? perfume.englishTitle : perfume.title}
+                      </h3>
+                      <div className="title-tooltip">
+                        <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                          {isEnglish ? perfume.englishTitle : perfume.title}
+                        </p>
+                      </div>
+                    </div>
                     <p className="text-xs text-accent-gold/40 line-clamp-2">
                       {isEnglish ? perfume.englishDescription : perfume.description}
                     </p>

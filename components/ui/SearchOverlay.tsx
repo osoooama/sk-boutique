@@ -125,9 +125,16 @@ function SearchResultItem({ product, isEnglish, onClose }: { product: Product; i
         )}
       </div>
       <div className="flex-1 min-w-0">
-        <p className={`text-xs font-medium truncate group-hover:text-accent-gold transition-colors ${isEnglish ? "font-inter" : "font-alexandria"}`}>
-          {isEnglish ? product.englishTitle : product.title}
-        </p>
+        <div className="relative">
+          <p className={`text-xs font-medium line-clamp-2 group-hover:text-accent-gold transition-colors ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+            {isEnglish ? product.englishTitle : product.title}
+          </p>
+          <div className="title-tooltip">
+            <p className={`text-xs font-medium ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+              {isEnglish ? product.englishTitle : product.title}
+            </p>
+          </div>
+        </div>
         <p className="text-[10px] text-accent-gold/40">{product.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
       </div>
     </Link>

@@ -18,7 +18,7 @@ import { products } from "@/lib/products";
 import { perfumes, getPerfumePrice } from "@/lib/perfumes";
 
 export default function WishlistPage() {
-  const [isEnglish, setIsEnglish] = useState(true);
+  const [isEnglish, setIsEnglish] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
 
@@ -104,9 +104,16 @@ export default function WishlistPage() {
                         )}
                       </div>
                       <div className="p-3 space-y-1">
-                        <p className={`text-xs font-bold truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>
-                          {isEnglish ? product.englishTitle : product.title}
-                        </p>
+                        <div className="relative">
+                          <p className={`text-xs font-bold line-clamp-2 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                            {isEnglish ? product.englishTitle : product.title}
+                          </p>
+                          <div className="title-tooltip">
+                            <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                              {isEnglish ? product.englishTitle : product.title}
+                            </p>
+                          </div>
+                        </div>
                         <p className="text-[10px] text-accent-gold/40">{product.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
                       </div>
                     </Link>
@@ -158,9 +165,16 @@ export default function WishlistPage() {
                     <img src={perfume.image} alt={perfume.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   </div>
                   <Link href="/perfumes" className="block p-3" style={{ textDecoration: "none" }}>
-                    <p className={`text-xs font-bold truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>
-                      {isEnglish ? perfume.englishTitle : perfume.title}
-                    </p>
+                    <div className="relative">
+                      <p className={`text-xs font-bold line-clamp-1 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                        {isEnglish ? perfume.englishTitle : perfume.title}
+                      </p>
+                      <div className="title-tooltip">
+                        <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                          {isEnglish ? perfume.englishTitle : perfume.title}
+                        </p>
+                      </div>
+                    </div>
                     <p className="text-[10px] text-accent-gold/40">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "د.أ"} · {perfume.volume}</p>
                   </Link>
                 </motion.div>

@@ -155,7 +155,12 @@ export default function PerfumesPage() {
                       </div>
                     </div>
                     <div className="p-4 space-y-2">
-                      <h3 className={`font-bold text-sm truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</h3>
+                      <div className="relative">
+                        <h3 className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</h3>
+                        <div className="title-tooltip">
+                          <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</p>
+                        </div>
+                      </div>
                       <p className="text-xs text-accent-gold/40 line-clamp-2 leading-relaxed">{isEnglish ? perfume.englishDescription : perfume.description}</p>
                       <div className="flex items-center justify-between pt-1">
                         <span className="text-xs font-bold text-accent-gold">{getPrice(perfume)} {isEnglish ? "JD" : "\u062f.\u0623"}</span>

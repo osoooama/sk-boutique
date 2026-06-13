@@ -83,9 +83,16 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
                       <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0 space-y-1">
-                      <p className={`text-xs font-bold truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>
-                        {isEnglish ? item.englishTitle : item.title}
-                      </p>
+                      <div className="relative">
+                        <p className={`text-xs font-bold line-clamp-2 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                          {isEnglish ? item.englishTitle : item.title}
+                        </p>
+                        <div className="title-tooltip">
+                          <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                            {isEnglish ? item.englishTitle : item.title}
+                          </p>
+                        </div>
+                      </div>
                       <div className="flex items-center gap-2 text-[10px] text-accent-gold/40">
                         <span className="flex items-center gap-1">
                           <span className="w-2.5 h-2.5 rounded-full border border-border-strong" style={{ background: item.colorHex }} />
@@ -191,7 +198,7 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
                 <Link
                   href="/checkout"
                   onClick={closeCart}
-                  className="block w-full py-3.5 rounded-xl bg-accent-gold text-luxury-black font-bold text-xs text-center tracking-wide"
+                  className="block w-full py-3.5 rounded-xl bg-accent-gold text-content-on-accent font-bold text-xs text-center tracking-wide"
                 >
                   {isEnglish ? "Proceed to Checkout" : "إتمام الطلب"}
                 </Link>

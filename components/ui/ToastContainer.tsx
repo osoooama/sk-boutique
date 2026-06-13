@@ -26,7 +26,7 @@ export default function ToastContainer() {
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               className={`pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl backdrop-blur-xl border ${style.bg} ${style.border} shadow-xl shadow-black/30 min-w-[280px] max-w-sm`}
-              style={{ background: "rgba(10,10,10,0.9)" }}
+              style={{ background: "var(--toast-bg)" }}
             >
               <i className={`fas ${toast.icon || style.defaultIcon} ${style.icon} text-sm`} />
               <p className="text-xs text-content-primary flex-1">{toast.message}</p>

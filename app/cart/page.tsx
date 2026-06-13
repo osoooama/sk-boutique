@@ -15,7 +15,7 @@ import { useCart } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
 
 export default function CartPage() {
-  const [isEnglish, setIsEnglish] = useState(true);
+  const [isEnglish, setIsEnglish] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
 
@@ -93,9 +93,16 @@ export default function CartPage() {
                       <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                     </Link>
                     <div className="flex-1 min-w-0 space-y-1.5">
-                      <Link href={`/product/${item.productId}`} className={`text-sm font-bold truncate block hover:text-accent-gold transition-colors ${isEnglish ? "font-inter" : "font-alexandria"}`}>
-                        {isEnglish ? item.englishTitle : item.title}
-                      </Link>
+                      <div className="relative">
+                        <Link href={`/product/${item.productId}`} className={`text-sm font-bold line-clamp-2 block hover:text-accent-gold transition-colors ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                          {isEnglish ? item.englishTitle : item.title}
+                        </Link>
+                        <div className="title-tooltip">
+                          <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                            {isEnglish ? item.englishTitle : item.title}
+                          </p>
+                        </div>
+                      </div>
                       <div className="flex items-center gap-3 text-[11px] text-accent-gold/40">
                         <span className="flex items-center gap-1.5">
                           <span className="w-3 h-3 rounded-full border border-border-strong" style={{ background: item.colorHex }} />

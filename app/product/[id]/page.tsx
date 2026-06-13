@@ -307,7 +307,12 @@ export default function ProductDetailPage() {
                     <img src={p.colors[0]?.images[0] || ""} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="p-2.5 space-y-1">
-                    <p className={`text-xs font-bold truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p.englishTitle : p.title}</p>
+                    <div className="relative">
+                      <p className={`text-xs font-bold line-clamp-2 ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p.englishTitle : p.title}</p>
+                      <div className="title-tooltip">
+                        <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p.englishTitle : p.title}</p>
+                      </div>
+                    </div>
                     <p className="text-[10px] text-accent-gold/40">{p.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
                   </div>
                 </Link>
@@ -329,7 +334,12 @@ export default function ProductDetailPage() {
                     <img src={p!.colors[0]?.images[0] || ""} alt={p!.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="p-2.5 space-y-1">
-                    <p className={`text-xs font-bold truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p!.englishTitle : p!.title}</p>
+                    <div className="relative">
+                      <p className={`text-xs font-bold line-clamp-2 ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p!.englishTitle : p!.title}</p>
+                      <div className="title-tooltip">
+                        <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p!.englishTitle : p!.title}</p>
+                      </div>
+                    </div>
                     <p className="text-[10px] text-accent-gold/40">{p!.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
                   </div>
                 </Link>

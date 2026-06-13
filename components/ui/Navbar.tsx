@@ -52,22 +52,7 @@ export default function Navbar({
     lastScroll.current = latest;
   });
 
-  const pillBg = isDark
-    ? isScrolled
-      ? "rgba(10,10,10,0.88)"
-      : "rgba(10,10,10,0.4)"
-    : isScrolled
-      ? "rgba(255,253,247,0.88)"
-      : "rgba(255,253,247,0.6)";
-
-  const pillBlur = isScrolled ? "blur(16px)" : "blur(8px)";
   const pillPy = isScrolled ? "py-2" : "py-4";
-  const pillBorder = isScrolled
-    ? "rgba(201,168,76,0.35)"
-    : "rgba(201,168,76,0.15)";
-  const pillShadow = isScrolled
-    ? "0 4px 24px rgba(201,168,76,0.18)"
-    : "none";
 
   return (
     <>
@@ -85,11 +70,11 @@ export default function Navbar({
           <div
             className={`flex items-center justify-between ${pillPy} px-3 md:px-5 transition-all duration-300`}
             style={{
-              background: pillBg,
-              backdropFilter: pillBlur,
-              WebkitBackdropFilter: pillBlur,
-              border: `1px solid ${pillBorder}`,
-              boxShadow: pillShadow,
+              background: isScrolled ? "var(--nav-bg)" : "var(--nav-bg-ghost)",
+              backdropFilter: isScrolled ? "blur(16px)" : "blur(8px)",
+              WebkitBackdropFilter: isScrolled ? "blur(16px)" : "blur(8px)",
+              border: isScrolled ? "1px solid var(--border-color-strong)" : "1px solid var(--border-color)",
+              boxShadow: isScrolled ? "var(--shadow-card)" : "none",
               borderRadius: "20px",
             }}
           >

@@ -18,7 +18,7 @@ import { phoneErrorMessage } from "@/lib/phone-validation";
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const [isEnglish, setIsEnglish] = useState(true);
+  const [isEnglish, setIsEnglish] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
   const { items, subtotal, discountCode, discountPercent, discountedSubtotal, clearCart } = useCart();
@@ -132,7 +132,7 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
   const inputClass = (hasError: boolean) =>
     `w-full rounded-xl border px-4 py-3 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent-gold-muted ${
       hasError
-        ? "border-red-400 bg-red-50 dark:bg-red-900/10"
+        ? "border-red-400 bg-red-500/10"
         : "border-accent-gold-muted bg-surface-card text-content-primary"
     }`;
 
@@ -174,7 +174,7 @@ ${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - di
         ) : (
           <div className="space-y-6">
             {/* Shipping Information */}
-            <div className="p-5 rounded-2xl bg-white/[0.03] dark:bg-white/[0.03] border border-border space-y-4">
+            <div className="p-5 rounded-2xl bg-white/[0.03] border border-border space-y-4">
               <h3 className={`font-bold text-sm ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                 {isEnglish ? "Shipping Information" : "معلومات الشحن"}
               </h3>

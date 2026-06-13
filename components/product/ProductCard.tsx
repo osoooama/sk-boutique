@@ -110,13 +110,20 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
         </div>
 
         <div className="p-3 md:p-4 space-y-2">
-          <h3
-            className={`font-bold text-sm truncate ${
-              isEnglish ? "font-inter" : "font-alexandria"
-            }`}
-          >
-            {isEnglish ? product.englishTitle : product.title}
-          </h3>
+          <div className="relative">
+            <h3
+              className={`font-bold text-sm line-clamp-2 ${
+                isEnglish ? "font-inter" : "font-alexandria"
+              }`}
+            >
+              {isEnglish ? product.englishTitle : product.title}
+            </h3>
+            <div className="title-tooltip">
+              <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                {isEnglish ? product.englishTitle : product.title}
+              </p>
+            </div>
+          </div>
 
           <div className="flex items-center justify-between">
             <span className="font-bold text-accent-gold text-sm">
