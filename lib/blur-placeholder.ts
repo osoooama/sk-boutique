@@ -1,0 +1,2 @@
+export const BLUR_PLACEHOLDER =
+  "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoQABAADMDOJaQAA3AA/undAAA=";

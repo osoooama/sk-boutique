@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Product } from "@/lib/types";
 import { fadeUpVariant } from "@/lib/animations";
+import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useToast } from "@/components/Toast/ToastContext";
@@ -136,6 +137,8 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
                 loading="lazy"
+                placeholder="blur"
+                blurDataURL={BLUR_PLACEHOLDER}
                 onError={() => setImgError(true)}
               />
             ) : (

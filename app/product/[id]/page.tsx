@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
+import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
@@ -153,7 +155,7 @@ export default function ProductDetailPage() {
                   className="absolute inset-0"
                 >
                   {images[selectedImage] ? (
-                    <img src={images[selectedImage]} alt={isEnglish ? product.englishTitle : product.title} className="w-full h-full object-cover" />
+                    <Image src={images[selectedImage]} alt={isEnglish ? product.englishTitle : product.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" priority placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
                       <i className="fas fa-tshirt text-6xl text-accent-gold/20" />
@@ -183,7 +185,7 @@ export default function ProductDetailPage() {
                       selectedImage === i ? "border-accent-gold scale-105" : "border-border hover:border-border-strong"
                     }`}
                   >
-                    <img src={img} alt={`${product.title} ${i + 1}`} className="w-full h-full object-cover" />
+                    <Image src={img} alt={isEnglish ? `${product.englishTitle} ${i + 1}` : `${product.title} ${i + 1}`} fill sizes="80px" className="object-cover" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
                   </button>
                 ))}
               </div>
@@ -303,8 +305,8 @@ export default function ProductDetailPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {relatedProducts.map((p, i) => (
                 <Link key={p.id} href={`/product/${p.id}`} className="group block glass-card rounded-xl overflow-hidden hover:border-accent-gold-muted transition-all" style={{ textDecoration: "none" }}>
-                  <div className="aspect-[3/4] bg-surface-primary overflow-hidden">
-                    <img src={p.colors[0]?.images[0] || ""} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="relative aspect-[3/4] bg-surface-primary overflow-hidden">
+                    <Image src={p.colors[0]?.images[0] || ""} alt={isEnglish ? p.englishTitle : p.title} fill sizes="(max-width: 640px) 50vw, 25vw" className="object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
                   </div>
                   <div className="p-2.5 space-y-1">
                     <div className="relative">
@@ -330,8 +332,8 @@ export default function ProductDetailPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {recentProducts.map((p) => (
                 <Link key={p!.id} href={`/product/${p!.id}`} className="group block glass-card rounded-xl overflow-hidden hover:border-accent-gold-muted transition-all" style={{ textDecoration: "none" }}>
-                  <div className="aspect-[3/4] bg-surface-primary overflow-hidden">
-                    <img src={p!.colors[0]?.images[0] || ""} alt={p!.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="relative aspect-[3/4] bg-surface-primary overflow-hidden">
+                    <Image src={p!.colors[0]?.images[0] || ""} alt={isEnglish ? p!.englishTitle : p!.title} fill sizes="(max-width: 640px) 50vw, 25vw" className="object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
                   </div>
                   <div className="p-2.5 space-y-1">
                     <div className="relative">

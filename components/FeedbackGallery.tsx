@@ -1,29 +1,31 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 
 const IMAGES = [
-  "/feedback/sk_boutique977-highlights-3881002745452919211-20260422_182639_671154159.jpg",
-  "/feedback/sk_boutique977-highlights-3881015597580644909-20260422_185211_671253711.jpg",
-  "/feedback/sk_boutique977-highlights-3882328644228159711-20260424_142059_672382780.jpg",
-  "/feedback/sk_boutique977-highlights-3883084120309947040-20260425_152157_674433341.jpg",
-  "/feedback/sk_boutique977-highlights-3883128596659248679-20260425_165020_673169164.jpg",
-  "/feedback/sk_boutique977-highlights-3884678328217180618-20260427_200923_684102285.jpg",
-  "/feedback/sk_boutique977-highlights-3884684367427706634-20260427_202122_681936164.jpg",
-  "/feedback/sk_boutique977-highlights-3889129909717224163-20260503_233352_684901235.jpg",
-  "/feedback/sk_boutique977-highlights-3889149386630540197-20260504_001235_683474609.jpg",
-  "/feedback/sk_boutique977-highlights-3889149761299306500-20260504_001319_683901927.jpg",
-  "/feedback/sk_boutique977-highlights-3889149819616910087-20260504_001326_682724087.jpg",
-  "/feedback/sk_boutique977-highlights-3889149860779716103-20260504_001331_685648146.jpg",
-  "/feedback/sk_boutique977-highlights-3892665550233014738-20260508_203832_689870940.jpg",
-  "/feedback/sk_boutique977-highlights-3892679404455337107-20260508_210605_687017423.jpg",
-  "/feedback/sk_boutique977-highlights-3908652243967045901-20260530_220117_710264612.jpg",
-  "/feedback/sk_boutique977-highlights-3908652605038028666-20260530_220200_711802552.jpg",
-  "/feedback/sk_boutique977-highlights-3913634552822701357-20260606_190015_717076566.jpg",
-  "/feedback/sk_boutique977-highlights-3913634633546253590-20260606_190025_718068683.jpg",
-  "/feedback/sk_boutique977-highlights-3913634720108437672-20260606_190035_718264726.jpg",
-  "/feedback/sk_boutique977-highlights-3913634831500749993-20260606_190048_718076194.jpg",
+  "/feedback/sk_boutique977-highlights-3881002745452919211-20260422_182639_671154159.webp",
+  "/feedback/sk_boutique977-highlights-3881015597580644909-20260422_185211_671253711.webp",
+  "/feedback/sk_boutique977-highlights-3882328644228159711-20260424_142059_672382780.webp",
+  "/feedback/sk_boutique977-highlights-3883084120309947040-20260425_152157_674433341.webp",
+  "/feedback/sk_boutique977-highlights-3883128596659248679-20260425_165020_673169164.webp",
+  "/feedback/sk_boutique977-highlights-3884678328217180618-20260427_200923_684102285.webp",
+  "/feedback/sk_boutique977-highlights-3884684367427706634-20260427_202122_681936164.webp",
+  "/feedback/sk_boutique977-highlights-3889129909717224163-20260503_233352_684901235.webp",
+  "/feedback/sk_boutique977-highlights-3889149386630540197-20260504_001235_683474609.webp",
+  "/feedback/sk_boutique977-highlights-3889149761299306500-20260504_001319_683901927.webp",
+  "/feedback/sk_boutique977-highlights-3889149819616910087-20260504_001326_682724087.webp",
+  "/feedback/sk_boutique977-highlights-3889149860779716103-20260504_001331_685648146.webp",
+  "/feedback/sk_boutique977-highlights-3892665550233014738-20260508_203832_689870940.webp",
+  "/feedback/sk_boutique977-highlights-3892679404455337107-20260508_210605_687017423.webp",
+  "/feedback/sk_boutique977-highlights-3908652243967045901-20260530_220117_710264612.webp",
+  "/feedback/sk_boutique977-highlights-3908652605038028666-20260530_220200_711802552.webp",
+  "/feedback/sk_boutique977-highlights-3913634552822701357-20260606_190015_717076566.webp",
+  "/feedback/sk_boutique977-highlights-3913634633546253590-20260606_190025_718068683.webp",
+  "/feedback/sk_boutique977-highlights-3913634720108437672-20260606_190035_718264726.webp",
+  "/feedback/sk_boutique977-highlights-3913634831500749993-20260606_190048_718076194.webp",
 ];
 
 interface FeedbackGalleryProps {
@@ -64,11 +66,15 @@ export default function FeedbackGallery({ isEnglish }: FeedbackGalleryProps) {
             onClick={() => setLightboxIndex(i)}
             className="group relative aspect-square rounded-2xl overflow-hidden bg-surface-primary border border-border focus:outline-none"
           >
-            <img
+            <Image
               src={src}
               alt={isEnglish ? "SK BOUTIQUE customer experience" : "تجربة عميل SK BOUTIQUE"}
+              fill
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
               loading="lazy"
-              className="w-full h-full object-cover transition-all duration-300 group-hover:scale-104 group-hover:border-2 group-hover:border-accent-gold group-hover:shadow-[0_8px_25px_rgba(201,168,76,0.3)]"
+              placeholder="blur"
+              blurDataURL={BLUR_PLACEHOLDER}
+              className="object-cover transition-all duration-300 group-hover:scale-104 group-hover:border-2 group-hover:border-accent-gold group-hover:shadow-[0_8px_25px_rgba(201,168,76,0.3)]"
             />
           </motion.button>
         ))}
@@ -80,13 +86,17 @@ export default function FeedbackGallery({ isEnglish }: FeedbackGalleryProps) {
             <button
               key={src}
               onClick={() => setLightboxIndex(i)}
-              className="flex-shrink-0 w-64 aspect-square rounded-2xl overflow-hidden bg-surface-primary border border-border focus:outline-none group"
+              className="flex-shrink-0 w-64 aspect-square rounded-2xl overflow-hidden bg-surface-primary border border-border focus:outline-none group relative"
             >
-              <img
+              <Image
                 src={src}
                 alt={isEnglish ? "SK BOUTIQUE customer experience" : "تجربة عميل SK BOUTIQUE"}
+                fill
+                sizes="256px"
                 loading="lazy"
-                className="w-full h-full object-cover transition-all duration-300 group-hover:scale-104"
+                placeholder="blur"
+                blurDataURL={BLUR_PLACEHOLDER}
+                className="object-cover transition-all duration-300 group-hover:scale-104"
               />
             </button>
           ))}
@@ -140,10 +150,15 @@ export default function FeedbackGallery({ isEnglish }: FeedbackGalleryProps) {
               className="relative max-w-2xl w-full max-h-[85vh] flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <img
+              <Image
                 src={IMAGES[lightboxIndex]}
                 alt={isEnglish ? "SK BOUTIQUE customer experience" : "تجربة عميل SK BOUTIQUE"}
-                className="max-w-full max-h-[85vh] object-contain rounded-2xl"
+                fill
+                sizes="(max-width: 768px) 100vw, 672px"
+                className="object-contain rounded-2xl"
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL={BLUR_PLACEHOLDER}
               />
             </motion.div>
 

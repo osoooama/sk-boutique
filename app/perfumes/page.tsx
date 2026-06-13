@@ -6,6 +6,8 @@ import { fadeLeftVariant, staggerContainer, perfumeCardVariant } from "@/lib/ani
 import TiltCard from "@/components/product/TiltCard";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
+import Image from "next/image";
+import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import CartDrawer from "@/components/ui/CartDrawer";
 import Toast from "@/components/Toast/Toast";
 import SearchOverlay from "@/components/ui/SearchOverlay";
@@ -167,11 +169,10 @@ export default function PerfumesPage() {
                   >
                     <TiltCard className="group glass-card overflow-hidden hover:border-accent-gold-muted transition-all duration-500">
                       <div className="relative aspect-square overflow-hidden bg-surface-primary">
-                        <img src={perfume.image} alt={perfume.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <Image src={perfume.image} alt={isEnglish ? perfume.englishTitle : perfume.title} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
                         <div className="absolute inset-0 bg-gradient-to-t from-surface-primary/60 via-transparent to-transparent" />
-                        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+                        <div className="absolute bottom-2 left-2 right-2">
                           <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted backdrop-blur-sm">{perfume.volume}</span>
-                          <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-black/40 text-accent-gold border border-border backdrop-blur-sm">{isEnglish ? perfume.englishTitle : perfume.title}</span>
                         </div>
                       </div>
                       <div className="p-4 space-y-2">

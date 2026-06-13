@@ -137,32 +137,6 @@ export default function Navbar({
                 </div>
               </button>
 
-              {onToggleTheme && (
-                <button
-                  onClick={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    const x = rect.left + rect.width / 2;
-                    const y = rect.top + rect.height / 2;
-                    setThemeRotation((p) => p + 180);
-                    onToggleTheme(x, y);
-                  }}
-                  className="hidden md:flex w-10 h-10 rounded-full items-center justify-center border-2 transition-all duration-300 cursor-pointer hover:shadow-[0_0_16px_rgba(201,169,110,0.4)]"
-                  style={{
-                    borderColor: isDark ? "var(--border-color)" : "var(--accent-gold)",
-                    background: "var(--nav-bg-ghost)",
-                    backdropFilter: "blur(12px)",
-                    WebkitBackdropFilter: "blur(12px)",
-                  }}
-                  aria-label={isEnglish ? "Toggle theme" : "تغيير المظهر"}
-                >
-                  <motion.i
-                    animate={{ rotate: themeRotation }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-sm`}
-                    style={{ color: "var(--accent-gold)" }}
-                  />
-                </button>
-              )}
             </div>
 
             <nav className="hidden md:flex items-center gap-6 text-sm">
@@ -239,6 +213,32 @@ export default function Navbar({
                 <Logo showText={false} size="sm" />
               </Link>
 
+              {onToggleTheme && (
+                <button
+                  onClick={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = rect.left + rect.width / 2;
+                    const y = rect.top + rect.height / 2;
+                    setThemeRotation((p) => p + 180);
+                    onToggleTheme(x, y);
+                  }}
+                  className="flex w-9 h-9 rounded-full items-center justify-center border-2 transition-all duration-300 cursor-pointer hover:shadow-[0_0_16px_rgba(201,169,110,0.4)]"
+                  style={{
+                    borderColor: isDark ? "var(--border-color)" : "var(--accent-gold)",
+                    background: "var(--nav-bg-ghost)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                  }}
+                  aria-label={isEnglish ? "Toggle theme" : "تغيير المظهر"}
+                >
+                  <motion.i
+                    animate={{ rotate: themeRotation }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-sm`}
+                    style={{ color: "var(--accent-gold)" }}
+                  />
+                </button>
+              )}
               {onToggleLang && (
                 <button
                   onClick={onToggleLang}
@@ -329,28 +329,16 @@ export default function Navbar({
                 </Link>
               </nav>
 
-              <div className="p-4 border-t border-border flex items-center gap-3">
-                {onToggleTheme && (
-                  <button
-                    onClick={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      onToggleTheme(rect.left + rect.width / 2, rect.top + rect.height / 2);
-                    }}
-                    className="flex-1 h-10 rounded-xl border border-border text-accent-gold hover:bg-accent-gold-muted transition-all text-xs"
-                  >
-                    <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} ml-2`} />
-                    {isEnglish ? "Theme" : "المظهر"}
-                  </button>
-                )}
-                {onToggleLang && (
+              {onToggleLang && (
+                <div className="p-4 border-t border-border">
                   <button
                     onClick={onToggleLang}
-                    className="flex-1 h-10 rounded-xl border border-border text-accent-gold hover:bg-accent-gold-muted transition-all text-xs font-semibold"
+                    className="w-full h-10 rounded-xl border border-border text-accent-gold hover:bg-accent-gold-muted transition-all text-xs font-semibold"
                   >
                     {isEnglish ? "AR" : "EN"}
                   </button>
-                )}
-              </div>
+                </div>
+              )}
             </motion.aside>
           </>
         )}

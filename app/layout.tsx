@@ -43,18 +43,18 @@ export const metadata: Metadata = {
     title: "SK BOUTIQUE | تصاميم أوروبية عصرية بصناعة محلية متقنة",
     description:
       "تصاميم أوروبية عصرية تُصنع محلياً بأيدٍ أردنية ماهرة بمعايير الجودة الأوروبية.",
-    url: "https://sk-boutique.pages.dev",
+    url: "https://sk-boutique.osamakreshan352.workers.dev",
     siteName: "SK BOUTIQUE",
     locale: "ar_JO",
     type: "website",
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: "https://sk-boutique.pages.dev" },
+  alternates: { canonical: "https://sk-boutique.osamakreshan352.workers.dev" },
   other: { "mobile-web-app-capable": "yes" },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A0A",
+  themeColor: "#C9A96E",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -99,19 +99,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   "@type": "Store",
                   name: "SK BOUTIQUE",
                   description: "تصاميم أوروبية عصرية تُصنع محلياً بمعايير الجودة الأوروبية",
-                  url: "https://sk-boutique.pages.dev",
+                  url: "https://sk-boutique.osamakreshan352.workers.dev",
                   telephone: "+962798921123",
                   address: { "@type": "PostalAddress", addressCountry: "JO" },
                   sameAs: ["https://www.instagram.com/sk_boutique977/"],
                 },
                 {
                   "@type": "WebSite",
-                  url: "https://sk-boutique.pages.dev",
+                  url: "https://sk-boutique.osamakreshan352.workers.dev",
                   potentialAction: {
                     "@type": "SearchAction",
                     target: {
                       "@type": "EntryPoint",
-                      urlTemplate: "https://sk-boutique.pages.dev/?q={search_term_string}",
+                      urlTemplate: "https://sk-boutique.osamakreshan352.workers.dev/?q={search_term_string}",
                     },
                     "query-input": "required name=search_term_string",
                   },

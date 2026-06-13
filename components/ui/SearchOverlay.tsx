@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
+import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { products } from "@/lib/products";
 import type { Product } from "@/lib/types";
 
@@ -117,9 +119,9 @@ function SearchResultItem({ product, isEnglish, onClose }: { product: Product; i
       className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-accent-gold-muted transition-all group"
       style={{ textDecoration: "none" }}
     >
-      <div className="w-10 h-12 rounded-lg overflow-hidden bg-surface-primary flex-shrink-0">
+      <div className="w-10 h-12 rounded-lg overflow-hidden bg-surface-primary flex-shrink-0 relative">
         {imgSrc ? (
-          <img src={imgSrc} alt={product.title} className="w-full h-full object-cover" />
+          <Image src={imgSrc} alt={isEnglish ? product.englishTitle : product.title} fill sizes="48px" className="object-cover" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
         ) : (
           <div className="w-full h-full flex items-center justify-center"><i className="fas fa-tshirt text-accent-gold/20 text-xs" /></div>
         )}

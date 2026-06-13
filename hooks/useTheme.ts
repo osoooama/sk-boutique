@@ -16,7 +16,7 @@ export function useTheme() {
   }, []);
 
   const toggleTheme = useCallback((x?: number, y?: number) => {
-    const next = !document.documentElement.classList.contains("light");
+    const next = document.documentElement.classList.contains("light");
 
     if (x !== undefined && y !== undefined) {
       document.documentElement.style.setProperty("--ripple-x", `${x}px`);

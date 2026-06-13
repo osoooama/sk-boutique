@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
+import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
 
@@ -82,8 +84,8 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
                       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                       className="flex gap-3 p-3 rounded-2xl bg-accent-gold-muted border border-border overflow-hidden"
                     >
-                      <div className="w-16 h-20 rounded-xl overflow-hidden bg-surface-primary flex-shrink-0">
-                        <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                      <div className="w-16 h-20 rounded-xl overflow-hidden bg-surface-primary flex-shrink-0 relative">
+                        <Image src={item.image} alt={isEnglish ? item.englishTitle : item.title} fill sizes="80px" className="object-cover" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
                       </div>
                       <div className="flex-1 min-w-0 space-y-1">
                         <div className="relative">

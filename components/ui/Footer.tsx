@@ -140,29 +140,7 @@ export default function Footer({ isEnglish }: FooterProps) {
             </div>
           </div>
 
-          {/* Credit Line */}
-          <motion.div
-            className="mt-6 pt-4 border-t border-border text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <motion.p
-              className="text-xs text-accent-gold/50"
-              animate={{ opacity: [0.4, 0.8, 0.4] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            >
-              {isEnglish ? "Built with ♥ by " : "قام بإنشاء هذه الصفحة "}
-              <a
-                href="https://www.instagram.com/osamakreishan?igsh=MW9yYWtrODhyZWs2NA%3D%3D&utm_source=qr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent-gold hover:text-accent-gold-hover transition-colors font-semibold"
-              >
-                @osamakreishan
-              </a>
-            </motion.p>
-          </motion.div>
+
       </div>
     </footer>
   );

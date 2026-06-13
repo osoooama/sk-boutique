@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
+import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
@@ -89,8 +91,8 @@ export default function CartPage() {
                     exit={{ opacity: 0, x: -30, height: 0, marginBottom: 0 }}
                     className="flex gap-4 p-4 rounded-2xl bg-white/[0.03] border border-border"
                   >
-                    <Link href={`/product/${item.productId}`} className="w-20 h-24 rounded-xl overflow-hidden bg-surface-primary flex-shrink-0">
-                      <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                    <Link href={`/product/${item.productId}`} className="w-20 h-24 rounded-xl overflow-hidden bg-surface-primary flex-shrink-0 relative">
+                      <Image src={item.image} alt={isEnglish ? item.englishTitle : item.title} fill sizes="96px" className="object-cover" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
                     </Link>
                     <div className="flex-1 min-w-0 space-y-1.5">
                       <div className="relative">

@@ -14,6 +14,8 @@ import CartDrawer from "@/components/ui/CartDrawer";
 import Toast from "@/components/Toast/Toast";
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
+import Image from "next/image";
+import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { products } from "@/lib/products";
 import { perfumes } from "@/lib/perfumes";
 import FeedbackGallery from "@/components/FeedbackGallery";
@@ -144,7 +146,7 @@ export default function HomePage() {
                 >
                   <TiltCard className="group glass-card overflow-hidden hover:border-accent-gold-muted transition-all duration-500">
                     <div className="relative aspect-square overflow-hidden bg-surface-primary">
-                      <img src={perfume.image} alt={perfume.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <Image src={perfume.image} alt={isEnglish ? perfume.englishTitle : perfume.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
                       <div className="absolute inset-0 bg-gradient-to-t from-surface-primary/60 to-transparent" />
                       <div className="absolute bottom-3 left-3 right-3">
                         <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted backdrop-blur-sm">

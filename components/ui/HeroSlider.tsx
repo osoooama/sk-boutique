@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 
 interface HeroSliderProps {
   isEnglish?: boolean;
@@ -30,7 +31,7 @@ export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
   }, [next]);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-surface-primary">
+    <section className="relative h-[100dvh] w-full overflow-hidden bg-surface-primary">
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
@@ -48,6 +49,8 @@ export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
             className="object-cover"
             priority={current === 0}
             loading={current === 0 ? undefined : "lazy"}
+            placeholder="blur"
+            blurDataURL={BLUR_PLACEHOLDER}
           />
         </motion.div>
       </AnimatePresence>

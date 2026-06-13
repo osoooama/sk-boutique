@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 
 interface LogoProps {
   className?: string;
@@ -54,6 +55,8 @@ export default function Logo({ className = "", showText = true, size = "md" }: L
               "drop-shadow(0 0 8px rgba(201, 168, 76, 0.4)) drop-shadow(0 0 16px rgba(232, 232, 232, 0.2))",
           }}
           priority
+          placeholder="blur"
+          blurDataURL={BLUR_PLACEHOLDER}
         />
       </motion.div>
 

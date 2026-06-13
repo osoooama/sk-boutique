@@ -10,7 +10,7 @@ export default function Hero({ isEnglish }: HeroProps) {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden"
+      className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-16 overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-to-b from-accent-gold/5 via-transparent to-surface-primary pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_20%_30%,rgba(201,168,76,0.08)_0%,transparent_60%),radial-gradient(ellipse_60%_40%_at_80%_70%,rgba(139,92,246,0.04)_0%,transparent_50%)] pointer-events-none" />

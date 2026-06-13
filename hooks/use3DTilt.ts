@@ -1,6 +1,8 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 
 const MAX_ROTATION = 8;
+const IS_TOUCH_DEVICE =
+  typeof window !== "undefined" && "ontouchstart" in window;
 
 export function use3DTilt() {
   const ref = useRef<HTMLDivElement>(null);
@@ -34,7 +36,7 @@ export function use3DTilt() {
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || IS_TOUCH_DEVICE) return;
     el.addEventListener("mousemove", handleMouseMove);
     el.addEventListener("mouseleave", handleMouseLeave);
     return () => {
@@ -43,21 +45,25 @@ export function use3DTilt() {
     };
   }, [handleMouseMove, handleMouseLeave]);
 
-  const tiltStyle: React.CSSProperties = {
-    transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${isHovering ? 1.03 : 1})`,
-    transition: isHovering ? "transform 0.05s ease-out" : "transform 0.5s ease-out",
-    willChange: "transform",
-  };
+  const tiltStyle: React.CSSProperties = IS_TOUCH_DEVICE
+    ? {}
+    : {
+        transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${isHovering ? 1.03 : 1})`,
+        transition: isHovering ? "transform 0.05s ease-out" : "transform 0.5s ease-out",
+        willChange: "transform",
+      };
 
-  const shimmerStyle: React.CSSProperties = {
-    position: "absolute",
-    inset: 0,
-    pointerEvents: "none",
-    borderRadius: "inherit",
-    opacity: isHovering ? 0.15 : 0,
-    transition: "opacity 0.3s ease",
-    background: `radial-gradient(circle at ${shimmerPos.x}% ${shimmerPos.y}%, rgba(201, 169, 110, 0.25) 0%, transparent 60%)`,
-  };
+  const shimmerStyle: React.CSSProperties = IS_TOUCH_DEVICE
+    ? { display: "none" }
+    : {
+        position: "absolute",
+        inset: 0,
+        pointerEvents: "none",
+        borderRadius: "inherit",
+        opacity: isHovering ? 0.15 : 0,
+        transition: "opacity 0.3s ease",
+        background: `radial-gradient(circle at ${shimmerPos.x}% ${shimmerPos.y}%, rgba(201, 169, 110, 0.25) 0%, transparent 60%)`,
+      };
 
   return { ref, tiltStyle, shimmerStyle, isHovering };
 }

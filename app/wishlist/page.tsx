@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
+import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
@@ -96,9 +98,9 @@ export default function WishlistPage() {
                       <i className="fas fa-heart text-xs" />
                     </button>
                     <Link href={`/product/${product.id}`} className="block" style={{ textDecoration: "none" }}>
-                      <div className="aspect-[3/4] bg-surface-primary overflow-hidden">
+                      <div className="relative aspect-[3/4] bg-surface-primary overflow-hidden">
                         {imgSrc ? (
-                          <img src={imgSrc} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                          <Image src={imgSrc} alt={isEnglish ? product.englishTitle : product.title} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center"><i className="fas fa-tshirt text-2xl text-accent-gold/20" /></div>
                         )}
@@ -161,8 +163,8 @@ export default function WishlistPage() {
                   >
                     <i className="fas fa-heart text-xs" />
                   </button>
-                  <div className="aspect-[3/4] bg-surface-primary overflow-hidden">
-                    <img src={perfume.image} alt={perfume.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div className="relative aspect-[3/4] bg-surface-primary overflow-hidden">
+                    <Image src={perfume.image} alt={isEnglish ? perfume.englishTitle : perfume.title} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
                   </div>
                   <Link href="/perfumes" className="block p-3" style={{ textDecoration: "none" }}>
                     <div className="relative">
