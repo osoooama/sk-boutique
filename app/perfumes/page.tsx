@@ -18,6 +18,7 @@ import { usePerfumes } from "@/lib/data";
 import { getPerfumePrice } from "@/lib/perfumes";
 import { springs } from "@/lib/springs";
 import type { Perfume } from "@/lib/types";
+import { useDeviceParallax } from "@/hooks/useDeviceParallax";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
 import CurrencyPopup from "@/components/CurrencyPopup";
@@ -29,22 +30,12 @@ const CATEGORIES = [
   { id: "sample", ar: "\u0639\u064a\u0646\u0627\u062a", en: "Samples" },
 ];
 
-export default function PerfumesPage() {
-  const [isEnglish, setIsEnglish] = useState(false);
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [searchOpen, setSearchOpen] = useState(false);
-  const { isDark, toggleTheme } = useTheme();
-  const { perfumes } = usePerfumes();
-
+function PerfumeCardWithParallax({ perfume, isEnglish, index = 0 }: { perfume: Perfume; isEnglish: boolean; index?: number }) {
+  const { ref, offset } = useDeviceParallax();
   const { addItem } = useCart();
   const { addToast } = useToast();
 
-  const filtered =
-    activeCategory === "all"
-      ? perfumes
-      : perfumes.filter((p) => p.category === activeCategory);
-
-  const handleAddPerfume = (perfume: Perfume) => {
+  const handleAdd = () => {
     addItem({
       productId: perfume.id,
       title: perfume.title,
@@ -57,6 +48,69 @@ export default function PerfumesPage() {
     });
     addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
   };
+
+  return (
+    <motion.div
+      ref={ref}
+      variants={perfumeCardVariant}
+      custom={index}
+      style={{ willChange: "transform" }}
+    >
+      <TiltCard className="group glass-card overflow-hidden hover:border-accent-gold-muted transition-all duration-500">
+        <div className="relative aspect-square overflow-hidden bg-surface-primary">
+          <div
+            className="absolute inset-0 will-change-transform"
+            style={{
+              transform: `translate3d(${(offset.x * 12).toFixed(1)}px, ${(offset.y * 12).toFixed(1)}px, 0)`,
+            }}
+          >
+            <Image src={perfume.image} alt={isEnglish ? perfume.englishTitle : perfume.title} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-surface-primary/60 via-transparent to-transparent" />
+          <div className="absolute bottom-2 left-2 right-2">
+            <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted backdrop-blur-sm">{perfume.volume}</span>
+          </div>
+        </div>
+        <div className="p-4 space-y-2" style={{ transform: `translate3d(${(offset.x * -5).toFixed(1)}px, ${(offset.y * -5).toFixed(1)}px, 0)`, willChange: "transform" }}>
+          <div className="relative">
+            <h3 className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</h3>
+            <div className="title-tooltip">
+              <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</p>
+            </div>
+          </div>
+          <p className="text-xs text-accent-gold/40 line-clamp-2 leading-relaxed">{isEnglish ? perfume.englishDescription : perfume.description}</p>
+          <div className="flex items-center justify-between pt-1">
+            <CurrencyPopup price={getPerfumePrice(perfume)}>
+              <span className="text-xs font-bold text-accent-gold">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "د.أ"}</span>
+            </CurrencyPopup>
+            <motion.button onClick={handleAdd} className="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted hover:bg-accent-gold/25 transition-all" whileHover={{ scale: 1.06, transition: springs.gentle }} whileTap={{ scale: 0.93, transition: springs.snappy }}>
+              <i className="fas fa-shopping-bag mr-1" />{isEnglish ? "Add" : "أضف"}
+            </motion.button>
+          </div>
+          {perfume.notes && (
+            <div className="pt-2 border-t border-border space-y-1">
+              {perfume.notes.top && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Top:" : "البداية:"} <span className="text-accent-gold/60">{perfume.notes.top.join("، ")}</span></p>}
+              {perfume.notes.middle && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Heart:" : "القلب:"} <span className="text-accent-gold/60">{perfume.notes.middle.join("، ")}</span></p>}
+              {perfume.notes.base && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Base:" : "القاعدة:"} <span className="text-accent-gold/60">{perfume.notes.base.join("، ")}</span></p>}
+            </div>
+          )}
+        </div>
+      </TiltCard>
+    </motion.div>
+  );
+}
+
+export default function PerfumesPage() {
+  const [isEnglish, setIsEnglish] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
+  const { perfumes } = usePerfumes();
+
+  const filtered =
+    activeCategory === "all"
+      ? perfumes
+      : perfumes.filter((p) => p.category === activeCategory);
 
   return (
     <div className="min-h-screen" dir={isEnglish ? "ltr" : "rtl"}>
@@ -156,45 +210,7 @@ export default function PerfumesPage() {
                 className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"
               >
                 {filtered.map((perfume, i) => (
-                  <motion.div
-                    key={perfume.id}
-                    variants={perfumeCardVariant}
-                    custom={i}
-                  >
-                    <TiltCard className="group glass-card overflow-hidden hover:border-accent-gold-muted transition-all duration-500">
-                      <div className="relative aspect-square overflow-hidden bg-surface-primary">
-                        <Image src={perfume.image} alt={isEnglish ? perfume.englishTitle : perfume.title} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
-                        <div className="absolute inset-0 bg-gradient-to-t from-surface-primary/60 via-transparent to-transparent" />
-                        <div className="absolute bottom-2 left-2 right-2">
-                          <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted backdrop-blur-sm">{perfume.volume}</span>
-                        </div>
-                      </div>
-                      <div className="p-4 space-y-2">
-                        <div className="relative">
-                          <h3 className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</h3>
-                          <div className="title-tooltip">
-                            <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</p>
-                          </div>
-                        </div>
-                        <p className="text-xs text-accent-gold/40 line-clamp-2 leading-relaxed">{isEnglish ? perfume.englishDescription : perfume.description}</p>
-                        <div className="flex items-center justify-between pt-1">
-                        <CurrencyPopup price={getPerfumePrice(perfume)}>
-                          <span className="text-xs font-bold text-accent-gold">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "\u062f.\u0623"}</span>
-                        </CurrencyPopup>
-                        <motion.button onClick={() => handleAddPerfume(perfume)} className="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted hover:bg-accent-gold/25 transition-all" whileHover={{ scale: 1.06, transition: springs.gentle }} whileTap={{ scale: 0.93, transition: springs.snappy }}>
-                          <i className="fas fa-shopping-bag mr-1" />{isEnglish ? "Add" : "\u0623\u0636\u0641"}
-                        </motion.button>
-                      </div>
-                      {perfume.notes && (
-                        <div className="pt-2 border-t border-border space-y-1">
-                          {perfume.notes.top && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Top:" : "\u0627\u0644\u0628\u062f\u0627\u064a\u0629:"} <span className="text-accent-gold/60">{perfume.notes.top.join("\u060c ")}</span></p>}
-                          {perfume.notes.middle && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Heart:" : "\u0627\u0644\u0642\u0644\u0628:"} <span className="text-accent-gold/60">{perfume.notes.middle.join("\u060c ")}</span></p>}
-                          {perfume.notes.base && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Base:" : "\u0627\u0644\u0642\u0627\u0639\u062f\u0629:"} <span className="text-accent-gold/60">{perfume.notes.base.join("\u060c ")}</span></p>}
-                        </div>
-                      )}
-                    </div>
-                  </TiltCard>
-                </motion.div>
+                  <PerfumeCardWithParallax key={perfume.id} perfume={perfume} isEnglish={isEnglish} index={i} />
                 ))}
               </motion.div>
             )}

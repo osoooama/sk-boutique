@@ -12,6 +12,7 @@ import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { springs } from "@/lib/springs";
 import { hapticMedium, hapticLight } from "@/lib/haptics";
 import { useSwipeAction } from "@/hooks/useSwipeAction";
+import { useDeviceParallax } from "@/hooks/useDeviceParallax";
 import CurrencyPopup from "@/components/CurrencyPopup";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -66,6 +67,8 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
     onSwipeLeft: handleSwipeLeft,
     onSwipeRight: handleSwipeRight,
   });
+
+  const { ref: parallaxRef, offset: parallax } = useDeviceParallax();
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -157,6 +160,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
         style={{ textDecoration: "none" }}
       >
         <motion.div
+          ref={parallaxRef}
           className="group relative rounded-[20px] overflow-hidden will-change-transform"
           style={{
             background: "var(--bg-card)",
@@ -205,29 +209,36 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
 
             {images[0] && !imgError ? (
               <>
-                <Image
-                  src={images[0]}
-                  alt={isEnglish ? product.englishTitle : product.title}
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
-                  loading="lazy"
-                  placeholder="blur"
-                  blurDataURL={BLUR_PLACEHOLDER}
-                  onError={() => setImgError(true)}
-                />
-                {images[1] && (
+                <div
+                  className="absolute inset-0 will-change-transform"
+                  style={{
+                    transform: `translate3d(${(parallax.x * 15).toFixed(1)}px, ${(parallax.y * 15).toFixed(1)}px, 0)`,
+                  }}
+                >
                   <Image
-                    src={images[1]}
+                    src={images[0]}
                     alt={isEnglish ? product.englishTitle : product.title}
                     fill
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-[0.4s]"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
                     loading="lazy"
                     placeholder="blur"
                     blurDataURL={BLUR_PLACEHOLDER}
+                    onError={() => setImgError(true)}
                   />
-                )}
+                  {images[1] && (
+                    <Image
+                      src={images[1]}
+                      alt={isEnglish ? product.englishTitle : product.title}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-[0.4s]"
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL={BLUR_PLACEHOLDER}
+                    />
+                  )}
+                </div>
               </>
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-4xl text-accent-gold/10">
@@ -235,7 +246,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
               </div>
             )}
 
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-surface-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
             <div className="absolute inset-x-0 bottom-0 p-4 translate-y-5 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
               <button
@@ -264,7 +275,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
             </div>
           </div>
 
-          <div className="p-3 md:p-4 space-y-2">
+          <div className="p-3 md:p-4 space-y-2" style={{ transform: `translate3d(${(parallax.x * -5).toFixed(1)}px, ${(parallax.y * -5).toFixed(1)}px, 0)`, willChange: "transform" }}>
             <div className="relative">
               <h3
                 className={`font-bold text-sm line-clamp-2 ${

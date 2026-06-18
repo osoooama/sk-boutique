@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
+import { useDeviceParallax } from "@/hooks/useDeviceParallax";
 import MagneticWrapper from "./MagneticWrapper";
 
 interface HeroSliderProps {
@@ -20,6 +21,7 @@ const SLIDES = [
 ];
 
 export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
+  const { ref: parallaxRef, offset: parallax } = useDeviceParallax();
   const [current, setCurrent] = useState(0);
 
   const next = useCallback(() => {
@@ -32,11 +34,14 @@ export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
   }, [next]);
 
   return (
-    <section className="relative h-[100dvh] w-full overflow-hidden bg-surface-primary">
+    <section ref={parallaxRef} className="relative h-[100dvh] w-full overflow-hidden bg-surface-primary">
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
-          className="absolute inset-0"
+          className="absolute inset-0 will-change-transform"
+          style={{
+            transform: `translate3d(${(parallax.x * 20).toFixed(1)}px, ${(parallax.y * 20).toFixed(1)}px, 0)`,
+          }}
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
@@ -59,7 +64,7 @@ export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
 
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ transform: `translate3d(${(parallax.x * -8).toFixed(1)}px, ${(parallax.y * -8).toFixed(1)}px, 0)`, willChange: "transform" }}>
         <div className="text-center space-y-6 px-4" dir="rtl">
           <motion.div
             key={`badge-${current}`}
