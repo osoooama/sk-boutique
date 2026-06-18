@@ -33,7 +33,7 @@ export default function EditPerfumePage() {
   const [featured, setFeatured] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+  const [_loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (!perfume) return;

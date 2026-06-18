@@ -1,6 +1,6 @@
 "use client";
 
-export default function ProductCardSkeleton({ isEnglish }: { isEnglish?: boolean }) {
+export default function ProductCardSkeleton() {
   return (
     <div className="rounded-[20px] overflow-hidden" style={{ background: "var(--bg-card)", border: "1px solid rgba(201,168,76,0.15)" }}>
       <div className="relative aspect-[3/4] overflow-hidden bg-surface-primary">

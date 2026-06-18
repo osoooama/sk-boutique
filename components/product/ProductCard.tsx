@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -10,7 +9,7 @@ import { fadeUpVariant } from "@/lib/animations";
 import { navigateWithTransition } from "@/lib/viewTransition";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { springs } from "@/lib/springs";
-import { hapticMedium, hapticLight } from "@/lib/haptics";
+import { hapticLight } from "@/lib/haptics";
 import { useSwipeAction } from "@/hooks/useSwipeAction";
 import { useDeviceParallax } from "@/hooks/useDeviceParallax";
 import { useProductColor } from "@/hooks/useProductColor";

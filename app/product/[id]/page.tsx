@@ -36,7 +36,6 @@ export default function ProductDetailPage() {
   const [selectedSize, setSelectedSize] = useState("");
   const { isDark, toggleTheme } = useTheme();
   const [selectedColor, setSelectedColor] = useState("");
-  const [selectedImage, setSelectedImage] = useState(0);
   const [addedToCart, setAddedToCart] = useState(false);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
@@ -254,7 +253,7 @@ export default function ProductDetailPage() {
                   <ColorSwatches
                     colors={product.colors.slice(0, 2)}
                     selectedColor={selectedColor || product.colors[0].name}
-                    onColorChange={(name) => { setSelectedColor(name); setSelectedImage(0); }}
+                    onColorChange={(name) => { setSelectedColor(name); }}
                     isEnglish={isEnglish}
                   />
                   {product.colors.length > 2 && (
@@ -341,7 +340,7 @@ export default function ProductDetailPage() {
               {isEnglish ? "You May Also Like" : "قد يعجبك أيضاً"}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {relatedProducts.map((p, i) => (
+              {relatedProducts.map((p) => (
                 <Link key={p.id} href={`/product/${p.id}`} className="group block glass-card rounded-xl overflow-hidden hover:border-accent-gold-muted transition-all" style={{ textDecoration: "none" }}>
                   <div className="relative aspect-[3/4] bg-surface-primary overflow-hidden">
                     <Image src={p.colors[0]?.images[0] || ""} alt={isEnglish ? p.englishTitle : p.title} fill sizes="(max-width: 640px) 50vw, 25vw" className="object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
@@ -452,7 +451,7 @@ export default function ProductDetailPage() {
               {product.colors.slice(0, 2).map((c) => (
                 <button
                   key={c.name}
-                  onClick={() => { setSelectedColor(c.name); setSelectedImage(0); }}
+                  onClick={() => { setSelectedColor(c.name); }}
                   className={`w-8 h-8 rounded-full border-2 transition-all ${
                     (selectedColor || product.colors[0].name) === c.name ? "border-accent-gold scale-110" : "border-border"
                   }`}

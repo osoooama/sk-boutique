@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { fadeLeftVariant, staggerContainer, staggerContainerSlow, fadeUpVariant, featureCardVariant, feedbackCardVariant } from "@/lib/animations";
+import { fadeLeftVariant, staggerContainer, staggerContainerSlow, fadeUpVariant, featureCardVariant } from "@/lib/animations";
 import TiltCard from "@/components/product/TiltCard";
 import Navbar from "@/components/ui/Navbar";
 import { useTheme } from "@/context/ThemeContext";

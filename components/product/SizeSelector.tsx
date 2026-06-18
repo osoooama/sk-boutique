@@ -2,11 +2,6 @@
 
 import { motion } from "framer-motion";
 
-interface SizeOption {
-  size: string;
-  available: boolean;
-}
-
 interface SizeSelectorProps {
   sizes: string[];
   selectedSize: string;

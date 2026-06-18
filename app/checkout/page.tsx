@@ -33,7 +33,6 @@ export default function CheckoutPage() {
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [backupPhone, setBackupPhone] = useState("");
   const [backupPhoneError, setBackupPhoneError] = useState<string | null>(null);
-  const [step, setStep] = useState<"form" | "submitting">("form");
   const [submitting, setSubmitting] = useState(false);
 
   const handleCityChange = (cityName: string) => {
@@ -86,7 +85,6 @@ export default function CheckoutPage() {
     }
 
     setSubmitting(true);
-    setStep("submitting");
 
     const orderLines = items
       .map(
@@ -122,13 +120,6 @@ ${discountPercent > 0 ? `🎁 *كود الخصم:* ${discountCode} (-${(subtotal
     window.open(waUrl, "_blank");
     router.push("/order-confirmation");
   };
-
-  const inputClass = (hasError: boolean) =>
-    `w-full rounded-xl border px-4 py-3 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent-gold-muted ${
-      hasError
-        ? "border-red-400 bg-red-500/10"
-        : "border-accent-gold-muted bg-surface-card text-content-primary"
-    }`;
 
   return (
     <div

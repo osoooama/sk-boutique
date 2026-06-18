@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { springs } from "@/lib/springs";
 
 export default function NotificationBar() {
   return (

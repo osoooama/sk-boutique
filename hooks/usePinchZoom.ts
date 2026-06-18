@@ -14,20 +14,7 @@ export function usePinchZoom(maxScale = 3) {
   const lastScale = useRef(1);
   const lastX = useRef(0);
   const lastY = useRef(0);
-  const rafId = useRef(0);
   const lastTap = useRef(0);
-  const initialPinchDist = useRef(0);
-
-  const update = useCallback(
-    (scale: number, x: number, y: number) => {
-      cancelAnimationFrame(rafId.current);
-      rafId.current = requestAnimationFrame(() => {
-        const clamped = Math.max(1, Math.min(maxScale, scale));
-        setState({ scale: clamped, x, y });
-      });
-    },
-    [maxScale]
-  );
 
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
@@ -36,7 +23,6 @@ export function usePinchZoom(maxScale = 3) {
         const dy = e.touches[0].clientY - e.touches[1].clientY;
         lastDist.current = Math.sqrt(dx * dx + dy * dy);
         lastScale.current = state.scale;
-        initialPinchDist.current = lastDist.current;
         return;
       }
       if (e.touches.length === 1) {
@@ -65,7 +51,7 @@ export function usePinchZoom(maxScale = 3) {
         const dist = Math.sqrt(dx * dx + dy * dy);
         const ratio = dist / lastDist.current;
         const newScale = Math.max(1, Math.min(maxScale, lastScale.current * ratio));
-        setState((prev) => ({ ...prev, scale: newScale }));
+        setState((prev): PinchZoomState => ({ ...prev, scale: newScale }));
         return;
       }
       if (e.touches.length === 1 && state.scale > 1) {
@@ -73,7 +59,7 @@ export function usePinchZoom(maxScale = 3) {
         const dy = e.touches[0].clientY - lastY.current;
         lastX.current = e.touches[0].clientX;
         lastY.current = e.touches[0].clientY;
-        setState((prev) => ({ ...prev, x: prev.x + dx, y: prev.y + dy }));
+        setState((prev): PinchZoomState => ({ ...prev, x: prev.x + dx, y: prev.y + dy }));
       }
     },
     [maxScale, state.scale]
