@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { getSupabase } from "./supabase";
 import type { Product, Perfume, ProductColor, DbProduct, DbPerfume } from "./types";
 
 function toProduct(row: DbProduct): Product {
@@ -47,7 +47,8 @@ function toPerfume(row: DbPerfume): Perfume {
 }
 
 export async function getProducts(): Promise<Product[]> {
-  const { data, error } = await supabase
+  const sb = getSupabase();
+  const { data, error } = await sb
     .from("products")
     .select("*")
     .order("created_at", { ascending: false });
@@ -57,7 +58,8 @@ export async function getProducts(): Promise<Product[]> {
 }
 
 export async function getProduct(id: string): Promise<Product | null> {
-  const { data, error } = await supabase
+  const sb = getSupabase();
+  const { data, error } = await sb
     .from("products")
     .select("*")
     .eq("id", id)
@@ -70,7 +72,8 @@ export async function getProduct(id: string): Promise<Product | null> {
 export async function createProduct(
   input: Omit<DbProduct, "id" | "created_at" | "updated_at">
 ): Promise<Product> {
-  const { data, error } = await supabase
+  const sb = getSupabase();
+  const { data, error } = await sb
     .from("products")
     .insert(input)
     .select()
@@ -84,7 +87,8 @@ export async function updateProduct(
   id: string,
   input: Partial<Omit<DbProduct, "id" | "created_at" | "updated_at">>
 ): Promise<Product> {
-  const { data, error } = await supabase
+  const sb = getSupabase();
+  const { data, error } = await sb
     .from("products")
     .update(input)
     .eq("id", id)
@@ -96,12 +100,14 @@ export async function updateProduct(
 }
 
 export async function deleteProduct(id: string): Promise<void> {
-  const { error } = await supabase.from("products").delete().eq("id", id);
+  const sb = getSupabase();
+  const { error } = await sb.from("products").delete().eq("id", id);
   if (error) throw new Error(error.message);
 }
 
 export async function getPerfumes(): Promise<Perfume[]> {
-  const { data, error } = await supabase
+  const sb = getSupabase();
+  const { data, error } = await sb
     .from("perfumes")
     .select("*")
     .order("created_at", { ascending: false });
@@ -111,7 +117,8 @@ export async function getPerfumes(): Promise<Perfume[]> {
 }
 
 export async function getPerfume(id: string): Promise<Perfume | null> {
-  const { data, error } = await supabase
+  const sb = getSupabase();
+  const { data, error } = await sb
     .from("perfumes")
     .select("*")
     .eq("id", id)
@@ -124,7 +131,8 @@ export async function getPerfume(id: string): Promise<Perfume | null> {
 export async function createPerfume(
   input: Omit<DbPerfume, "id" | "created_at" | "updated_at">
 ): Promise<Perfume> {
-  const { data, error } = await supabase
+  const sb = getSupabase();
+  const { data, error } = await sb
     .from("perfumes")
     .insert(input)
     .select()
@@ -138,7 +146,8 @@ export async function updatePerfume(
   id: string,
   input: Partial<Omit<DbPerfume, "id" | "created_at" | "updated_at">>
 ): Promise<Perfume> {
-  const { data, error } = await supabase
+  const sb = getSupabase();
+  const { data, error } = await sb
     .from("perfumes")
     .update(input)
     .eq("id", id)
@@ -150,7 +159,8 @@ export async function updatePerfume(
 }
 
 export async function deletePerfume(id: string): Promise<void> {
-  const { error } = await supabase.from("perfumes").delete().eq("id", id);
+  const sb = getSupabase();
+  const { error } = await sb.from("perfumes").delete().eq("id", id);
   if (error) throw new Error(error.message);
 }
 
@@ -158,24 +168,26 @@ export async function uploadImage(
   file: File,
   folder: string
 ): Promise<string> {
+  const sb = getSupabase();
   const ext = file.name.split(".").pop() ?? "webp";
   const fileName = `${folder}/${crypto.randomUUID()}.${ext}`;
 
-  const { error } = await supabase.storage.from("products").upload(fileName, file, {
+  const { error } = await sb.storage.from("products").upload(fileName, file, {
     contentType: file.type,
     cacheControl: "31536000",
   });
 
   if (error) throw new Error(error.message);
 
-  const { data: urlData } = supabase.storage.from("products").getPublicUrl(fileName);
+  const { data: urlData } = sb.storage.from("products").getPublicUrl(fileName);
   return urlData.publicUrl;
 }
 
 export async function deleteImage(url: string): Promise<void> {
+  const sb = getSupabase();
   const path = url.split("/").pop();
   if (!path) return;
 
-  const { error } = await supabase.storage.from("products").remove([path]);
+  const { error } = await sb.storage.from("products").remove([path]);
   if (error) throw new Error(error.message);
 }

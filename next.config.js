@@ -21,7 +21,12 @@ const nextConfig = {
     minimumCacheTTL: 31536000,
     dangerouslyAllowSVG: false,
     contentDispositionType: "attachment",
-    remotePatterns: [],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.supabase.co",
+      },
+    ],
   },
   experimental: {
     optimizePackageImports: ["framer-motion", "gsap"],
