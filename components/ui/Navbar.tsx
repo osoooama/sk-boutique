@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
@@ -24,6 +24,8 @@ const NAV_LINKS = [
   { href: "/#contact", ar: "تواصل معنا", en: "Contact Us" },
 ];
 
+type PillMode = "default" | "compact" | "notification" | "cart";
+
 const menuItemVariant = {
   hidden: { opacity: 0, x: 30 },
   visible: (i: number) => ({
@@ -33,6 +35,10 @@ const menuItemVariant = {
   }),
 };
 
+function pillBg(dark: boolean) {
+  return dark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.6)";
+}
+
 export default function Navbar({
   isEnglish,
   isDark,
@@ -40,15 +46,27 @@ export default function Navbar({
   onToggleTheme,
   onSearchOpen,
 }: NavbarProps) {
-  const { totalItems, openCart } = useCart();
+  const { items, totalItems, openCart } = useCart();
   const { count: wishlistCount } = useWishlist();
   const [hidden, setHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [badgeBounce, setBadgeBounce] = useState(false);
-  const { scrollY } = useScroll();
+  const [isMobile, setIsMobile] = useState(false);
   const lastScroll = useRef(0);
   const prevTotal = useRef(totalItems);
+  const [pillMode, setPillMode] = useState<PillMode>("default");
+  const [overrideMode, setOverrideMode] = useState(false);
+  const [notificationMsg, setNotificationMsg] = useState("");
+  const notifTimer = useRef<ReturnType<typeof setTimeout>>();
+  const [themeRotation, setThemeRotation] = useState(0);
+  const { scrollY } = useScroll();
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check, { passive: true });
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50);
@@ -58,12 +76,31 @@ export default function Navbar({
   }, []);
 
   useEffect(() => {
+    if (overrideMode) return;
+    setPillMode(isScrolled ? "compact" : "default");
+  }, [isScrolled, overrideMode]);
+
+  const revertMode = useCallback(() => {
+    setOverrideMode(false);
+    setIsScrolled(window.scrollY > 50);
+  }, []);
+
+  const showNotification = useCallback((msg: string) => {
+    setNotificationMsg(msg);
+    setOverrideMode(true);
+    setPillMode("notification");
+    if (notifTimer.current) clearTimeout(notifTimer.current);
+    notifTimer.current = setTimeout(revertMode, 3000);
+  }, [revertMode]);
+
+  useEffect(() => {
     if (totalItems > prevTotal.current) {
-      setBadgeBounce(true);
-      setTimeout(() => setBadgeBounce(false), 400);
+      const last = items[items.length - 1];
+      const name = isEnglish ? last?.englishTitle : last?.title;
+      showNotification(name ? `✓ ${name}` : isEnglish ? "✓ Added to cart!" : "✓ أضيف للسلة!");
     }
     prevTotal.current = totalItems;
-  }, [totalItems]);
+  }, [totalItems, items, isEnglish, showNotification]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -76,20 +113,21 @@ export default function Navbar({
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const diff = latest - lastScroll.current;
+    if (overrideMode) return;
     if (diff > 80 && isScrolled) setHidden(true);
     else if (diff < 0) setHidden(false);
     lastScroll.current = latest;
   });
 
-  const [themeRotation, setThemeRotation] = useState(0);
-
-  const scrollBg = isScrolled
-    ? isDark ? "rgba(10,10,10,0.72)" : "rgba(255,255,253,0.75)"
-    : "transparent";
+  const handleCartClick = useCallback(() => {
+    openCart();
+    setPillMode("cart");
+    setOverrideMode(true);
+  }, [openCart]);
 
   const IridescentLogo = ({ className = "" }: { className?: string }) => (
     <span
-      className={`text-xl md:text-2xl font-bold tracking-wider select-none ${className}`}
+      className={`font-bold tracking-wider select-none ${className}`}
       style={{
         background: "linear-gradient(90deg, #C0C0C0 0%, #C9A84C 20%, #E8D5A3 40%, #FFB6C1 60%, #D4A574 80%, #C0C0C0 100%)",
         backgroundSize: "300% auto",
@@ -103,225 +141,301 @@ export default function Navbar({
     </span>
   );
 
+  const liquidGlass: React.CSSProperties = {
+    background: pillBg(isDark),
+    backdropFilter: "blur(40px) saturate(200%) brightness(1.1)",
+    WebkitBackdropFilter: "blur(40px) saturate(200%) brightness(1.1)",
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: isMobile ? "16px" : "20px",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.2), 0 8px 32px rgba(0,0,0,0.3)",
+  };
+
+  const pillCompact = pillMode === "compact" || (pillMode === "default" && isMobile);
+  const horizontalPadding = pillCompact ? "0 12px" : "0 8px";
+  const pillHeight = pillCompact ? 40 : 48;
+
+  const CompactContent = () => (
+    <motion.div
+      key="compact"
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={springs.gentle}
+      className="flex items-center gap-1.5"
+      dir={isEnglish ? "ltr" : "rtl"}
+    >
+      <Link href="/" className="flex items-center shrink-0" style={{ textDecoration: "none" }}>
+        <IridescentLogo className="text-sm" />
+      </Link>
+      <div className="flex items-center gap-1">
+        <MagneticWrapper>
+          <button onClick={handleCartClick} className="relative w-7 h-7 flex items-center justify-center text-accent-gold/60 hover:text-accent-gold transition-all">
+            <i className="fas fa-shopping-bag text-xs" />
+            {totalItems > 0 && (
+              <motion.span
+                className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-extrabold"
+                style={{ background: "var(--accent-gold)", color: "var(--text-on-accent)" }}
+                key={totalItems}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={springs.bouncy}
+              >
+                {totalItems > 9 ? "9+" : totalItems}
+              </motion.span>
+            )}
+          </button>
+        </MagneticWrapper>
+        {onToggleTheme && (
+          <button
+            onClick={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              onToggleTheme(rect.left + rect.width / 2, rect.top + rect.height / 2);
+              setThemeRotation((p) => p + 180);
+            }}
+            className="w-7 h-7 rounded-full flex items-center justify-center transition-all"
+            style={{ border: "1px solid rgba(255,255,255,0.2)" }}
+          >
+            <motion.i
+              animate={{ rotate: themeRotation }}
+              className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-[10px]`}
+              style={{ color: "var(--accent-gold)" }}
+            />
+          </button>
+        )}
+        {onToggleLang && (
+          <button
+            onClick={onToggleLang}
+            className="w-7 h-7 rounded-xl flex items-center justify-center text-accent-gold/60 hover:text-accent-gold transition-all font-semibold text-[9px]"
+            style={{ border: "1px solid rgba(255,255,255,0.2)" }}
+          >
+            {isEnglish ? "AR" : "EN"}
+          </button>
+        )}
+      </div>
+      {isMobile && (
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="w-7 h-7 flex items-center justify-center text-accent-gold/60 hover:text-accent-gold transition-all"
+          aria-label={isEnglish ? "Menu" : "القائمة"}
+        >
+          <i className="fas fa-bars text-xs" />
+        </button>
+      )}
+    </motion.div>
+  );
+
   return (
     <>
       <motion.header
-        className="fixed top-0 inset-x-0 z-50"
+        className="fixed top-0 inset-x-0 z-50 flex justify-center"
         style={{
-          paddingTop: "env(safe-area-inset-top, 0px)",
-          background: scrollBg,
-          backdropFilter: isScrolled ? "blur(24px)" : "blur(4px)",
-          WebkitBackdropFilter: isScrolled ? "blur(24px)" : "blur(4px)",
-          borderBottom: isScrolled ? "1px solid rgba(201,169,110,0.35)" : "1px solid transparent",
-          transition: "background 0.3s ease, border 0.3s ease, backdrop-filter 0.3s ease",
+          paddingTop: "calc(env(safe-area-inset-top, 0px) + 8px)",
+          pointerEvents: "none",
         }}
-        animate={{ y: hidden ? -100 : 0 }}
+        animate={{ y: hidden ? -120 : 0 }}
         transition={springs.gentle}
       >
-        <div
-          className="flex items-center justify-between h-14 md:h-[60px] px-4 md:px-6 mx-auto"
-          style={{ maxWidth: "1280px" }}
-          dir={isEnglish ? "ltr" : "rtl"}
+        <motion.div
+          layout
+          className="flex items-center overflow-hidden"
+          style={{
+            ...liquidGlass,
+            pointerEvents: "auto",
+            padding: horizontalPadding,
+            height: pillHeight + (pillMode === "notification" || pillMode === "cart" ? 0 : 0),
+          }}
+          transition={springs.gentle}
         >
-          <Link href="/" className="flex items-center shrink-0" style={{ textDecoration: "none" }}>
-            <IridescentLogo />
-          </Link>
-
-          <nav className="hidden md:flex items-center gap-6 text-sm">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="relative text-accent-gold/60 hover:text-accent-gold transition-colors duration-300 py-2 tracking-wide"
-                style={{ textDecoration: "none" }}
+          <AnimatePresence mode="popLayout">
+            {pillMode === "default" && !isMobile && (
+              <motion.div
+                key="default"
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={springs.gentle}
+                className="flex items-center gap-1"
+                dir={isEnglish ? "ltr" : "rtl"}
               >
-                {isEnglish ? link.en : link.ar}
-                <span className="absolute -bottom-0.5 inset-x-0 h-[2px] bg-accent-gold scale-x-0 hover:scale-x-100 transition-transform duration-300 origin-right" />
-              </Link>
-            ))}
-          </nav>
+                <Link href="/" className="flex items-center shrink-0 mx-2" style={{ textDecoration: "none" }}>
+                  <IridescentLogo className="text-lg" />
+                </Link>
 
-          <div className="hidden md:flex items-center gap-2.5">
-            {onSearchOpen && (
-              <button
-                onClick={onSearchOpen}
-                className="w-9 h-9 rounded-xl flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all"
-                aria-label={isEnglish ? "Search" : "بحث"}
-              >
-                <i className="fas fa-search text-xs" />
-              </button>
-            )}
-            <Link href="/wishlist" className="relative hidden md:block" style={{ textDecoration: "none" }}>
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all">
-                <i className="fas fa-heart text-xs" />
-              </div>
-              {wishlistCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full bg-red-400 text-[#1A1208] text-[9px] font-extrabold flex items-center justify-center">
-                  {wishlistCount > 9 ? "9+" : wishlistCount}
-                </span>
-              )}
-            </Link>
-            <MagneticWrapper>
-              <button onClick={openCart} className="relative" style={{ textDecoration: "none" }}>
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all">
-                  <i className="fas fa-shopping-bag text-xs" />
+                <nav className="flex items-center gap-1 text-sm mx-2">
+                  {NAV_LINKS.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="relative px-3 py-1.5 rounded-xl text-accent-gold/60 hover:text-accent-gold hover:bg-accent-gold-muted transition-all text-xs font-medium tracking-wide whitespace-nowrap"
+                      style={{ textDecoration: "none" }}
+                    >
+                      {isEnglish ? link.en : link.ar}
+                    </Link>
+                  ))}
+                </nav>
+
+                <div className="flex items-center gap-1 mx-1">
+                  {onSearchOpen && (
+                    <button
+                      onClick={onSearchOpen}
+                      className="w-8 h-8 rounded-xl flex items-center justify-center text-accent-gold/60 hover:text-accent-gold hover:bg-accent-gold-muted transition-all"
+                      aria-label={isEnglish ? "Search" : "بحث"}
+                    >
+                      <i className="fas fa-search text-xs" />
+                    </button>
+                  )}
+                  <Link href="/wishlist" style={{ textDecoration: "none" }}>
+                    <div className="relative w-8 h-8 rounded-xl flex items-center justify-center text-accent-gold/60 hover:text-accent-gold hover:bg-accent-gold-muted transition-all">
+                      <i className="fas fa-heart text-xs" />
+                      {wishlistCount > 0 && (
+                        <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-red-400 text-[8px] font-extrabold flex items-center justify-center" style={{ color: "#1A1208" }}>
+                          {wishlistCount > 9 ? "9+" : wishlistCount}
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                  <MagneticWrapper>
+                    <button onClick={handleCartClick} className="relative" style={{ textDecoration: "none" }}>
+                      <div className="w-8 h-8 rounded-xl flex items-center justify-center text-accent-gold/60 hover:text-accent-gold hover:bg-accent-gold-muted transition-all">
+                        <i className="fas fa-shopping-bag text-xs" />
+                      </div>
+                      {totalItems > 0 && (
+                        <motion.span
+                          className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-extrabold"
+                          style={{ background: "var(--accent-gold)", color: "var(--text-on-accent)" }}
+                          key={totalItems}
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={springs.bouncy}
+                        >
+                          {totalItems > 9 ? "9+" : totalItems}
+                        </motion.span>
+                      )}
+                    </button>
+                  </MagneticWrapper>
+                  {onToggleTheme && (
+                    <button
+                      onClick={(e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        onToggleTheme(rect.left + rect.width / 2, rect.top + rect.height / 2);
+                        setThemeRotation((p) => p + 180);
+                      }}
+                      className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:shadow-[0_0_12px_rgba(201,169,110,0.3)]"
+                      style={{ border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.05)" }}
+                      aria-label={isEnglish ? "Toggle theme" : "تغيير المظهر"}
+                    >
+                      <motion.i
+                        animate={{ rotate: themeRotation }}
+                        transition={springs.gentle}
+                        className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-xs`}
+                        style={{ color: "var(--accent-gold)" }}
+                      />
+                    </button>
+                  )}
+                  {onToggleLang && (
+                    <button
+                      onClick={onToggleLang}
+                      className="w-8 h-8 rounded-xl flex items-center justify-center text-accent-gold/60 hover:text-accent-gold hover:bg-accent-gold-muted transition-all font-semibold text-[10px]"
+                      style={{ border: "1px solid rgba(255,255,255,0.2)" }}
+                      aria-label={isEnglish ? "العربية" : "English"}
+                    >
+                      {isEnglish ? "AR" : "EN"}
+                    </button>
+                  )}
                 </div>
-              {totalItems > 0 && (
-                <motion.span
-                  key={badgeBounce ? "bounce" : "normal"}
-                  className="absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full flex items-center justify-center text-[9px] font-extrabold"
+              </motion.div>
+            )}
+
+            {(pillMode === "compact" || (pillMode === "default" && isMobile)) && <CompactContent />}
+
+            {pillMode === "notification" && (
+              <motion.div
+                key="notification"
+                initial={{ opacity: 0, y: 10, height: 0 }}
+                animate={{ opacity: 1, y: 0, height: "auto" }}
+                exit={{ opacity: 0, y: -10, height: 0 }}
+                transition={springs.gentle}
+                className="flex items-center gap-2 px-4 py-2"
+                dir={isEnglish ? "ltr" : "rtl"}
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ ...springs.bouncy, delay: 0.1 }}
+                  className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
+                  style={{ background: "var(--accent-gold)" }}
+                >
+                  <i className="fas fa-check text-[10px]" style={{ color: "var(--text-on-accent)" }} />
+                </motion.div>
+                <span className="text-xs font-medium whitespace-nowrap" style={{ color: "var(--text-primary)" }}>
+                  {notificationMsg}
+                </span>
+                <motion.div
+                  className="h-0.5 rounded-full"
+                  style={{ background: "var(--accent-gold)", width: 48, minWidth: 48 }}
+                />
+              </motion.div>
+            )}
+
+            {pillMode === "cart" && (
+              <motion.div
+                key="cart"
+                initial={{ opacity: 0, y: 10, height: 0 }}
+                animate={{ opacity: 1, y: 0, height: "auto" }}
+                exit={{ opacity: 0, y: -10, height: 0 }}
+                transition={springs.gentle}
+                className="flex flex-col gap-2 px-4 py-3 min-w-[220px]"
+                dir={isEnglish ? "ltr" : "rtl"}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold" style={{ color: "var(--text-primary)" }}>
+                    {isEnglish ? "Cart" : "السلة"} ({totalItems})
+                  </span>
+                  <button
+                    onClick={revertMode}
+                    className="w-6 h-6 rounded-lg flex items-center justify-center text-accent-gold/40 hover:text-accent-gold transition-all"
+                  >
+                    <i className="fas fa-times text-[10px]" />
+                  </button>
+                </div>
+                {items.length === 0 ? (
+                  <p className="text-[11px]" style={{ color: "var(--text-muted)" }}>
+                    {isEnglish ? "Cart is empty" : "السلة فارغة"}
+                  </p>
+                ) : (
+                  <div className="space-y-1.5 max-h-[140px] overflow-y-auto">
+                    {items.slice(0, 4).map((item) => (
+                      <div key={`${item.productId}-${item.size}-${item.color}`} className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: item.colorHex || "var(--accent-gold)" }} />
+                        <span className="text-[11px] truncate flex-1" style={{ color: "var(--text-secondary)" }}>
+                          {isEnglish ? item.englishTitle : item.title}
+                        </span>
+                        <span className="text-[10px] font-medium shrink-0" style={{ color: "var(--accent-gold)" }}>
+                          x{item.quantity}
+                        </span>
+                      </div>
+                    ))}
+                    {items.length > 4 && (
+                      <p className="text-[10px]" style={{ color: "var(--text-muted)" }}>
+                        +{items.length - 4} {isEnglish ? "more" : "أخرى"}
+                      </p>
+                    )}
+                  </div>
+                )}
+                <button
+                  onClick={() => { revertMode(); window.location.href = "/cart"; }}
+                  className="w-full h-8 rounded-xl flex items-center justify-center text-[11px] font-bold transition-all"
                   style={{
                     background: "var(--accent-gold)",
                     color: "var(--text-on-accent)",
                   }}
-                  animate={badgeBounce ? { scale: [1, 1.5, 1] } : { scale: 1 }}
-                  transition={springs.bouncy}
                 >
-                  <AnimatePresence mode="popLayout">
-                    <motion.span
-                      key={totalItems}
-                      initial={{ y: -10, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: 10, opacity: 0 }}
-                      transition={springs.snappy}
-                    >
-                      {totalItems > 9 ? "9+" : totalItems}
-                    </motion.span>
-                  </AnimatePresence>
-                </motion.span>
-              )}
-            </button>
-            </MagneticWrapper>
-            {onToggleTheme && (
-              <button
-                onClick={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const x = rect.left + rect.width / 2;
-                  const y = rect.top + rect.height / 2;
-                  setThemeRotation((p) => p + 180);
-                  onToggleTheme(x, y);
-                }}
-                className="w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all duration-300 cursor-pointer hover:shadow-[0_0_16px_rgba(201,169,110,0.4)]"
-                style={{
-                  borderColor: isDark ? "var(--border-color)" : "var(--accent-gold)",
-                  background: "var(--nav-bg-ghost)",
-                  backdropFilter: "blur(12px)",
-                  WebkitBackdropFilter: "blur(12px)",
-                }}
-                aria-label={isEnglish ? "Toggle theme" : "تغيير المظهر"}
-              >
-                <motion.i
-                  animate={{ rotate: themeRotation }}
-                  transition={springs.gentle}
-                  className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-sm`}
-                  style={{ color: "var(--accent-gold)" }}
-                />
-              </button>
+                  {isEnglish ? "View Cart" : "عرض السلة"}
+                </button>
+              </motion.div>
             )}
-            {onToggleLang && (
-              <button
-                onClick={onToggleLang}
-                className="w-9 h-9 rounded-xl border border-border text-accent-gold hover:bg-accent-gold-muted transition-all flex items-center justify-center font-semibold text-[10px]"
-                aria-label={isEnglish ? "العربية" : "English"}
-              >
-                {isEnglish ? "AR" : "EN"}
-              </button>
-            )}
-          </div>
-
-          <div className="flex md:hidden items-center gap-0.5" dir={isEnglish ? "ltr" : "rtl"}>
-            {onToggleLang && (
-              <button
-                onClick={onToggleLang}
-                className="w-11 h-11 rounded-xl border border-border text-accent-gold hover:bg-accent-gold-muted transition-all flex items-center justify-center font-semibold text-[10px]"
-                aria-label={isEnglish ? "العربية" : "English"}
-              >
-                {isEnglish ? "AR" : "EN"}
-              </button>
-            )}
-            {onToggleTheme && (
-              <button
-                onClick={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const x = rect.left + rect.width / 2;
-                  const y = rect.top + rect.height / 2;
-                  setThemeRotation((p) => p + 180);
-                  onToggleTheme(x, y);
-                }}
-                className="w-11 h-11 flex items-center justify-center border-2 transition-all duration-300 cursor-pointer rounded-full hover:shadow-[0_0_16px_rgba(201,169,110,0.4)]"
-                style={{
-                  borderColor: isDark ? "var(--border-color)" : "var(--accent-gold)",
-                  background: "var(--nav-bg-ghost)",
-                  backdropFilter: "blur(12px)",
-                  WebkitBackdropFilter: "blur(12px)",
-                }}
-                aria-label={isEnglish ? "Toggle theme" : "تغيير المظهر"}
-              >
-                <motion.i
-                  animate={{ rotate: themeRotation }}
-                  transition={springs.gentle}
-                  className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-sm`}
-                  style={{ color: "var(--accent-gold)" }}
-                />
-              </button>
-            )}
-            <MagneticWrapper>
-            <button
-              onClick={openCart}
-              className="relative w-11 h-11 flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all rounded-xl"
-            >
-              <i className="fas fa-shopping-bag text-xs" />
-              {totalItems > 0 && (
-                <motion.span
-                  key={badgeBounce ? "bounce-m" : "normal-m"}
-                  className="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full flex items-center justify-center text-[9px] font-extrabold"
-                  style={{ background: "var(--accent-gold)", color: "var(--text-on-accent)" }}
-                  animate={badgeBounce ? { scale: [1, 1.5, 1] } : { scale: 1 }}
-                  transition={springs.bouncy}
-                >
-                  <AnimatePresence mode="popLayout">
-                    <motion.span
-                      key={totalItems}
-                      initial={{ y: -10, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: 10, opacity: 0 }}
-                      transition={springs.snappy}
-                    >
-                      {totalItems > 9 ? "9+" : totalItems}
-                    </motion.span>
-                  </AnimatePresence>
-                </motion.span>
-              )}
-            </button>
-            </MagneticWrapper>
-            <button
-              onClick={() => setMobileOpen(true)}
-              className="w-11 h-11 flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all rounded-xl"
-              aria-label={isEnglish ? "Menu" : "القائمة"}
-            >
-              <div className="relative w-4 h-3">
-                <motion.span
-                  className="absolute inset-x-0 h-[2px] rounded-full"
-                  style={{ background: "var(--accent-gold)", top: 0 }}
-                  animate={mobileOpen ? { rotate: 45, top: 5 } : { rotate: 0, top: 0 }}
-                  transition={springs.snappy}
-                />
-                <motion.span
-                  className="absolute inset-x-0 top-[5px] h-[2px] rounded-full"
-                  style={{ background: "var(--accent-gold)" }}
-                  animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-                  transition={springs.snappy}
-                />
-                <motion.span
-                  className="absolute inset-x-0 h-[2px] rounded-full"
-                  style={{ background: "var(--accent-gold)", bottom: 0 }}
-                  animate={mobileOpen ? { rotate: -45, bottom: 5 } : { rotate: 0, bottom: 0 }}
-                  transition={springs.snappy}
-                />
-              </div>
-            </button>
-          </div>
-        </div>
+          </AnimatePresence>
+        </motion.div>
       </motion.header>
 
       <AnimatePresence>
