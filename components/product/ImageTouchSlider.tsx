@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { springs } from "@/lib/springs";
@@ -64,29 +64,28 @@ export default function ImageTouchSlider({ images, alt, productId }: ImageTouchS
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <motion.div
-          className="absolute inset-0"
-          animate={{ x: dragX ? `calc(${-current * 100}% + ${dragX * 100}%)` : `${-current * 100}%` }}
-          transition={dragX ? { duration: 0 } : springs.gentle}
-          style={{ display: "flex", width: `${images.length * 100}%` }}
-        >
-          {images.map((src, i) => (
-            <div key={i} className="relative" style={{ width: `${100 / images.length}%` }}>
-              <Image
-                src={src}
-                alt={`${alt} ${i + 1}`}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover"
-                priority={i === 0}
-                loading={i === 0 ? undefined : "lazy"}
-                placeholder="blur"
-                blurDataURL={BLUR_PLACEHOLDER}
-                draggable={false}
-              />
-            </div>
-          ))}
-        </motion.div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={current}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={images[current]}
+              alt={`${alt} ${current + 1}`}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              priority
+              placeholder="blur"
+              blurDataURL={BLUR_PLACEHOLDER}
+              draggable={false}
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {images.length > 1 && (
