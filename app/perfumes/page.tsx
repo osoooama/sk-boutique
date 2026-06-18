@@ -16,6 +16,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { useTheme } from "@/context/ThemeContext";
 import { usePerfumes } from "@/lib/data";
 import { getPerfumePrice } from "@/lib/perfumes";
+import { springs } from "@/lib/springs";
 import type { Perfume } from "@/lib/types";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
@@ -125,14 +126,16 @@ export default function PerfumesPage() {
         <section className="pb-20 section-padding max-w-7xl mx-auto">
           <div className="flex items-center justify-center gap-2 mb-10 flex-wrap">
             {CATEGORIES.map((cat) => (
-              <button
+              <motion.button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
                 className={`px-5 py-2.5 rounded-xl text-xs font-medium transition-all duration-300 whitespace-nowrap min-touch-target ${activeCategory === cat.id ? "bg-accent-gold text-surface-primary shadow-lg shadow-accent-gold/25" : "glass-card text-accent-gold hover:bg-accent-gold-muted hover:border-accent-gold/30"}`}
                 style={{ border: activeCategory !== cat.id ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent" }}
+                whileHover={{ scale: 1.04, transition: springs.gentle }}
+                whileTap={{ scale: 0.95, transition: springs.snappy }}
               >
                 {isEnglish ? cat.en : cat.ar}
-              </button>
+              </motion.button>
             ))}
           </div>
 
@@ -178,9 +181,9 @@ export default function PerfumesPage() {
                         <CurrencyPopup price={getPerfumePrice(perfume)}>
                           <span className="text-xs font-bold text-accent-gold">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "\u062f.\u0623"}</span>
                         </CurrencyPopup>
-                        <button onClick={() => handleAddPerfume(perfume)} className="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted hover:bg-accent-gold/25 transition-all">
+                        <motion.button onClick={() => handleAddPerfume(perfume)} className="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted hover:bg-accent-gold/25 transition-all" whileHover={{ scale: 1.06, transition: springs.gentle }} whileTap={{ scale: 0.93, transition: springs.snappy }}>
                           <i className="fas fa-shopping-bag mr-1" />{isEnglish ? "Add" : "\u0623\u0636\u0641"}
-                        </button>
+                        </motion.button>
                       </div>
                       {perfume.notes && (
                         <div className="pt-2 border-t border-border space-y-1">

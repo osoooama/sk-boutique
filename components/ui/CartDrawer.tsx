@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
+import { springs } from "@/lib/springs";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
 import CurrencyPopup from "@/components/CurrencyPopup";
@@ -37,7 +38,7 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.6 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={springs.gentle}
             onClick={closeCart}
           />
           <motion.aside
@@ -46,7 +47,7 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            transition={springs.gentle}
             dir={isEnglish ? "ltr" : "rtl"}
           >
             <div className="flex items-center justify-between p-4 border-b border-border">
@@ -82,7 +83,7 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
                       initial={{ height: 0, opacity: 0, x: 100 }}
                       animate={{ height: "auto", opacity: 1, x: 0 }}
                       exit={{ height: 0, opacity: 0, x: 100 }}
-                      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                      transition={springs.bouncy}
                       className="flex gap-3 p-3 rounded-2xl bg-accent-gold-muted border border-border overflow-hidden"
                     >
                       <div className="w-16 h-20 rounded-xl overflow-hidden bg-surface-primary flex-shrink-0 relative">
@@ -128,8 +129,8 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
                                   className="text-xs font-bold text-accent-gold block"
                                   initial={{ y: item.quantity > 1 ? -10 : 10, opacity: 0 }}
                                   animate={{ y: 0, opacity: 1 }}
-                                  exit={{ y: item.quantity > 1 ? 10 : -10, opacity: 0 }}
-                                  transition={{ duration: 0.15 }}
+                                  exit={{ y: item.quantity > 1 ? -10 : 10, opacity: 0 }}
+                                  transition={springs.snappy}
                                 >
                                   {item.quantity}
                                 </motion.span>
@@ -204,7 +205,7 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
                     key={subtotal}
                     className="font-bold text-accent-gold"
                     animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    transition={springs.bouncy}
                     style={{ color: "var(--accent-gold)" }}
                   >
                     <CurrencyPopup price={subtotal}>

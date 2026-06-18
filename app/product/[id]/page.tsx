@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
+import { springs } from "@/lib/springs";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
@@ -248,8 +249,8 @@ export default function ProductDetailPage() {
               <motion.button
                 onClick={handleAddToCart}
                 className="flex-1 py-4 rounded-2xl bg-accent-gold text-surface-primary font-bold text-sm tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-accent-gold/20"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.02, transition: springs.gentle }}
+                whileTap={{ scale: 0.95, transition: springs.snappy }}
               >
                 {addedToCart ? (
                   <><i className="fas fa-check" />{isEnglish ? "Added!" : "تمت الإضافة!"}</>
@@ -260,8 +261,8 @@ export default function ProductDetailPage() {
               <motion.button
                 onClick={handleBuyNow}
                 className="py-4 px-6 rounded-2xl border border-accent-gold/30 text-accent-gold font-bold text-sm transition-all"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.02, transition: springs.gentle }}
+                whileTap={{ scale: 0.95, transition: springs.snappy }}
               >
                 {isEnglish ? "Buy Now" : "اشتر الآن"}
               </motion.button>
@@ -366,7 +367,7 @@ export default function ProductDetailPage() {
           <motion.button
             onClick={handleAddToCart}
             className="px-8 py-3 rounded-xl bg-accent-gold text-surface-primary font-bold text-xs whitespace-nowrap"
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.95, transition: springs.snappy }}
           >
             {addedToCart ? <><i className="fas fa-check ml-1" />{isEnglish ? "Done" : "تم"}</> : <><i className="fas fa-shopping-bag ml-1" />{isEnglish ? "Add" : "أضف"}</>}
           </motion.button>

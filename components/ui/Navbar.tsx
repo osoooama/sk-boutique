@@ -6,6 +6,7 @@ import { useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import { springs } from "@/lib/springs";
 
 interface NavbarProps {
   isEnglish: boolean;
@@ -27,7 +28,7 @@ const menuItemVariant = {
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
-    transition: { delay: i * 0.05, duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+    transition: { delay: i * 0.05, ...springs.gentle },
   }),
 };
 
@@ -114,7 +115,7 @@ export default function Navbar({
           transition: "background 0.3s ease, border 0.3s ease, backdrop-filter 0.3s ease",
         }}
         animate={{ y: hidden ? -100 : 0 }}
-        transition={{ duration: 0.35, ease: "easeInOut" }}
+        transition={springs.gentle}
       >
         <div
           className="flex items-center justify-between h-14 md:h-[60px] px-4 md:px-6 mx-auto"
@@ -172,7 +173,7 @@ export default function Navbar({
                     color: "var(--text-on-accent)",
                   }}
                   animate={badgeBounce ? { scale: [1, 1.5, 1] } : { scale: 1 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                  transition={springs.bouncy}
                 >
                   <AnimatePresence mode="popLayout">
                     <motion.span
@@ -180,7 +181,7 @@ export default function Navbar({
                       initial={{ y: -10, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: 10, opacity: 0 }}
-                      transition={{ duration: 0.15 }}
+                      transition={springs.snappy}
                     >
                       {totalItems > 9 ? "9+" : totalItems}
                     </motion.span>
@@ -208,7 +209,7 @@ export default function Navbar({
               >
                 <motion.i
                   animate={{ rotate: themeRotation }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  transition={springs.gentle}
                   className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-sm`}
                   style={{ color: "var(--accent-gold)" }}
                 />
@@ -255,7 +256,7 @@ export default function Navbar({
               >
                 <motion.i
                   animate={{ rotate: themeRotation }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  transition={springs.gentle}
                   className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-sm`}
                   style={{ color: "var(--accent-gold)" }}
                 />
@@ -272,7 +273,7 @@ export default function Navbar({
                   className="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full flex items-center justify-center text-[9px] font-extrabold"
                   style={{ background: "var(--accent-gold)", color: "var(--text-on-accent)" }}
                   animate={badgeBounce ? { scale: [1, 1.5, 1] } : { scale: 1 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                  transition={springs.bouncy}
                 >
                   <AnimatePresence mode="popLayout">
                     <motion.span
@@ -280,7 +281,7 @@ export default function Navbar({
                       initial={{ y: -10, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: 10, opacity: 0 }}
-                      transition={{ duration: 0.15 }}
+                      transition={springs.snappy}
                     >
                       {totalItems > 9 ? "9+" : totalItems}
                     </motion.span>
@@ -298,19 +299,19 @@ export default function Navbar({
                   className="absolute inset-x-0 h-[2px] rounded-full"
                   style={{ background: "var(--accent-gold)", top: 0 }}
                   animate={mobileOpen ? { rotate: 45, top: 5 } : { rotate: 0, top: 0 }}
-                  transition={{ duration: 0.25 }}
+                  transition={springs.snappy}
                 />
                 <motion.span
                   className="absolute inset-x-0 top-[5px] h-[2px] rounded-full"
                   style={{ background: "var(--accent-gold)" }}
                   animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-                  transition={{ duration: 0.15 }}
+                  transition={springs.snappy}
                 />
                 <motion.span
                   className="absolute inset-x-0 h-[2px] rounded-full"
                   style={{ background: "var(--accent-gold)", bottom: 0 }}
                   animate={mobileOpen ? { rotate: -45, bottom: 5 } : { rotate: 0, bottom: 0 }}
-                  transition={{ duration: 0.25 }}
+                  transition={springs.snappy}
                 />
               </div>
             </button>
@@ -327,6 +328,7 @@ export default function Navbar({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={springs.gentle}
               onClick={() => setMobileOpen(false)}
             />
             <motion.aside
@@ -336,7 +338,7 @@ export default function Navbar({
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              transition={springs.gentle}
             >
               <div
                 className="flex items-center justify-between p-4 border-b border-border"

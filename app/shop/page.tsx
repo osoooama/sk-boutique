@@ -13,6 +13,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import ProductCard from "@/components/product/ProductCard";
 import { useTheme } from "@/context/ThemeContext";
 import { useProducts } from "@/lib/data";
+import { springs } from "@/lib/springs";
 
 const CATEGORIES = [
   { id: "all", ar: "الكل", en: "All" },
@@ -79,7 +80,7 @@ export default function ShopPage() {
         <section className="pb-20 section-padding max-w-7xl mx-auto -mt-6">
           <div className="flex items-center justify-center gap-2 mb-10 flex-wrap">
             {CATEGORIES.map((cat) => (
-              <button
+              <motion.button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
                 className={`px-5 py-2.5 rounded-xl text-xs font-medium transition-all duration-300 whitespace-nowrap min-touch-target ${
@@ -88,9 +89,11 @@ export default function ShopPage() {
                     : "glass-card text-accent-gold hover:bg-accent-gold-muted hover:border-accent-gold/30"
                 }`}
                 style={{ border: activeCategory !== cat.id ? "1px solid rgba(255,255,255,0.1)" : "1px solid transparent" }}
+                whileHover={{ scale: 1.04, transition: springs.gentle }}
+                whileTap={{ scale: 0.95, transition: springs.snappy }}
               >
                 {isEnglish ? cat.en : cat.ar}
-              </button>
+              </motion.button>
             ))}
           </div>
 

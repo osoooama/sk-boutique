@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import type { Product } from "@/lib/types";
 import { fadeUpVariant } from "@/lib/animations";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
+import { springs } from "@/lib/springs";
 import CurrencyPopup from "@/components/CurrencyPopup";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -103,8 +104,10 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
           whileHover={{
             y: -8,
             borderColor: "rgba(201,168,76,0.4)",
-            transition: { duration: 0.3, ease: "easeOut" },
+            transition: springs.gentle,
           }}
+          whileTap={{ scale: 0.97, transition: springs.snappy }}
+
         >
           <div className="relative aspect-[3/4] overflow-hidden bg-surface-primary">
             <motion.button
