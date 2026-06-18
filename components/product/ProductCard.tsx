@@ -4,8 +4,10 @@ import { useState, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import type { Product } from "@/lib/types";
 import { fadeUpVariant } from "@/lib/animations";
+import { navigateWithTransition } from "@/lib/viewTransition";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { springs } from "@/lib/springs";
 import { hapticMedium, hapticLight } from "@/lib/haptics";
@@ -22,6 +24,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, isEnglish, index = 0 }: ProductCardProps) {
+  const router = useRouter();
   const [imgError, setImgError] = useState(false);
   const [addingToCart, setAddingToCart] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
@@ -145,8 +148,12 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
         style={{ touchAction: "pan-y" }}
       >
       {swipeOverlay}
-      <Link
-        href={`/product/${product.id}`}
+      <div
+        onClick={(e) => {
+          e.preventDefault();
+          navigateWithTransition(() => router.push(`/product/${product.id}`));
+        }}
+        className="cursor-pointer"
         style={{ textDecoration: "none" }}
       >
         <motion.div
@@ -166,7 +173,10 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
           whileTap={{ scale: 0.97, transition: springs.snappy }}
 
         >
-          <div className="relative aspect-[3/4] overflow-hidden bg-surface-primary">
+          <div
+            className="relative aspect-[3/4] overflow-hidden bg-surface-primary product-transition-image-card"
+            style={{ "--vt-name": `vt-product-image-${product.id}` } as React.CSSProperties}
+          >
             <motion.button
               onClick={handleToggleWishlist}
               className={`absolute ${isEnglish ? "right-3" : "left-3"} top-3 z-10 w-9 h-9 rounded-full backdrop-blur-md flex items-center justify-center cursor-pointer`}
@@ -307,7 +317,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
             )}
           </div>
         </motion.div>
-      </Link>
+      </div>
       </motion.div>
     </motion.div>
   );

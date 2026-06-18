@@ -9,9 +9,10 @@ import { springs } from "@/lib/springs";
 interface ImageTouchSliderProps {
   images: string[];
   alt: string;
+  productId?: string;
 }
 
-export default function ImageTouchSlider({ images, alt }: ImageTouchSliderProps) {
+export default function ImageTouchSlider({ images, alt, productId }: ImageTouchSliderProps) {
   const [current, setCurrent] = useState(0);
   const [dragX, setDragX] = useState(0);
   const startX = useRef(0);
@@ -57,7 +58,8 @@ export default function ImageTouchSlider({ images, alt }: ImageTouchSliderProps)
   return (
     <div className="space-y-3">
       <div
-        className="relative aspect-[3/4] rounded-3xl overflow-hidden glass-card bg-surface-primary"
+        className="relative aspect-[3/4] rounded-3xl overflow-hidden glass-card bg-surface-primary product-transition-image"
+        style={{ "--vt-name": `vt-product-image-${productId}` } as React.CSSProperties}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}

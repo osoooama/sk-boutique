@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { springs } from "@/lib/springs";
 import Link from "next/link";
 import Image from "next/image";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
-import { springs } from "@/lib/springs";
 import { hapticMedium } from "@/lib/haptics";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
@@ -30,6 +30,7 @@ const RECENT_KEY = "sk_recently_viewed";
 
 export default function ProductDetailPage() {
   const params = useParams();
+  const router = useRouter();
   const [isEnglish, setIsEnglish] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
   const { isDark, toggleTheme } = useTheme();
@@ -40,6 +41,30 @@ export default function ProductDetailPage() {
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
   const [sheetQuantity, setSheetQuantity] = useState(1);
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
+  const [gestureX, setGestureX] = useState(0);
+  const gestureStart = useRef(0);
+
+  const handleGestureStart = useCallback((e: React.TouchEvent) => {
+    if (e.touches[0].clientX < 40) {
+      gestureStart.current = e.touches[0].clientX;
+    } else {
+      gestureStart.current = 0;
+    }
+  }, []);
+
+  const handleGestureMove = useCallback((e: React.TouchEvent) => {
+    if (!gestureStart.current) return;
+    const dx = e.touches[0].clientX - gestureStart.current;
+    if (dx > 0) setGestureX(dx);
+  }, []);
+
+  const handleGestureEnd = useCallback(() => {
+    if (gestureX > 80) {
+      router.back();
+    }
+    setGestureX(0);
+    gestureStart.current = 0;
+  }, [gestureX, router]);
 
   const { products } = useProducts();
   const { addItem, items: cartItems } = useCart();
@@ -110,7 +135,13 @@ export default function ProductDetailPage() {
     .reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <div className="min-h-screen" dir={isEnglish ? "ltr" : "rtl"}>
+    <div
+      className="min-h-screen"
+      dir={isEnglish ? "ltr" : "rtl"}
+      onTouchStart={handleGestureStart}
+      onTouchMove={handleGestureMove}
+      onTouchEnd={handleGestureEnd}
+    >
       <Navbar
         isEnglish={isEnglish}
         isDark={isDark}
@@ -154,7 +185,7 @@ export default function ProductDetailPage() {
               </button>
 
               {images.length > 0 ? (
-                <ImageTouchSlider key={activeColor?.name || "default"} images={images} alt={isEnglish ? product.englishTitle : product.title} />
+                <ImageTouchSlider key={activeColor?.name || "default"} images={images} alt={isEnglish ? product.englishTitle : product.title} productId={product.id} />
               ) : (
                 <div className="relative aspect-[3/4] rounded-3xl overflow-hidden glass-card bg-surface-primary flex items-center justify-center">
                   <i className="fas fa-tshirt text-6xl text-accent-gold/20" />

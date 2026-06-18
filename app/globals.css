@@ -215,13 +215,20 @@
     }
   }
 
+  ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation: ripple-in 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  ::view-transition-old(root) {
     animation: none;
+    mix-blend-mode: normal;
   }
+}
+
+.product-transition-image {
+  view-transition-name: var(--vt-name);
+}
+
+.product-transition-image-card {
+  view-transition-name: var(--vt-name);
+  contain: layout;
 }
 
 @layer components {

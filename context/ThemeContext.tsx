@@ -32,11 +32,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       document.documentElement.style.setProperty("--ripple-y", `${y}px`);
     }
 
-    if (typeof document !== "undefined" && document.startViewTransition) {
-      document.startViewTransition(() => applyTheme(next));
-    } else {
-      applyTheme(next);
-    }
+    applyTheme(next);
   }, [applyTheme]);
 
   return (
