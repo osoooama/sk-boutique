@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { springs } from "@/lib/springs";
@@ -125,19 +126,16 @@ export default function Navbar({
     setOverrideMode(true);
   }, [openCart]);
 
-  const IridescentLogo = ({ className = "" }: { className?: string }) => (
-    <span
-      className={`font-bold tracking-wider select-none ${className}`}
-      style={{
-        background: "linear-gradient(90deg, #C0C0C0 0%, #C9A84C 20%, #E8D5A3 40%, #FFB6C1 60%, #D4A574 80%, #C0C0C0 100%)",
-        backgroundSize: "300% auto",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        backgroundClip: "text",
-        animation: "logo-shimmer 4s linear infinite",
-      }}
-    >
-      SK
+  const IridescentLogo = ({ className = "", width = 80, height = 24 }: { className?: string; width?: number; height?: number }) => (
+    <span className={`inline-block select-none ${className}`}>
+      <Image
+        src="/logo/sk-logo.webp"
+        alt="SK BOUTIQUE"
+        width={width}
+        height={height}
+        priority
+        className="object-contain"
+      />
     </span>
   );
 
@@ -164,9 +162,9 @@ export default function Navbar({
       className="flex items-center gap-1.5"
       dir={isEnglish ? "ltr" : "rtl"}
     >
-      <Link href="/" className="flex items-center shrink-0" style={{ textDecoration: "none" }}>
-        <IridescentLogo className="text-sm" />
-      </Link>
+        <Link href="/" className="flex items-center shrink-0" style={{ textDecoration: "none" }}>
+          <IridescentLogo width={60} height={18} />
+        </Link>
       <div className="flex items-center gap-1">
         <MagneticWrapper>
           <button onClick={handleCartClick} className="relative w-7 h-7 flex items-center justify-center text-accent-gold/60 hover:text-accent-gold transition-all">
@@ -258,7 +256,7 @@ export default function Navbar({
                 dir={isEnglish ? "ltr" : "rtl"}
               >
                 <Link href="/" className="flex items-center shrink-0 mx-2" style={{ textDecoration: "none" }}>
-                  <IridescentLogo className="text-lg" />
+                  <IridescentLogo width={80} height={24} />
                 </Link>
 
                 <nav className="flex items-center gap-1 text-sm mx-2">
@@ -463,7 +461,7 @@ export default function Navbar({
                 className="flex items-center justify-between p-4 border-b border-border"
                 style={{ paddingTop: "calc(env(safe-area-inset-top, 0px) + 1rem)" }}
               >
-                <IridescentLogo className="text-lg" />
+                <IridescentLogo width={80} height={24} />
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="w-10 h-10 rounded-xl flex items-center justify-center border border-border text-accent-gold"

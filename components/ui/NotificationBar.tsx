@@ -18,8 +18,8 @@ export default function NotificationBar() {
     >
       <div className="hidden md:block text-[11px] whitespace-nowrap" style={{ color: "#C9A96E" }}>
         <i className="fas fa-truck-fast ml-1.5" />
-        شحن مجاني لكل الأردن · إرجاع مجاني 7 أيام · خصم 20% كود SK30
-        <i className="fas fa-certificate mr-1.5 mr-2" />
+        توصيل لكل الأردن · إرجاع 7 أيام · خصم 20% كود SK30
+        <i className="fas fa-certificate mr-1.5" />
       </div>
       <div className="md:hidden w-full overflow-hidden">
         <motion.div
@@ -30,13 +30,13 @@ export default function NotificationBar() {
         >
           <span className="mx-4">
             <i className="fas fa-truck-fast ml-1.5" />
-            شحن مجاني لكل الأردن · إرجاع مجاني 7 أيام · خصم 20% كود SK30
-            <i className="fas fa-certificate mr-2 mr-1.5" />
+            توصيل لكل الأردن · إرجاع 7 أيام · خصم 20% كود SK30
+            <i className="fas fa-certificate mr-1.5" />
           </span>
           <span className="mx-4">
             <i className="fas fa-truck-fast ml-1.5" />
-            شحن مجاني لكل الأردن · إرجاع مجاني 7 أيام · خصم 20% كود SK30
-            <i className="fas fa-certificate mr-2 mr-1.5" />
+            توصيل لكل الأردن · إرجاع 7 أيام · خصم 20% كود SK30
+            <i className="fas fa-certificate mr-1.5" />
           </span>
         </motion.div>
       </div>

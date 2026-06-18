@@ -37,7 +37,7 @@ export default function Footer({ isEnglish }: FooterProps) {
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="https://www.instagram.com/sk_boutique977/"
+                href={process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://www.instagram.com/sk_boutique977/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted hover:border-accent-gold/30 transition-all"
@@ -95,7 +95,6 @@ export default function Footer({ isEnglish }: FooterProps) {
             </h3>
             <ul className="space-y-3 text-sm">
               {[
-                { ar: "شحن مجاني لكل الأردن", en: "Free shipping across Jordan" },
                 { ar: "الدفع عند الاستلام", en: "Cash on delivery" },
                 { ar: "إرجاع مجاني خلال 7 أيام", en: "7-day free returns" },
                 { ar: "خامات إيطالية وفرنسية", en: "Italian & French materials" },

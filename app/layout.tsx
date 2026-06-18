@@ -3,6 +3,7 @@ import { Alexandria, Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/context/Providers";
 import AmbientBackground from "@/components/AmbientBackground";
+import GlassSplash from "@/components/GlassSplash";
 import NotificationBar from "@/components/ui/NotificationBar";
 
 const alexandria = Alexandria({
@@ -123,6 +124,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="font-inter h-full antialiased overflow-x-hidden">
+        <GlassSplash />
         <AmbientBackground />
         <div className="relative z-[1]">
           <Providers>
