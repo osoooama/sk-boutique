@@ -6,8 +6,8 @@
   :root {
     --bg-primary: #0A0A0A;
     --bg-secondary: #111111;
-    --bg-card: #161616;
-    --bg-card-hover: #1C1C1C;
+    --bg-card: rgba(255, 255, 255, 0.03);
+    --bg-card-hover: rgba(255, 255, 255, 0.06);
 
     --text-primary: #F5F5F0;
     --text-secondary: #A8A89A;
@@ -48,7 +48,7 @@
     --footer-link: #A8A89A;
     --footer-link-hover: #C9A96E;
 
-    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
     --shadow-button: 0 2px 12px rgba(201, 169, 110, 0.2);
 
     --nav-bg-ghost: rgba(10, 10, 10, 0.4);
@@ -61,8 +61,8 @@
   .light {
     --bg-primary: #FFFDF7;
     --bg-secondary: #FFFFFF;
-    --bg-card: #FFFFFF;
-    --bg-card-hover: #FAF8F2;
+    --bg-card: rgba(255, 255, 255, 0.6);
+    --bg-card-hover: rgba(255, 255, 255, 0.75);
 
     --text-primary: #1A1A1A;
     --text-secondary: #6B6B5F;
@@ -226,15 +226,21 @@
 
 @layer components {
   .glass-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
+  .light .glass-card {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
   .glass-card:hover {
-    border-color: var(--border-color-strong);
-    box-shadow: var(--shadow-card);
+    border-color: rgba(201, 168, 76, 0.4);
   }
 
   .gold-gradient {

@@ -25,7 +25,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
   const [heartAnimation, setHeartAnimation] = useState<"idle" | "adding" | "removing">("idle");
   const firstColor = product.colors[0];
   const previewColors = product.colors.slice(0, 3);
-  const imageSrc = firstColor?.images[0];
+  const images = firstColor?.images || [];
   const { addItem } = useCart();
   const { isWishlisted, toggleItem } = useWishlist();
   const { addToast } = useToast();
@@ -92,14 +92,17 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
         style={{ textDecoration: "none" }}
       >
         <motion.div
-          className="group relative rounded-2xl overflow-hidden will-change-transform"
+          className="group relative rounded-[20px] overflow-hidden will-change-transform"
           style={{
             background: "var(--bg-card)",
-            border: "1px solid var(--border-color)",
+            backdropFilter: "blur(20px) saturate(180%)",
+            WebkitBackdropFilter: "blur(20px) saturate(180%)",
+            border: "1px solid rgba(201,168,76,0.15)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
           }}
           whileHover={{
             y: -8,
-            boxShadow: "0 8px 32px rgba(201, 169, 110, 0.15)",
+            borderColor: "rgba(201,168,76,0.4)",
             transition: { duration: 0.3, ease: "easeOut" },
           }}
         >
@@ -130,18 +133,32 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
               />
             </motion.button>
 
-            {imageSrc && !imgError ? (
-              <Image
-                src={imageSrc}
-                alt={isEnglish ? product.englishTitle : product.title}
-                fill
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
-                loading="lazy"
-                placeholder="blur"
-                blurDataURL={BLUR_PLACEHOLDER}
-                onError={() => setImgError(true)}
-              />
+            {images[0] && !imgError ? (
+              <>
+                <Image
+                  src={images[0]}
+                  alt={isEnglish ? product.englishTitle : product.title}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_PLACEHOLDER}
+                  onError={() => setImgError(true)}
+                />
+                {images[1] && (
+                  <Image
+                    src={images[1]}
+                    alt={isEnglish ? product.englishTitle : product.title}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-[0.4s]"
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={BLUR_PLACEHOLDER}
+                  />
+                )}
+              </>
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-4xl text-accent-gold/10">
                 <i className="fas fa-tshirt" />

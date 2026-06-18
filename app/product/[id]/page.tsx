@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
@@ -147,24 +147,15 @@ export default function ProductDetailPage() {
                 <i className={`fas fa-heart ${wishlisted ? "text-sm" : "text-sm"}`} />
               </button>
 
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`${activeColor?.name}-${selectedImage}`}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                  className="absolute inset-0"
-                >
-                  {images[selectedImage] ? (
-                    <Image src={images[selectedImage]} alt={isEnglish ? product.englishTitle : product.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" priority placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <i className="fas fa-tshirt text-6xl text-accent-gold/20" />
-                    </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
+              <div key={`${activeColor?.name}-${selectedImage}`} className="absolute inset-0">
+                {images[selectedImage] ? (
+                  <Image src={images[selectedImage]} alt={isEnglish ? product.englishTitle : product.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" priority placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <i className="fas fa-tshirt text-6xl text-accent-gold/20" />
+                  </div>
+                )}
+              </div>
               {product.inStock && (
                 <span className="absolute top-4 left-4 text-[10px] font-bold px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 backdrop-blur-sm z-10">
                   {isEnglish ? "In Stock" : "متوفر"}
@@ -179,7 +170,7 @@ export default function ProductDetailPage() {
 
             {images.length > 1 && (
               <div className="flex items-center gap-2" dir="ltr">
-                {images.map((img, i) => (
+                {images.slice(0, 3).map((img, i) => (
                   <button
                     key={i}
                     onClick={() => setSelectedImage(i)}
@@ -223,12 +214,19 @@ export default function ProductDetailPage() {
                   {isEnglish ? "Color" : "اللون"}
                   <span className="text-accent-gold mr-2">{isEnglish ? activeColor?.englishName : activeColor?.name}</span>
                 </h3>
-                <ColorSwatches
-                  colors={product.colors}
-                  selectedColor={selectedColor || product.colors[0].name}
-                  onColorChange={(name) => { setSelectedColor(name); setSelectedImage(0); }}
-                  isEnglish={isEnglish}
-                />
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <ColorSwatches
+                    colors={product.colors.slice(0, 2)}
+                    selectedColor={selectedColor || product.colors[0].name}
+                    onColorChange={(name) => { setSelectedColor(name); setSelectedImage(0); }}
+                    isEnglish={isEnglish}
+                  />
+                  {product.colors.length > 2 && (
+                    <span className="text-[10px] text-accent-gold/50">
+                      +{product.colors.length - 2} {isEnglish ? "more" : "أخرى"}
+                    </span>
+                  )}
+                </div>
               </div>
             )}
 
