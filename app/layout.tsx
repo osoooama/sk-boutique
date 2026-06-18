@@ -3,6 +3,7 @@ import { Alexandria, Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/context/Providers";
 import AmbientBackground from "@/components/AmbientBackground";
+import NotificationBar from "@/components/ui/NotificationBar";
 
 const alexandria = Alexandria({
   subsets: ["arabic"],
@@ -124,7 +125,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-inter h-full antialiased overflow-x-hidden">
         <AmbientBackground />
         <div className="relative z-[1]">
-          <Providers>{children}</Providers>
+          <Providers>
+            <NotificationBar />
+            {children}
+          </Providers>
         </div>
       </body>
     </html>

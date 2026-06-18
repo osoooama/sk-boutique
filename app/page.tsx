@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { fadeLeftVariant, staggerContainer, fadeUpVariant } from "@/lib/animations";
+import { fadeLeftVariant, staggerContainer, staggerContainerSlow, fadeUpVariant, featureCardVariant, feedbackCardVariant } from "@/lib/animations";
 import TiltCard from "@/components/product/TiltCard";
 import Navbar from "@/components/ui/Navbar";
 import { useTheme } from "@/context/ThemeContext";
@@ -59,7 +59,7 @@ export default function HomePage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="text-center space-y-4 mb-12"
+            className="text-center space-y-4 mb-12 will-change-transform"
           >
             <span className="inline-block bg-accent-gold-muted text-accent-gold px-4 py-1.5 rounded-full text-xs font-bold border border-accent-gold-muted">
               {isEnglish ? "Featured Collection" : "مختارات الملابس"}
@@ -68,7 +68,7 @@ export default function HomePage() {
               {isEnglish ? "Latest Trends" : "أحدث الصيحات"}
             </h2>
             <motion.div
-              className="h-[3px] w-16 mx-auto rounded-full gold-gradient"
+              className="h-[3px] w-16 mx-auto rounded-full gold-gradient will-change-transform"
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
@@ -85,7 +85,7 @@ export default function HomePage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 will-change-transform"
           >
             {featuredProducts.map((product, i) => (
               <ProductCard key={product.id} product={product} isEnglish={isEnglish} index={i} />
@@ -107,7 +107,7 @@ export default function HomePage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="text-center space-y-4 mb-12"
+              className="text-center space-y-4 mb-12 will-change-transform"
             >
               <span className="inline-block bg-accent-gold-muted text-accent-gold px-4 py-1.5 rounded-full text-xs font-bold border border-accent-gold-muted">
                 {isEnglish ? "Premium Fragrances" : "عالم العطور"}
@@ -116,7 +116,7 @@ export default function HomePage() {
                 {isEnglish ? "Discover Our Perfumes" : "اكتشف عطورنا الفاخرة"}
               </h2>
               <motion.div
-                className="h-[3px] w-16 mx-auto rounded-full gold-gradient"
+                className="h-[3px] w-16 mx-auto rounded-full gold-gradient will-change-transform"
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: true }}
@@ -133,7 +133,7 @@ export default function HomePage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 will-change-transform"
             >
               {featuredPerfumes.map((perfume, i) => (
                 <motion.div
@@ -192,16 +192,16 @@ export default function HomePage() {
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <motion.div
-              variants={staggerContainer}
+              variants={staggerContainerSlow}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 will-change-transform"
             >
               {FEATURES.map((feature, i) => (
                 <motion.div
                   key={feature.icon}
-                  variants={fadeUpVariant}
+                  variants={featureCardVariant}
                   custom={i}
                   className="text-center space-y-3"
                 >
@@ -224,7 +224,7 @@ export default function HomePage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="text-center space-y-4 mb-14"
+              className="text-center space-y-4 mb-14 will-change-transform"
             >
               <span className="inline-flex items-center gap-2 bg-accent-gold-muted text-accent-gold px-4 py-1.5 rounded-full text-xs font-bold border border-accent-gold-muted">
                 <i className="fas fa-camera text-[10px]" />
@@ -235,7 +235,7 @@ export default function HomePage() {
                 {isEnglish ? "What Our Clients Say" : "ماذا قالوا عنا؟"}
               </h2>
               <motion.div
-                className="h-[3px] w-16 mx-auto rounded-full gold-gradient"
+                className="h-[3px] w-16 mx-auto rounded-full gold-gradient will-change-transform"
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: true }}

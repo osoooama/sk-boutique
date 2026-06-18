@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { staggerContainer, footerSectionVariant } from "@/lib/animations";
 import Logo from "./Logo";
+import MagneticWrapper from "./MagneticWrapper";
 
 interface FooterProps {
   isEnglish: boolean;
@@ -15,8 +18,17 @@ export default function Footer({ isEnglish }: FooterProps) {
       <div className="absolute inset-0 bg-gradient-to-b from-accent-gold/[0.02] to-transparent pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
-          <div className="md:col-span-4 space-y-4">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12"
+        >
+          <motion.div
+            variants={footerSectionVariant}
+            custom={0}
+            className="md:col-span-4 space-y-4 will-change-transform">
             <Logo showText size="sm" />
             <p className="text-sm font-light leading-relaxed max-w-xs text-accent-gold/40">
               {isEnglish
@@ -33,15 +45,17 @@ export default function Footer({ isEnglish }: FooterProps) {
               >
                 <i className="fab fa-instagram" />
               </a>
-              <a
-                href="https://api.whatsapp.com/send/?phone=962798921123"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted hover:border-accent-gold/30 transition-all"
-                aria-label="WhatsApp"
-              >
-                <i className="fab fa-whatsapp" />
-              </a>
+              <MagneticWrapper>
+                <a
+                  href="https://api.whatsapp.com/send/?phone=962798921123"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted hover:border-accent-gold/30 transition-all"
+                  aria-label="WhatsApp"
+                >
+                  <i className="fab fa-whatsapp" />
+                </a>
+              </MagneticWrapper>
               <a
                 href="mailto:sk_boutique977@outlook.com"
                 className="w-10 h-10 rounded-full flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted hover:border-accent-gold/30 transition-all"
@@ -50,9 +64,9 @@ export default function Footer({ isEnglish }: FooterProps) {
                 <i className="fas fa-envelope" />
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="md:col-span-2 space-y-4">
+          <motion.div variants={footerSectionVariant} custom={1} className="md:col-span-2 space-y-4 will-change-transform">
             <h3 className="text-xs font-bold text-content-primary tracking-wider uppercase">
               {isEnglish ? "Links" : "روابط"}
             </h3>
@@ -73,9 +87,9 @@ export default function Footer({ isEnglish }: FooterProps) {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="md:col-span-3 space-y-4">
+          <motion.div variants={footerSectionVariant} custom={2} className="md:col-span-3 space-y-4 will-change-transform">
             <h3 className="text-xs font-bold text-content-primary tracking-wider uppercase">
               {isEnglish ? "Customer Service" : "خدمة العملاء"}
             </h3>
@@ -92,9 +106,9 @@ export default function Footer({ isEnglish }: FooterProps) {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="md:col-span-3 space-y-4">
+          <motion.div variants={footerSectionVariant} custom={3} className="md:col-span-3 space-y-4 will-change-transform">
             <h3 className="text-xs font-bold text-content-primary tracking-wider uppercase">
               {isEnglish ? "Contact" : "معلومات الاتصال"}
             </h3>
@@ -116,8 +130,8 @@ export default function Footer({ isEnglish }: FooterProps) {
                 @sk_boutique977
               </li>
             </ul>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         <div className="h-px bg-gradient-to-r from-transparent via-accent-gold/20 to-transparent" />
 

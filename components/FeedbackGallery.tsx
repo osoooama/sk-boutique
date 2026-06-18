@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
+import { staggerContainer, feedbackCardVariant } from "@/lib/animations";
 
 const IMAGES = [
   "/feedback/sk_boutique977-highlights-3881002745452919211-20260422_182639_671154159.webp",
@@ -55,16 +56,20 @@ export default function FeedbackGallery({ isEnglish }: FeedbackGalleryProps) {
 
   return (
     <>
-      <div className="hidden md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="hidden md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
+      >
         {IMAGES.map((src, i) => (
           <motion.button
             key={src}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.04 }}
+            variants={feedbackCardVariant}
+            custom={i}
             onClick={() => setLightboxIndex(i)}
-            className="group relative aspect-square rounded-2xl overflow-hidden bg-surface-primary border border-border focus:outline-none"
+            className="group relative aspect-square rounded-2xl overflow-hidden bg-surface-primary border border-border focus:outline-none will-change-transform"
           >
             <Image
               src={src}
@@ -78,7 +83,7 @@ export default function FeedbackGallery({ isEnglish }: FeedbackGalleryProps) {
             />
           </motion.button>
         ))}
-      </div>
+      </motion.div>
 
       <div ref={scrollRef} className="md:hidden overflow-x-auto scrollbar-none -mx-4 px-4">
         <div className="flex gap-3 w-max pb-2">

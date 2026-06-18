@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -8,6 +8,8 @@ import type { Product } from "@/lib/types";
 import { fadeUpVariant } from "@/lib/animations";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { springs } from "@/lib/springs";
+import { hapticMedium, hapticLight } from "@/lib/haptics";
+import { useSwipeAction } from "@/hooks/useSwipeAction";
 import CurrencyPopup from "@/components/CurrencyPopup";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -24,13 +26,43 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
   const [addingToCart, setAddingToCart] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   const [heartAnimation, setHeartAnimation] = useState<"idle" | "adding" | "removing">("idle");
-  const firstColor = product.colors[0];
-  const previewColors = product.colors.slice(0, 3);
-  const images = firstColor?.images || [];
   const { addItem } = useCart();
   const { isWishlisted, toggleItem } = useWishlist();
   const { addToast } = useToast();
+  const firstColor = product.colors[0];
+  const previewColors = product.colors.slice(0, 3);
+  const images = firstColor?.images || [];
   const wishlisted = isWishlisted(product.id);
+
+  const handleSwipeLeft = useCallback(() => {
+    if (!firstColor || !product.sizes[0]) return;
+    addItem({
+      productId: product.id,
+      title: product.title,
+      englishTitle: product.englishTitle,
+      price: product.basePrice,
+      size: product.sizes[0],
+      color: firstColor.name,
+      colorHex: firstColor.hex,
+      image: firstColor.images[0] || "",
+    });
+    addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
+  }, [product, firstColor, addItem, addToast, isEnglish]);
+
+  const handleSwipeRight = useCallback(() => {
+    toggleItem(product.id);
+    addToast(
+      "success",
+      isEnglish ? "Added to wishlist" : "أضيف للمفضلة!",
+      "fa-heart"
+    );
+  }, [product.id, isEnglish, toggleItem, addToast]);
+
+  const swipe = useSwipeAction({
+    threshold: 60,
+    onSwipeLeft: handleSwipeLeft,
+    onSwipeRight: handleSwipeRight,
+  });
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -80,6 +112,22 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
     }
   };
 
+  const swipeOverlay = swipe.overlay === "left" ? (
+    <div className="absolute inset-0 z-20 rounded-[20px] flex items-center justify-center bg-accent-gold/20 backdrop-blur-sm">
+      <span className="text-accent-gold font-bold text-sm flex items-center gap-2">
+        <i className="fas fa-shopping-bag" />
+        {isEnglish ? "Add to Cart" : "أضف للسلة"}
+      </span>
+    </div>
+  ) : swipe.overlay === "right" ? (
+    <div className="absolute inset-0 z-20 rounded-[20px] flex items-center justify-center bg-pink-500/20 backdrop-blur-sm">
+      <span className="text-pink-400 font-bold text-sm flex items-center gap-2">
+        <i className="fas fa-heart" />
+        {isEnglish ? "Wishlist" : "المفضلة"}
+      </span>
+    </div>
+  ) : null;
+
   return (
     <motion.div
       variants={fadeUpVariant}
@@ -88,6 +136,15 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
       viewport={{ once: true, margin: "-50px" }}
       custom={index}
     >
+      <motion.div
+        onTouchStart={swipe.handleTouchStart}
+        onTouchMove={swipe.handleTouchMove}
+        onTouchEnd={swipe.handleTouchEnd}
+        animate={{ x: swipe.x }}
+        transition={swipe.transition || springs.bouncy}
+        style={{ touchAction: "pan-y" }}
+      >
+      {swipeOverlay}
       <Link
         href={`/product/${product.id}`}
         style={{ textDecoration: "none" }}
@@ -251,6 +308,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
           </div>
         </motion.div>
       </Link>
+      </motion.div>
     </motion.div>
   );
 }

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
+import MagneticWrapper from "./MagneticWrapper";
 
 interface HeroSliderProps {
   isEnglish?: boolean;
@@ -95,12 +96,26 @@ export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
             transition={{ duration: 0.6, delay: 0.7 }}
             className="text-accent-gold/60 text-sm md:text-base max-w-xl mx-auto font-light"
           >
-            {isEnglish
-              ? "Modern European designs, locally handcrafted with premium Italian and French materials."
-              : "تصاميم أوروبية عصرية، تُصنع محلياً بأفضل الخامات الإيطالية والفرنسية."}
-          </motion.p>
+              {isEnglish
+                ? "Modern European designs, locally handcrafted with premium Italian and French materials."
+                : "تصاميم أوروبية عصرية، تُصنع محلياً بأفضل الخامات الإيطالية والفرنسية."}
+            </motion.p>
+
+            <MagneticWrapper>
+              <motion.a
+                href="/shop"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.9 }}
+                className="pointer-events-auto inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-accent-gold text-surface-primary font-bold text-sm shadow-lg shadow-accent-gold/30 hover:shadow-xl hover:shadow-accent-gold/40 transition-shadow cursor-pointer"
+                style={{ textDecoration: "none" }}
+              >
+                {isEnglish ? "Shop Now" : "تسوق الآن"}
+                <i className={`fas ${isEnglish ? "fa-arrow-right" : "fa-arrow-left"} text-xs`} />
+              </motion.a>
+            </MagneticWrapper>
+          </div>
         </div>
-      </div>
 
       <div className="absolute bottom-8 inset-x-0 flex items-center justify-center gap-2">
         {SLIDES.map((_, i) => (

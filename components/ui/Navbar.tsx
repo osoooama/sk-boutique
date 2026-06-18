@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { springs } from "@/lib/springs";
+import MagneticWrapper from "./MagneticWrapper";
 
 interface NavbarProps {
   isEnglish: boolean;
@@ -160,10 +161,11 @@ export default function Navbar({
                 </span>
               )}
             </Link>
-            <button onClick={openCart} className="relative" style={{ textDecoration: "none" }}>
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all">
-                <i className="fas fa-shopping-bag text-xs" />
-              </div>
+            <MagneticWrapper>
+              <button onClick={openCart} className="relative" style={{ textDecoration: "none" }}>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all">
+                  <i className="fas fa-shopping-bag text-xs" />
+                </div>
               {totalItems > 0 && (
                 <motion.span
                   key={badgeBounce ? "bounce" : "normal"}
@@ -189,6 +191,7 @@ export default function Navbar({
                 </motion.span>
               )}
             </button>
+            </MagneticWrapper>
             {onToggleTheme && (
               <button
                 onClick={(e) => {
@@ -262,6 +265,7 @@ export default function Navbar({
                 />
               </button>
             )}
+            <MagneticWrapper>
             <button
               onClick={openCart}
               className="relative w-11 h-11 flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all rounded-xl"
@@ -289,6 +293,7 @@ export default function Navbar({
                 </motion.span>
               )}
             </button>
+            </MagneticWrapper>
             <button
               onClick={() => setMobileOpen(true)}
               className="w-11 h-11 flex items-center justify-center border border-border text-accent-gold hover:bg-accent-gold-muted transition-all rounded-xl"
