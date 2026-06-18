@@ -305,3 +305,4 @@ interface Perfume { id, title, englishTitle, description, englishDescription,
 | 10 | Jun 15, 2026 | Orbs z-index fix — html background, z-0 orbs, z-1 content wrapper |
 | 11 | Jun 15, 2026 | Full dead code audit — 16 CSS classes, 26 files, duplicate logic, broken icons |
 | 12 | Jun 18, 2026 | Data layer — `lib/data.ts` hooks + `lib/products-api.ts` CRUD, admin panel, migration script, currency popup |
+| 13 | Jun 18, 2026 | **Deploy to production:** Supabase SQL schema, migration (8 products, 8 perfumes, 16 images), env vars in Cloudflare Dashboard, npm run deploy, git commit + push |
