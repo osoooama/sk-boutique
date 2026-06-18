@@ -7,12 +7,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { springs } from "@/lib/springs";
+import { hapticMedium } from "@/lib/haptics";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
 import Toast from "@/components/Toast/Toast";
 import ColorSwatches from "@/components/product/ColorSwatches";
 import SizeSelector from "@/components/product/SizeSelector";
+import ImageTouchSlider from "@/components/product/ImageTouchSlider";
+import BottomSheet from "@/components/BottomSheet";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import SizeGuideModal from "@/components/ui/SizeGuideModal";
 import BackToTop from "@/components/ui/BackToTop";
@@ -34,6 +37,8 @@ export default function ProductDetailPage() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [addedToCart, setAddedToCart] = useState(false);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
+  const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
+  const [sheetQuantity, setSheetQuantity] = useState(1);
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
 
   const { products } = useProducts();
@@ -127,7 +132,7 @@ export default function ProductDetailPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           <div className="space-y-4">
-            <div className="relative aspect-[3/4] rounded-3xl overflow-hidden glass-card bg-surface-primary">
+            <div className="relative">
               <button
                 onClick={() => {
                   toggleItem(product.id);
@@ -145,18 +150,16 @@ export default function ProductDetailPage() {
                     : "bg-black/50 text-accent-gold/40 hover:text-red-400 hover:bg-red-500/20"
                 }`}
               >
-                <i className={`fas fa-heart ${wishlisted ? "text-sm" : "text-sm"}`} />
+                <i className="fas fa-heart text-sm" />
               </button>
 
-              <div key={`${activeColor?.name}-${selectedImage}`} className="absolute inset-0">
-                {images[selectedImage] ? (
-                  <Image src={images[selectedImage]} alt={isEnglish ? product.englishTitle : product.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" priority placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <i className="fas fa-tshirt text-6xl text-accent-gold/20" />
-                  </div>
-                )}
-              </div>
+              {images.length > 0 ? (
+                <ImageTouchSlider key={activeColor?.name || "default"} images={images} alt={isEnglish ? product.englishTitle : product.title} />
+              ) : (
+                <div className="relative aspect-[3/4] rounded-3xl overflow-hidden glass-card bg-surface-primary flex items-center justify-center">
+                  <i className="fas fa-tshirt text-6xl text-accent-gold/20" />
+                </div>
+              )}
               {product.inStock && (
                 <span className="absolute top-4 left-4 text-[10px] font-bold px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 backdrop-blur-sm z-10">
                   {isEnglish ? "In Stock" : "متوفر"}
@@ -168,22 +171,6 @@ export default function ProductDetailPage() {
                 </span>
               )}
             </div>
-
-            {images.length > 1 && (
-              <div className="flex items-center gap-2" dir="ltr">
-                {images.slice(0, 3).map((img, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setSelectedImage(i)}
-                    className={`relative w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 ${
-                      selectedImage === i ? "border-accent-gold scale-105" : "border-border hover:border-border-strong"
-                    }`}
-                  >
-                    <Image src={img} alt={isEnglish ? `${product.englishTitle} ${i + 1}` : `${product.title} ${i + 1}`} fill sizes="80px" className="object-cover" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
 
           <div className="space-y-6 md:sticky md:top-28 md:self-start">
@@ -365,16 +352,137 @@ export default function ProductDetailPage() {
             </p>
           </div>
           <motion.button
-            onClick={handleAddToCart}
+            onClick={() => { setSheetQuantity(1); setSelectedSize(product.sizes[0] || ""); setBottomSheetOpen(true); }}
             className="px-8 py-3 rounded-xl bg-accent-gold text-surface-primary font-bold text-xs whitespace-nowrap"
             whileTap={{ scale: 0.95, transition: springs.snappy }}
           >
-            {addedToCart ? <><i className="fas fa-check ml-1" />{isEnglish ? "Done" : "تم"}</> : <><i className="fas fa-shopping-bag ml-1" />{isEnglish ? "Add" : "أضف"}</>}
+            <i className="fas fa-shopping-bag ml-1" />{isEnglish ? "Add" : "أضف"}
           </motion.button>
         </div>
       </div>
 
       <SizeGuideModal isOpen={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} isEnglish={isEnglish} />
+      <BottomSheet isOpen={bottomSheetOpen} onClose={() => setBottomSheetOpen(false)}>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="relative w-16 h-20 rounded-xl overflow-hidden bg-surface-primary flex-shrink-0">
+              {images[0] && (
+                <Image src={images[0]} alt={isEnglish ? product.englishTitle : product.title} fill sizes="64px" className="object-cover" />
+              )}
+            </div>
+            <div className="min-w-0">
+              <p className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                {isEnglish ? product.englishTitle : product.title}
+              </p>
+              <p className="text-accent-gold font-bold text-sm mt-1">
+                {finalPrice} {isEnglish ? "JD" : "د.أ"}
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold text-content-secondary mb-2">{isEnglish ? "Color" : "اللون"}</p>
+            <div className="flex gap-2 flex-wrap">
+              {product.colors.slice(0, 2).map((c) => (
+                <button
+                  key={c.name}
+                  onClick={() => { setSelectedColor(c.name); setSelectedImage(0); }}
+                  className={`w-8 h-8 rounded-full border-2 transition-all ${
+                    (selectedColor || product.colors[0].name) === c.name ? "border-accent-gold scale-110" : "border-border"
+                  }`}
+                  style={{ backgroundColor: c.hex }}
+                  aria-label={isEnglish ? c.englishName : c.name}
+                />
+              ))}
+              {product.colors.length > 2 && (
+                <span className="text-[10px] text-accent-gold/50 self-center">
+                  +{product.colors.length - 2}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold text-content-secondary mb-2">{isEnglish ? "Size" : "المقاس"}</p>
+            <div className="flex gap-2 flex-wrap">
+              {product.sizes.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setSelectedSize(s)}
+                  className={`w-12 h-9 rounded-lg text-xs font-bold border transition-all ${
+                    (selectedSize || product.sizes[0]) === s
+                      ? "border-accent-gold bg-accent-gold-muted text-accent-gold"
+                      : "border-border text-accent-gold/60 hover:border-accent-gold/30"
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold text-content-secondary mb-2">{isEnglish ? "Quantity" : "الكمية"}</p>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setSheetQuantity((q) => Math.max(1, q - 1))}
+                className="w-9 h-9 rounded-lg border border-border text-accent-gold flex items-center justify-center text-sm"
+              >
+                <i className="fas fa-minus text-xs" />
+              </button>
+              <span className="w-8 text-center font-bold text-sm">{sheetQuantity}</span>
+              <button
+                onClick={() => setSheetQuantity((q) => Math.min(10, q + 1))}
+                className="w-9 h-9 rounded-lg border border-border text-accent-gold flex items-center justify-center text-sm"
+              >
+                <i className="fas fa-plus text-xs" />
+              </button>
+            </div>
+          </div>
+
+          <div className="flex gap-3 pt-2">
+            <motion.button
+              onClick={() => {
+                hapticMedium();
+                const size = selectedSize || product.sizes[0];
+                if (!size || !activeColor) return;
+                for (let i = 0; i < sheetQuantity; i++) {
+                  addItem({
+                    productId: product.id,
+                    title: product.title,
+                    englishTitle: product.englishTitle,
+                    price: finalPrice,
+                    size,
+                    color: activeColor.name,
+                    colorHex: activeColor.hex,
+                    image: activeColor.images[0] || "",
+                  });
+                }
+                setAddedToCart(true);
+                addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
+                setTimeout(() => setAddedToCart(false), 2000);
+                setBottomSheetOpen(false);
+              }}
+              className="flex-1 py-3.5 rounded-2xl text-surface-primary font-bold text-sm"
+              style={{ background: "linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover))" }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <i className="fas fa-shopping-bag ml-2" />{isEnglish ? "Add to Cart" : "أضف للسلة"}
+            </motion.button>
+            <motion.button
+              onClick={() => {
+                toggleItem(product.id);
+                addToast("success", isEnglish ? "Added to wishlist" : "أضيف للمفضلة!", "fa-heart");
+                setBottomSheetOpen(false);
+              }}
+              className="py-3.5 px-5 rounded-2xl border border-accent-gold/30 text-accent-gold font-bold text-sm"
+              whileTap={{ scale: 0.95 }}
+            >
+              <i className="fas fa-heart" />
+            </motion.button>
+          </div>
+        </div>
+      </BottomSheet>
       <BackToTop />
       <Footer isEnglish={isEnglish} />
     </div>
