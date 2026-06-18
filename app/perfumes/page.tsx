@@ -14,7 +14,8 @@ import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { useTheme } from "@/context/ThemeContext";
-import { perfumes, getPerfumePrice } from "@/lib/perfumes";
+import { usePerfumes } from "@/lib/data";
+import { getPerfumePrice } from "@/lib/perfumes";
 import type { Perfume } from "@/lib/types";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
@@ -32,6 +33,7 @@ export default function PerfumesPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
+  const { perfumes } = usePerfumes();
 
   const { addItem } = useCart();
   const { addToast } = useToast();

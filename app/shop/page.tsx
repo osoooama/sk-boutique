@@ -12,7 +12,7 @@ import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import ProductCard from "@/components/product/ProductCard";
 import { useTheme } from "@/context/ThemeContext";
-import { products } from "@/lib/products";
+import { useProducts } from "@/lib/data";
 
 const CATEGORIES = [
   { id: "all", ar: "الكل", en: "All" },
@@ -26,6 +26,7 @@ export default function ShopPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
+  const { products } = useProducts();
 
   const filtered =
     activeCategory === "all"

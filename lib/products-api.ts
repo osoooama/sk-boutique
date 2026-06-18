@@ -165,15 +165,16 @@ export async function deletePerfume(id: string): Promise<void> {
 }
 
 export async function uploadImage(
-  file: File,
+  file: Blob | File,
   folder: string
 ): Promise<string> {
   const sb = getSupabase();
-  const ext = file.name.split(".").pop() ?? "webp";
+  const ext = file instanceof File ? (file.name.split(".").pop() ?? "webp") : "webp";
+  const contentType = file.type || "image/webp";
   const fileName = `${folder}/${crypto.randomUUID()}.${ext}`;
 
   const { error } = await sb.storage.from("products").upload(fileName, file, {
-    contentType: file.type,
+    contentType,
     cacheControl: "31536000",
   });
 

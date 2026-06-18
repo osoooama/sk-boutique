@@ -16,7 +16,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import SizeGuideModal from "@/components/ui/SizeGuideModal";
 import BackToTop from "@/components/ui/BackToTop";
 import { useTheme } from "@/context/ThemeContext";
-import { products } from "@/lib/products";
+import { useProducts } from "@/lib/data";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useToast } from "@/components/Toast/ToastContext";
@@ -35,6 +35,7 @@ export default function ProductDetailPage() {
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
 
+  const { products } = useProducts();
   const { addItem, items: cartItems } = useCart();
   const { isWishlisted, toggleItem } = useWishlist();
   const { addToast } = useToast();

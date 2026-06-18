@@ -88,14 +88,20 @@ sk-boutique/
 │
 ├── lib/
 │   ├── types.ts                      # TypeScript interfaces (Product, Perfume, ProductColor, etc.)
-│   ├── products.ts                   # 8 products with colors, sizes, descriptions
-│   ├── perfumes.ts                   # 8 perfumes + getPerfumePrice helper
+│   ├── products.ts                   # 8 static products (fallback data)
+│   ├── perfumes.ts                   # 8 static perfumes + getPerfumePrice helper
+│   ├── data.ts                       # Unified data hooks — tries Supabase, falls back to static
+│   ├── supabase.ts                   # Lazy getSupabase() client
+│   ├── products-api.ts               # 12 Supabase CRUD/Storage functions
+│   ├── supabase-schema.sql           # SQL migration reference
 │   ├── animations.ts                 # Shared framer-motion variants (mobile-aware values)
 │   ├── blur-placeholder.ts           # Reusable base64 blur placeholder for <Image>
 │   ├── jordan-cities.ts              # 36 cities + getDeliveryFee helper
 │   └── phone-validation.ts           # Jordan phone validation (077/078/079)
 │
-├── scripts/                          # Build/utility scripts (sharp-based)
+├── scripts/
+│   ├── migrate-data.ts               # Upload static data + images to Supabase
+│   ├── *.js                          # Build/utility scripts (sharp-based)
 ├── public/
 │   ├── clothing/                     # 30 product images (.webp)
 │   ├── perfumes/                     # 8 perfume images (.webp)
@@ -126,7 +132,7 @@ sk-boutique/
 | `npm run preview` | Build + local preview on Cloudflare |
 | `npx tsc --noEmit` | Type check without emitting |
 
-**After any code edit, always run `npm run build` to verify 0 errors, 0 warnings, 11/11 pages.**
+**After any code edit, always run `npm run build` to verify 0 errors, 0 warnings, 15/15 pages.**
 
 ---
 
@@ -154,6 +160,13 @@ ToastProvider (outermost)
             └─ ThemeProvider
                  └─ {children}
 ```
+
+### Data Layer (lib/data.ts)
+- All pages use React hooks from `lib/data.ts` (`useProducts`, `usePerfumes`)
+- Tries Supabase API first via `lib/products-api.ts`; catches errors → falls back to static data from `lib/products.ts` / `lib/perfumes.ts`
+- Static data is the initial value (no loading flash); Supabase data replaces it silently when available
+- Async fetchers (`fetchProducts`, `fetchPerfumes`, `fetchProduct`, `fetchPerfume`) available for non-hook usage
+- Admin dashboard uses static data for display + API functions for mutations (writes fail gracefully until Supabase configured)
 
 ### Discount Code
 - `SK30` = 20% off
@@ -291,3 +304,4 @@ interface Perfume { id, title, englishTitle, description, englishDescription,
 | 9 | Jun 15, 2026 | ThemeContext provider refactor, CSS cleanup, dead code removal |
 | 10 | Jun 15, 2026 | Orbs z-index fix — html background, z-0 orbs, z-1 content wrapper |
 | 11 | Jun 15, 2026 | Full dead code audit — 16 CSS classes, 26 files, duplicate logic, broken icons |
+| 12 | Jun 18, 2026 | Data layer — `lib/data.ts` hooks + `lib/products-api.ts` CRUD, admin panel, migration script, currency popup |

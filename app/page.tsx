@@ -16,8 +16,7 @@ import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Image from "next/image";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
-import { products } from "@/lib/products";
-import { perfumes } from "@/lib/perfumes";
+import { useProducts, usePerfumes } from "@/lib/data";
 import FeedbackGallery from "@/components/FeedbackGallery";
 
 const FEATURES = [
@@ -27,14 +26,15 @@ const FEATURES = [
   { icon: "fa-hand-holding-dollar", ar: "الدفع عند الاستلام", en: "Cash on Delivery" },
 ];
 
-const FEATURED_PERFUMES = perfumes.slice(0, 3);
-
 export default function HomePage() {
   const [isEnglish, setIsEnglish] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
+  const { products } = useProducts();
+  const { perfumes } = usePerfumes();
 
   const featuredProducts = products.slice(0, 6);
+  const featuredPerfumes = perfumes.slice(0, 3);
 
   return (
     <div className="min-h-screen">
@@ -138,7 +138,7 @@ export default function HomePage() {
               viewport={{ once: true, margin: "-50px" }}
               className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
             >
-              {FEATURED_PERFUMES.map((perfume, i) => (
+              {featuredPerfumes.map((perfume, i) => (
                 <motion.div
                   key={perfume.id}
                   variants={fadeUpVariant}

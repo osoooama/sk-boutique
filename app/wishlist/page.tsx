@@ -17,14 +17,16 @@ import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
 import CurrencyPopup from "@/components/CurrencyPopup";
-import { products } from "@/lib/products";
-import { perfumes, getPerfumePrice } from "@/lib/perfumes";
+import { useProducts, usePerfumes } from "@/lib/data";
+import { getPerfumePrice } from "@/lib/perfumes";
 
 export default function WishlistPage() {
   const [isEnglish, setIsEnglish] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
 
+  const { products } = useProducts();
+  const { perfumes } = usePerfumes();
   const { items: wishlist, toggleItem } = useWishlist();
   const { addItem } = useCart();
   const { addToast } = useToast();

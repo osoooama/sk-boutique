@@ -3,7 +3,7 @@
 
 -- 1. Products table
 CREATE TABLE products (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  id TEXT PRIMARY KEY,
   name_ar TEXT NOT NULL,
   name_en TEXT,
   price DECIMAL(10,2) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE products (
 
 -- 2. Perfumes table
 CREATE TABLE perfumes (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  id TEXT PRIMARY KEY,
   name_ar TEXT NOT NULL,
   name_en TEXT,
   price DECIMAL(10,2) NOT NULL,
@@ -43,16 +43,11 @@ CREATE TABLE perfumes (
   updated_at TIMESTAMPTZ DEFAULT now()
 );
 
--- 3. Storage bucket for product/perfume images
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('products', 'products', true)
-ON CONFLICT (id) DO NOTHING;
-
--- 4. Row Level Security
+-- 3. Row Level Security
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE perfumes ENABLE ROW LEVEL SECURITY;
 
--- 5. Policies: public read, authenticated write
+-- 4. Policies: public read, authenticated write
 CREATE POLICY "Public read products"
 ON products FOR SELECT TO anon USING (true);
 
