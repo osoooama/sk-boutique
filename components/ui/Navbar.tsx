@@ -135,7 +135,7 @@ export default function Navbar({
         height={height}
         priority
         className="object-contain"
-        style={{ borderRadius: "50%" }}
+        style={{ borderRadius: "50%", mixBlendMode: "multiply" }}
       />
     </span>
   );
