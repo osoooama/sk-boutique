@@ -16,6 +16,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
+import CurrencyPopup from "@/components/CurrencyPopup";
 import { products } from "@/lib/products";
 import { perfumes, getPerfumePrice } from "@/lib/perfumes";
 
@@ -116,7 +117,9 @@ export default function WishlistPage() {
                             </p>
                           </div>
                         </div>
-                        <p className="text-[10px] text-accent-gold/40">{product.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
+                        <CurrencyPopup price={product.basePrice}>
+                          <p className="text-[10px] text-accent-gold/40">{product.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
+                        </CurrencyPopup>
                       </div>
                     </Link>
                     <div className="px-3 pb-3">
@@ -177,7 +180,9 @@ export default function WishlistPage() {
                         </p>
                       </div>
                     </div>
-                    <p className="text-[10px] text-accent-gold/40">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "د.أ"} · {perfume.volume}</p>
+                    <CurrencyPopup price={getPerfumePrice(perfume)}>
+                      <p className="text-[10px] text-accent-gold/40">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "د.أ"} · {perfume.volume}</p>
+                    </CurrencyPopup>
                   </Link>
                 </motion.div>
               ))}

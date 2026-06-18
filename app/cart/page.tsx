@@ -15,6 +15,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { useTheme } from "@/context/ThemeContext";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
+import CurrencyPopup from "@/components/CurrencyPopup";
 
 export default function CartPage() {
   const [isEnglish, setIsEnglish] = useState(false);
@@ -136,9 +137,11 @@ export default function CartPage() {
                           </button>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="text-sm font-bold text-accent-gold">
-                            {item.price * item.quantity} {isEnglish ? "JD" : "د.أ"}
-                          </span>
+                          <CurrencyPopup price={item.price * item.quantity}>
+                            <span className="text-sm font-bold text-accent-gold">
+                              {item.price * item.quantity} {isEnglish ? "JD" : "د.أ"}
+                            </span>
+                          </CurrencyPopup>
                           <button
                             onClick={() => {
                               removeItem(item.productId, item.size, item.color);
@@ -195,13 +198,17 @@ export default function CartPage() {
               <div className="space-y-2 text-xs">
                 <div className="flex items-center justify-between text-accent-gold/60">
                   <span>{isEnglish ? "Subtotal" : "المجموع الفرعي"}</span>
-                  <span>{subtotal} {isEnglish ? "JD" : "د.أ"}</span>
+                  <CurrencyPopup price={subtotal}>
+                    <span>{subtotal} {isEnglish ? "JD" : "د.أ"}</span>
+                  </CurrencyPopup>
                 </div>
 
                 {discountPercent > 0 && (
                   <div className="flex items-center justify-between text-green-400/80">
                     <span>{isEnglish ? "Discount (20%)" : "الخصم (20%)"}</span>
-                    <span className="font-bold text-green-400">-{(subtotal - discountedSubtotal).toFixed(2)} {isEnglish ? "JD" : "د.أ"}</span>
+                    <CurrencyPopup price={subtotal - discountedSubtotal}>
+                      <span className="font-bold text-green-400">-{(subtotal - discountedSubtotal).toFixed(2)} {isEnglish ? "JD" : "د.أ"}</span>
+                    </CurrencyPopup>
                   </div>
                 )}
 
@@ -211,7 +218,9 @@ export default function CartPage() {
                 </div>
                 <div className="border-t border-border pt-2 flex items-center justify-between font-bold text-sm">
                   <span>{isEnglish ? "Total" : "المجموع"}</span>
-                  <span className="text-accent-gold">{discountedSubtotal} {isEnglish ? "JD" : "د.أ"}</span>
+                  <CurrencyPopup price={discountedSubtotal}>
+                    <span className="text-accent-gold">{discountedSubtotal} {isEnglish ? "JD" : "د.أ"}</span>
+                  </CurrencyPopup>
                 </div>
               </div>
               <Link

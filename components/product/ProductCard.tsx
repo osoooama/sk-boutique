@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import type { Product } from "@/lib/types";
 import { fadeUpVariant } from "@/lib/animations";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
+import CurrencyPopup from "@/components/CurrencyPopup";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useToast } from "@/components/Toast/ToastContext";
@@ -193,9 +194,11 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="font-bold text-accent-gold text-sm">
-                {product.basePrice} {isEnglish ? "JD" : "د.أ"}
-              </span>
+              <CurrencyPopup price={product.basePrice}>
+                <span className="font-bold text-accent-gold text-sm">
+                  {product.basePrice} {isEnglish ? "JD" : "د.أ"}
+                </span>
+              </CurrencyPopup>
               <div className="flex gap-1">
                 {product.sizes.slice(0, 3).map((s) => (
                   <span

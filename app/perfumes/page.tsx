@@ -18,6 +18,7 @@ import { perfumes, getPerfumePrice } from "@/lib/perfumes";
 import type { Perfume } from "@/lib/types";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
+import CurrencyPopup from "@/components/CurrencyPopup";
 
 const CATEGORIES = [
   { id: "all", ar: "\u0627\u0644\u0643\u0644", en: "All" },
@@ -175,7 +176,9 @@ export default function PerfumesPage() {
                         </div>
                         <p className="text-xs text-accent-gold/40 line-clamp-2 leading-relaxed">{isEnglish ? perfume.englishDescription : perfume.description}</p>
                         <div className="flex items-center justify-between pt-1">
-                        <span className="text-xs font-bold text-accent-gold">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "\u062f.\u0623"}</span>
+                        <CurrencyPopup price={getPerfumePrice(perfume)}>
+                          <span className="text-xs font-bold text-accent-gold">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "\u062f.\u0623"}</span>
+                        </CurrencyPopup>
                         <button onClick={() => handleAddPerfume(perfume)} className="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted hover:bg-accent-gold/25 transition-all">
                           <i className="fas fa-shopping-bag mr-1" />{isEnglish ? "Add" : "\u0623\u0636\u0641"}
                         </button>

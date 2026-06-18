@@ -7,6 +7,7 @@ import Image from "next/image";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
+import CurrencyPopup from "@/components/CurrencyPopup";
 
 interface CartDrawerProps {
   isEnglish: boolean;
@@ -142,9 +143,11 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
                             </button>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-accent-gold">
-                              {item.price * item.quantity} {isEnglish ? "JD" : "د.أ"}
-                            </span>
+                            <CurrencyPopup price={item.price * item.quantity}>
+                              <span className="text-xs font-bold text-accent-gold">
+                                {item.price * item.quantity} {isEnglish ? "JD" : "د.أ"}
+                              </span>
+                            </CurrencyPopup>
                             <button
                               onClick={() => {
                                 removeItem(item.productId, item.size, item.color);
@@ -204,21 +207,27 @@ export default function CartDrawer({ isEnglish }: CartDrawerProps) {
                     transition={{ duration: 0.3, ease: "easeOut" }}
                     style={{ color: "var(--accent-gold)" }}
                   >
-                    {subtotal} {isEnglish ? "JD" : "د.أ"}
+                    <CurrencyPopup price={subtotal}>
+                      <span>{subtotal} {isEnglish ? "JD" : "د.أ"}</span>
+                    </CurrencyPopup>
                   </motion.span>
                 </div>
 
                 {discountPercent > 0 && (
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-green-400/80">{isEnglish ? "Discount (20%)" : "الخصم (20%)"}</span>
-                    <span className="text-green-400 font-bold">-{(subtotal - discountedSubtotal).toFixed(2)} {isEnglish ? "JD" : "د.أ"}</span>
+                    <CurrencyPopup price={subtotal - discountedSubtotal}>
+                      <span className="text-green-400 font-bold">-{(subtotal - discountedSubtotal).toFixed(2)} {isEnglish ? "JD" : "د.أ"}</span>
+                    </CurrencyPopup>
                   </div>
                 )}
 
                 {discountPercent > 0 && (
                   <div className="flex items-center justify-between text-sm border-t border-border pt-2">
                     <span className="font-bold">{isEnglish ? "Total after discount" : "المجموع بعد الخصم"}</span>
-                    <span className="font-bold text-accent-gold">{discountedSubtotal.toFixed(2)} {isEnglish ? "JD" : "د.أ"}</span>
+                    <CurrencyPopup price={discountedSubtotal}>
+                      <span className="font-bold text-accent-gold">{discountedSubtotal.toFixed(2)} {isEnglish ? "JD" : "د.أ"}</span>
+                    </CurrencyPopup>
                   </div>
                 )}
                 <Link

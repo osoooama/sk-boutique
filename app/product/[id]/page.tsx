@@ -20,6 +20,7 @@ import { products } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useToast } from "@/components/Toast/ToastContext";
+import CurrencyPopup from "@/components/CurrencyPopup";
 
 const RECENT_KEY = "sk_recently_viewed";
 
@@ -198,9 +199,11 @@ export default function ProductDetailPage() {
                 {isEnglish ? product.englishTitle : product.title}
               </h1>
               <div className="flex items-center gap-4">
-                <span className="text-2xl md:text-3xl font-bold text-accent-gold">
-                  {finalPrice} {isEnglish ? "JD" : "د.أ"}
-                </span>
+                <CurrencyPopup price={finalPrice}>
+                  <span className="text-2xl md:text-3xl font-bold text-accent-gold">
+                    {finalPrice} {isEnglish ? "JD" : "د.أ"}
+                  </span>
+                </CurrencyPopup>
                 {sizeSurcharge > 0 && (
                   <span className="text-xs text-accent-gold/40 line-through">
                     {product.basePrice} {isEnglish ? "JD" : "د.أ"}
