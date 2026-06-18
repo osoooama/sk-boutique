@@ -303,8 +303,6 @@ export default function ProductDetailPage() {
             </div>
 
             <div className="flex items-center gap-4 text-[10px] text-accent-gold/30">
-              <span className="flex items-center gap-1"><i className="fas fa-truck text-accent-gold/40" />{isEnglish ? "Free Shipping" : "شحن مجاني"}</span>
-              <span className="flex items-center gap-1"><i className="fas fa-rotate-left text-accent-gold/40" />{isEnglish ? "7-Day Returns" : "إرجاع 7 أيام"}</span>
               <span className="flex items-center gap-1"><i className="fas fa-shield text-accent-gold/40" />{isEnglish ? "COD" : "دفع عند الاستلام"}</span>
             </div>
 
@@ -314,15 +312,11 @@ export default function ProductDetailPage() {
                 <p className="text-xs text-accent-gold/40 leading-relaxed">{isEnglish ? product.englishDetails : product.details}</p>
               </div>
               <div>
-                <h3 className="text-xs font-bold text-content-secondary mb-2">{isEnglish ? "Shipping & Returns" : "الشحن والإرجاع"}</h3>
+                <h3 className="text-xs font-bold text-content-secondary mb-2">{isEnglish ? "Shipping" : "الشحن"}</h3>
                 <ul className="space-y-2 text-xs text-accent-gold/40">
                   <li className="flex items-center gap-2">
                     <i className="fas fa-truck text-accent-gold/60 text-[8px]" />
                     {isEnglish ? product.englishShipping : product.shipping}
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-rotate-left text-accent-gold/60 text-[8px]" />
-                    {isEnglish ? "Free returns within 7 days" : "إرجاع مجاني خلال 7 أيام"}
                   </li>
                   <li className="flex items-center gap-2">
                     <i className="fas fa-shield text-accent-gold/60 text-[8px]" />

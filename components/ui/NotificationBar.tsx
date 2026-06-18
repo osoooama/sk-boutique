@@ -17,8 +17,8 @@ export default function NotificationBar() {
       }}
     >
       <div className="hidden md:block text-[11px] whitespace-nowrap" style={{ color: "#C9A96E" }}>
-        <i className="fas fa-truck-fast ml-1.5" />
-        توصيل لكل الأردن · إرجاع 7 أيام · خصم 20% كود SK30
+        <i className="fas fa-tag ml-1.5" />
+        خصم 20% كود SK30
         <i className="fas fa-certificate mr-1.5" />
       </div>
       <div className="md:hidden w-full overflow-hidden">
@@ -29,13 +29,13 @@ export default function NotificationBar() {
           transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
         >
           <span className="mx-4">
-            <i className="fas fa-truck-fast ml-1.5" />
-            توصيل لكل الأردن · إرجاع 7 أيام · خصم 20% كود SK30
+            <i className="fas fa-tag ml-1.5" />
+            خصم 20% كود SK30
             <i className="fas fa-certificate mr-1.5" />
           </span>
           <span className="mx-4">
-            <i className="fas fa-truck-fast ml-1.5" />
-            توصيل لكل الأردن · إرجاع 7 أيام · خصم 20% كود SK30
+            <i className="fas fa-tag ml-1.5" />
+            خصم 20% كود SK30
             <i className="fas fa-certificate mr-1.5" />
           </span>
         </motion.div>

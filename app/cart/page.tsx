@@ -255,10 +255,6 @@ export default function CartPage() {
                   </div>
                 )}
 
-                <div className="flex items-center justify-between text-accent-gold/60">
-                  <span>{isEnglish ? "Shipping" : "الشحن"}</span>
-                  <span className="text-green-400/60">{isEnglish ? "Free" : "مجاني"}</span>
-                </div>
                 <div className="border-t border-border pt-2 flex items-center justify-between font-bold text-sm">
                   <span>{isEnglish ? "Total" : "المجموع"}</span>
                   <CurrencyPopup price={discountedSubtotal}>

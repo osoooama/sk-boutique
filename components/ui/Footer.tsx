@@ -96,7 +96,6 @@ export default function Footer({ isEnglish }: FooterProps) {
             <ul className="space-y-3 text-sm">
               {[
                 { ar: "الدفع عند الاستلام", en: "Cash on delivery" },
-                { ar: "إرجاع مجاني خلال 7 أيام", en: "7-day free returns" },
                 { ar: "خامات إيطالية وفرنسية", en: "Italian & French materials" },
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-2 text-accent-gold/40">

@@ -21,7 +21,7 @@ import FeedbackGallery from "@/components/FeedbackGallery";
 
 const FEATURES = [
   { icon: "fa-truck-fast", ar: "شحن سريع لكل الأردن", en: "Fast Shipping Across Jordan" },
-  { icon: "fa-rotate-left", ar: "إرجاع مجاني خلال 7 أيام", en: "7-Day Free Returns" },
+
   { icon: "fa-certificate", ar: "خامات إيطالية وفرنسية", en: "Italian & French Materials" },
   { icon: "fa-hand-holding-dollar", ar: "الدفع عند الاستلام", en: "Cash on Delivery" },
 ];
