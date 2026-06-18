@@ -14,7 +14,7 @@ import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { useTheme } from "@/context/ThemeContext";
 import { useCart } from "@/context/CartContext";
-import { useToast } from "@/components/Toast/ToastContext";
+import { useToast } from "@/components/GlassToast/ToastProvider";
 import CurrencyPopup from "@/components/CurrencyPopup";
 import { springs } from "@/lib/springs";
 

@@ -271,9 +271,8 @@ export const products: Product[] = [
       "خامة مخمل فاخرة مع تفاصيل لؤلؤية مطرزة يدوياً. قماش ناعم ومريح مع بطانة داخلية من الحرير.",
     englishDetails:
       "Premium velvet fabric with hand-embroidered pearl details. Soft and comfortable fabric with silk inner lining.",
-    shipping: "توصيل داخل عمان. 2-3 أيام عمل لباقي المدن.",
-    englishShipping: "Delivery in Amman. 2-3 business days to other cities.",
     inStock: true,
+    featured: true,
     createdAt: "2025-03-22",
   },
   {
@@ -292,9 +291,8 @@ export const products: Product[] = [
       "قماش كريب ناعم مع لفافة جانبية وحزام خصر. يتكون من جاكيت قصير وبنطال واسع.",
     englishDetails:
       "Soft crepe fabric with side-wrap and waist belt. Consists of a short jacket and wide-leg trousers.",
-    shipping: "توصيل داخل عمان. 2-3 أيام عمل لباقي المدن.",
-    englishShipping: "Delivery in Amman. 2-3 business days to other cities.",
     inStock: true,
+    featured: true,
     createdAt: "2025-10-23",
   },
   {
@@ -313,8 +311,6 @@ export const products: Product[] = [
       "بليزر من المخمل الفاخر مع حزام خصر مخملي. جيوب عملية وتفصيل أوروبي دقيق.",
     englishDetails:
       "Luxury velvet blazer with a velvet waist belt. Practical pockets and precise European tailoring.",
-    shipping: "توصيل داخل عمان. 2-3 أيام عمل لباقي المدن.",
-    englishShipping: "Delivery in Amman. 2-3 business days to other cities.",
     inStock: true,
     createdAt: "2026-05-24",
   },
@@ -334,8 +330,6 @@ export const products: Product[] = [
       "ساتان إيطالي فاخر مع رقبة عالية (Mock Neck) وربطة خصر حريرية. قماش لامع ناعم الملمس.",
     englishDetails:
       "Premium Italian satin with a mock neck and silk waist tie. Shiny, soft-to-the-touch fabric.",
-    shipping: "توصيل داخل عمان. 2-3 أيام عمل لباقي المدن.",
-    englishShipping: "Delivery in Amman. 2-3 business days to other cities.",
     inStock: true,
     createdAt: "2026-05-22",
   },
@@ -355,8 +349,6 @@ export const products: Product[] = [
       "قماش قطني ناعم مع ربطة جانبية وسلاسل ذهبية أنيقة. أكمام طويلة بياقة كلاسيكية.",
     englishDetails:
       "Soft cotton fabric with side-tie and elegant gold chains. Long sleeves with classic collar.",
-    shipping: "توصيل داخل عمان. 2-3 أيام عمل لباقي المدن.",
-    englishShipping: "Delivery in Amman. 2-3 business days to other cities.",
     inStock: true,
     createdAt: "2026-04-24",
   },
@@ -376,8 +368,6 @@ export const products: Product[] = [
       "قماش كريب ناعم مع تفاصيل دانتيل أنيقة. فستان طويل بتصميم عصري جذاب.",
     englishDetails:
       "Soft crepe fabric with elegant lace details. Long dress with an attractive modern design.",
-    shipping: "توصيل داخل عمان. 2-3 أيام عمل لباقي المدن.",
-    englishShipping: "Delivery in Amman. 2-3 business days to other cities.",
     inStock: true,
     createdAt: "2025-07-23",
   },
@@ -397,8 +387,6 @@ export const products: Product[] = [
       "قماش تويد فاخر مع بطانة حريرية. يتكون من بليزر وتنورة ملفوفة أنيقة.",
     englishDetails:
       "Premium tweed fabric with silk lining. Consists of a blazer and an elegant wrap skirt.",
-    shipping: "توصيل داخل عمان. 2-3 أيام عمل لباقي المدن.",
-    englishShipping: "Delivery in Amman. 2-3 business days to other cities.",
     inStock: true,
     createdAt: "2025-08-11",
   },
@@ -418,8 +406,6 @@ export const products: Product[] = [
       "خامة ناعمة ومريحة مع قصة عصرية. مثالي للارتداء اليومي مع تصاميم أنيقة.",
     englishDetails:
       "Soft and comfortable material with a modern cut. Perfect for daily wear with elegant designs.",
-    shipping: "توصيل داخل عمان. 2-3 أيام عمل لباقي المدن.",
-    englishShipping: "Delivery in Amman. 2-3 business days to other cities.",
     inStock: true,
     createdAt: "2025-10-09",
   },

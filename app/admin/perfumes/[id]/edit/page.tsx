@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useToast } from "@/components/Toast/ToastContext";
+import { useToast } from "@/components/GlassToast/ToastProvider";
 import ImageUploader from "@/components/admin/ImageUploader";
 import ConfirmModal from "@/components/admin/ConfirmModal";
 import { perfumes } from "@/lib/perfumes";

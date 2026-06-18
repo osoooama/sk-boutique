@@ -17,6 +17,7 @@ function toProduct(row: DbProduct): Product {
     shipping: row.shipping_ar ?? "",
     englishShipping: row.shipping_en ?? "",
     inStock: row.in_stock,
+    featured: row.featured,
     createdAt: row.created_at,
   };
 }
@@ -41,6 +42,7 @@ function toPerfume(row: DbPerfume): Perfume {
     basePrice: row.price,
     volume: row.volume ?? `${row.size_ml}ml`,
     inStock: row.in_stock,
+    featured: row.featured,
     notes,
     createdAt: row.created_at,
   };

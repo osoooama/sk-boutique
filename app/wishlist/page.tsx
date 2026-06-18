@@ -15,7 +15,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { useTheme } from "@/context/ThemeContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
-import { useToast } from "@/components/Toast/ToastContext";
+import { useToast } from "@/components/GlassToast/ToastProvider";
 import CurrencyPopup from "@/components/CurrencyPopup";
 import { useProducts, usePerfumes } from "@/lib/data";
 import { getPerfumePrice } from "@/lib/perfumes";
@@ -103,6 +103,13 @@ export default function WishlistPage() {
                     exit={{ opacity: 0, scale: 0.9 }}
                     className="glass-card group relative overflow-hidden"
                   >
+                    {!product.inStock && (
+                      <div className="absolute inset-0 z-10 bg-black/50 backdrop-blur-[2px] flex items-center justify-center rounded-2xl">
+                        <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-red-500/80 text-white border border-red-400/50 backdrop-blur-sm">
+                          {isEnglish ? "Unavailable" : "غير متوفر"}
+                        </span>
+                      </div>
+                    )}
                     <button
                       onClick={() => {
                         toggleItem(product.id);
@@ -113,7 +120,7 @@ export default function WishlistPage() {
                       <i className="fas fa-heart text-xs" />
                     </button>
                     <Link href={`/product/${product.id}`} className="block" style={{ textDecoration: "none" }}>
-                      <div className="relative aspect-[3/4] bg-surface-primary overflow-hidden">
+                      <div className={`relative aspect-[3/4] bg-surface-primary overflow-hidden ${!product.inStock ? "opacity-50" : ""}`}>
                         {imgSrc ? (
                           <Image src={imgSrc} alt={isEnglish ? product.englishTitle : product.title} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} />
                         ) : (
@@ -139,6 +146,10 @@ export default function WishlistPage() {
                     <div className="px-3 pb-3">
                       <button
                         onClick={() => {
+                          if (!product.inStock) {
+                            show("error", isEnglish ? "Product unavailable" : "هذا المنتج غير متوفر", "fa-times");
+                            return;
+                          }
                           if (product.colors[0] && product.sizes[0]) {
                             addItem({
                               productId: product.id,
@@ -149,14 +160,19 @@ export default function WishlistPage() {
                               color: product.colors[0].name,
                               colorHex: product.colors[0].hex,
                               image: product.colors[0].images[0] || "",
+                              inStock: product.inStock,
                             });
                             show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
                           }
                         }}
-                        className="w-full py-2.5 rounded-xl border border-accent-gold-muted text-accent-gold text-[10px] font-medium hover:bg-accent-gold-muted transition-all"
+                        className={`w-full py-2.5 rounded-xl border text-[10px] font-medium transition-all ${
+                          product.inStock
+                            ? "border-accent-gold-muted text-accent-gold hover:bg-accent-gold-muted"
+                            : "border-red-500/30 text-red-400 cursor-not-allowed"
+                        }`}
                       >
-                        <i className="fas fa-shopping-bag mr-1" />
-                        {isEnglish ? "Add to Cart" : "أضف للسلة"}
+                        <i className={`fas ${product.inStock ? "fa-shopping-bag" : "fa-times-circle"} mr-1`} />
+                        {product.inStock ? (isEnglish ? "Add to Cart" : "أضف للسلة") : (isEnglish ? "Unavailable" : "غير متوفر")}
                       </button>
                     </div>
                   </motion.div>

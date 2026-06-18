@@ -4,18 +4,20 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useToast } from "@/components/Toast/ToastContext";
+import { useToast } from "@/components/GlassToast/ToastProvider";
 import ConfirmModal from "@/components/admin/ConfirmModal";
 import { products } from "@/lib/products";
 import { perfumes } from "@/lib/perfumes";
 import { deleteProduct, deletePerfume } from "@/lib/products-api";
 
 type Tab = "products" | "perfumes";
+type Filter = "all" | "available" | "unavailable" | "featured";
 
 export default function AdminDashboardPage() {
   const router = useRouter();
   const { show } = useToast();
   const [tab, setTab] = useState<Tab>("products");
+  const [filter, setFilter] = useState<Filter>("all");
   const [deleteTarget, setDeleteTarget] = useState<{ type: Tab; id: string; name: string } | null>(null);
   const [deleting, setDeleting] = useState(false);
 
@@ -132,9 +134,22 @@ export default function AdminDashboardPage() {
             )}
           </button>
         ))}
+        <div className="mr-auto flex items-center gap-2">
+          {(["all", "available", "unavailable", "featured"] as Filter[]).map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`text-[10px] px-2.5 h-7 rounded-lg font-medium transition-all ${
+                filter === f ? "bg-accent-gold/20 text-accent-gold border border-accent-gold/30" : "text-[#6B6B5F] border border-transparent hover:text-accent-gold/60"
+              }`}
+            >
+              {f === "all" ? "الكل" : f === "available" ? "متوفر" : f === "unavailable" ? "غير متوفر" : "مميز"}
+            </button>
+          ))}
+        </div>
         <Link
           href={tab === "products" ? "/admin/products/new" : "/admin/perfumes/new"}
-          className="mr-auto text-xs h-9 px-4 rounded-xl font-medium flex items-center gap-1.5 transition-all"
+          className="text-xs h-9 px-4 rounded-xl font-medium flex items-center gap-1.5 transition-all"
           style={{
             background: "linear-gradient(135deg, #C9A84C, #D4B87A)",
             color: "#0A0A0A",
@@ -146,19 +161,37 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {(tab === "products" ? sortedProducts : sortedPerfumes).map((item, idx) => (
+        {(tab === "products" ? sortedProducts : sortedPerfumes)
+          .filter((item) => {
+            if (filter === "available") return item.inStock;
+            if (filter === "unavailable") return !item.inStock;
+            if (filter === "featured") return (item as any).featured === true;
+            return true;
+          })
+          .map((item, idx) => (
           <motion.div
             key={item.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.05 }}
-            className="rounded-xl overflow-hidden transition-all"
+            className={`rounded-xl overflow-hidden transition-all ${!item.inStock ? "opacity-60" : ""}`}
             style={{
               background: "rgba(255,255,255,0.03)",
               border: "1px solid rgba(255,255,255,0.06)",
             }}
           >
             <div className="aspect-[4/3] relative" style={{ background: "#111" }}>
+              {!item.inStock && (
+                <div className="absolute inset-0 z-10 bg-black/60 flex items-center justify-center">
+                  <span className="text-xs font-bold px-3 py-1 rounded-full bg-red-500/80 text-white">غير متوفر</span>
+                </div>
+              )}
+              {item.inStock && (item as any).featured && (
+                <span className="absolute top-2 right-2 z-10 text-[10px] font-bold px-2 py-0.5 rounded-full bg-accent-gold/20 text-accent-gold border border-accent-gold/30 backdrop-blur-sm flex items-center gap-1">
+                  <i className="fas fa-star text-[8px]" />
+                  مميز
+                </span>
+              )}
               {"image" in item ? (
                 <img
                   src={item.image}
@@ -180,7 +213,18 @@ export default function AdminDashboardPage() {
               )}
             </div>
             <div className="p-3 space-y-2">
-              <h3 className="text-sm font-medium truncate" style={{ color: "#F5F5F0" }}>{item.title}</h3>
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-sm font-medium truncate flex-1" style={{ color: "#F5F5F0" }}>{item.title}</h3>
+                {item.inStock ? (
+                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-green-500/15 text-green-400 border border-green-500/20 whitespace-nowrap">
+                    🟢 متوفر
+                  </span>
+                ) : (
+                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 border border-red-500/20 whitespace-nowrap">
+                    🔴 غير متوفر
+                  </span>
+                )}
+              </div>
               <div className="flex items-center justify-between">
                 <span className="text-xs" style={{ color: "#C9A84C" }}>{item.basePrice} د.أ</span>
                 <span className="text-[10px]" style={{ color: "#6B6B5F" }}>

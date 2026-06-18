@@ -16,7 +16,7 @@ import { useProductColor } from "@/hooks/useProductColor";
 import CurrencyPopup from "@/components/CurrencyPopup";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
-import { useToast } from "@/components/Toast/ToastContext";
+import { useToast } from "@/components/GlassToast/ToastProvider";
 
 interface ProductCardProps {
   product: Product;
@@ -25,6 +25,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, isEnglish, index = 0 }: ProductCardProps) {
+  const isAvailable = product.inStock;
   const router = useRouter();
   const [imgError, setImgError] = useState(false);
   const [addingToCart, setAddingToCart] = useState(false);
@@ -40,8 +41,8 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
   const { dominantColor } = useProductColor(images[0]);
 
   const handleSwipeLeft = useCallback(() => {
-    if (!firstColor || !product.sizes[0]) return;
-    addItem({
+    if (!isAvailable || !firstColor || !product.sizes[0]) return;
+    const added = addItem({
       productId: product.id,
       title: product.title,
       englishTitle: product.englishTitle,
@@ -50,9 +51,11 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
       color: firstColor.name,
       colorHex: firstColor.hex,
       image: firstColor.images[0] || "",
+      inStock: product.inStock,
     });
-    show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
-  }, [product, firstColor, addItem, show, isEnglish]);
+    if (added) show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
+    else show("error", isEnglish ? "Product unavailable" : "هذا المنتج غير متوفر", "fa-times");
+  }, [product, firstColor, addItem, show, isEnglish, isAvailable]);
 
   const handleSwipeRight = useCallback(() => {
     toggleItem(product.id);
@@ -74,11 +77,11 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (addingToCart) return;
+    if (!isAvailable || addingToCart) return;
     if (!firstColor || !product.sizes[0]) return;
     setAddingToCart(true);
     setTimeout(() => {
-      addItem({
+      const added = addItem({
         productId: product.id,
         title: product.title,
         englishTitle: product.englishTitle,
@@ -87,11 +90,16 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
         color: firstColor.name,
         colorHex: firstColor.hex,
         image: firstColor.images[0] || "",
+        inStock: product.inStock,
       });
       setAddingToCart(false);
-      setAddedToCart(true);
-      show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
-      setTimeout(() => setAddedToCart(false), 1500);
+      if (added) {
+        setAddedToCart(true);
+        show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
+        setTimeout(() => setAddedToCart(false), 1500);
+      } else {
+        show("error", isEnglish ? "Product unavailable" : "هذا المنتج غير متوفر", "fa-times");
+      }
     }, 400);
   };
 
@@ -162,7 +170,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
       >
           <motion.div
             ref={parallaxRef}
-            className="group relative rounded-[20px] overflow-hidden will-change-transform"
+            className={`group relative rounded-[20px] overflow-hidden will-change-transform ${!isAvailable ? "opacity-60" : ""}`}
             style={{
               background: "var(--bg-card)",
               backdropFilter: "blur(20px) saturate(180%)",
@@ -207,6 +215,19 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
             >
               <i className="fas fa-share-nodes text-xs" style={{ color: "var(--accent-gold)" }} />
             </button>
+            {!isAvailable && (
+              <div className="absolute inset-0 z-10 bg-black/50 backdrop-blur-[2px] flex items-center justify-center rounded-[20px]">
+                <span className="text-xs font-bold px-4 py-2 rounded-full bg-red-500/80 text-white border border-red-400/50 backdrop-blur-sm">
+                  {isEnglish ? "Unavailable" : "غير متوفر"}
+                </span>
+              </div>
+            )}
+            {product.featured && isAvailable && (
+              <span className="absolute top-3 left-3 z-10 text-[10px] font-bold px-2 py-1 rounded-full bg-accent-gold/20 text-accent-gold border border-accent-gold/30 backdrop-blur-sm flex items-center gap-1">
+                <i className="fas fa-star text-[8px]" />
+                {isEnglish ? "Featured" : "مميز"}
+              </span>
+            )}
             <motion.button
               onClick={handleToggleWishlist}
               className={`absolute ${isEnglish ? "right-3" : "left-3"} top-3 z-10 w-9 h-9 rounded-full backdrop-blur-md flex items-center justify-center cursor-pointer`}

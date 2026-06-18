@@ -33,8 +33,12 @@ export default function HomePage() {
   const { products } = useProducts();
   const { perfumes } = usePerfumes();
 
-  const featuredProducts = products.slice(0, 6);
-  const featuredPerfumes = perfumes.slice(0, 3);
+  const featuredProducts = products.filter((p) => p.featured).length > 0
+    ? products.filter((p) => p.featured)
+    : products.slice(0, 6);
+  const featuredPerfumes = perfumes.filter((p) => p.featured).length > 0
+    ? perfumes.filter((p) => p.featured)
+    : perfumes.slice(0, 3);
 
   return (
     <div className="min-h-screen">

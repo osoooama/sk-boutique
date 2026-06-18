@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useToast } from "@/components/Toast/ToastContext";
+import { useToast } from "@/components/GlassToast/ToastProvider";
 import ImageUploader from "@/components/admin/ImageUploader";
 import ColorPicker from "@/components/admin/ColorPicker";
 import { createProduct } from "@/lib/products-api";

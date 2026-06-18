@@ -127,15 +127,21 @@ export default function Navbar({
   }, [openCart]);
 
   const IridescentLogo = ({ className = "", width = 40, height = 40 }: { className?: string; width?: number; height?: number }) => (
-    <span className={`logo-container relative inline-block select-none ${className}`}>
+    <span className={`logo-container relative inline-flex items-center justify-center select-none ${className}`}>
+      <span className="absolute inset-0 rounded-full" style={{
+        background: "conic-gradient(from 0deg, #C9A84C, #FFB6C1, #C0C0C0, #C9A84C)",
+        filter: "blur(20px)",
+        opacity: 0.5,
+        animation: "spin-glow 6s linear infinite",
+      }} />
       <Image
-        src="/logo.png"
+        src="/logo.webp"
         alt="SK BOUTIQUE"
         width={width}
         height={height}
         priority
-        className="object-contain"
-        style={{ borderRadius: "50%", mixBlendMode: "multiply" }}
+        className="object-contain relative z-10"
+        style={{ borderRadius: "50%" }}
       />
     </span>
   );

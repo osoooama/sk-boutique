@@ -18,9 +18,10 @@ export interface Product {
   colors: ProductColor[];
   details: string;
   englishDetails: string;
-  shipping: string;
-  englishShipping: string;
+  shipping?: string;
+  englishShipping?: string;
   inStock: boolean;
+  featured?: boolean;
   createdAt: string;
 }
 
@@ -35,6 +36,7 @@ export interface Perfume {
   basePrice: number;
   volume: string;
   inStock: boolean;
+  featured?: boolean;
   notes?: {
     top?: string[];
     middle?: string[];

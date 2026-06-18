@@ -12,11 +12,12 @@ export interface CartItem {
   colorHex: string;
   image: string;
   quantity: number;
+  inStock?: boolean;
 }
 
 interface CartContextType {
   items: CartItem[];
-  addItem: (item: Omit<CartItem, "quantity">) => void;
+  addItem: (item: Omit<CartItem, "quantity">) => boolean;
   removeItem: (productId: string, size: string, color: string) => void;
   updateQuantity: (productId: string, size: string, color: string, delta: number) => void;
   clearCart: () => void;
@@ -66,7 +67,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [items, loaded]);
 
-  const addItem = useCallback((newItem: Omit<CartItem, "quantity">) => {
+  const addItem = useCallback((newItem: Omit<CartItem, "quantity">): boolean => {
+    if (newItem.inStock === false) return false;
     setItems((prev) => {
       const existing = prev.find(
         (i) => i.productId === newItem.productId && i.size === newItem.size && i.color === newItem.color
@@ -80,6 +82,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...prev, { ...newItem, quantity: 1 }];
     });
+    return true;
   }, []);
 
   const removeItem = useCallback((productId: string, size: string, color: string) => {

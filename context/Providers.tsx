@@ -2,7 +2,7 @@
 
 import { type ReactNode } from "react";
 import { CartProvider } from "./CartContext";
-import { ToastProvider } from "@/components/Toast/ToastContext";
+import { ToastProvider } from "@/components/GlassToast/ToastProvider";
 import { WishlistProvider } from "./WishlistContext";
 import { ThemeProvider } from "./ThemeContext";
 

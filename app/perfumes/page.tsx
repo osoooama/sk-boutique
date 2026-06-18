@@ -20,7 +20,7 @@ import { springs } from "@/lib/springs";
 import type { Perfume } from "@/lib/types";
 import { useDeviceParallax } from "@/hooks/useDeviceParallax";
 import { useCart } from "@/context/CartContext";
-import { useToast } from "@/components/Toast/ToastContext";
+import { useToast } from "@/components/GlassToast/ToastProvider";
 import CurrencyPopup from "@/components/CurrencyPopup";
 import PerfumeCardSkeleton from "@/components/Skeleton/PerfumeCardSkeleton";
 
@@ -37,6 +37,10 @@ function PerfumeCardWithParallax({ perfume, isEnglish, index = 0 }: { perfume: P
   const { show } = useToast();
 
   const handleAdd = () => {
+    if (!perfume.inStock) {
+      show("error", isEnglish ? "Product unavailable" : "هذا المنتج غير متوفر", "fa-times");
+      return;
+    }
     addItem({
       productId: perfume.id,
       title: perfume.title,
@@ -46,8 +50,9 @@ function PerfumeCardWithParallax({ perfume, isEnglish, index = 0 }: { perfume: P
       color: "Original",
       colorHex: "#C9A84C",
       image: perfume.image,
+      inStock: perfume.inStock,
     });
-    show("success", isEnglish ? "Added to cart!" : "???? ?????!", "fa-check");
+    show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
   };
 
   return (
@@ -57,8 +62,21 @@ function PerfumeCardWithParallax({ perfume, isEnglish, index = 0 }: { perfume: P
       custom={index}
       style={{ willChange: "transform" }}
     >
-      <TiltCard className="group glass-card overflow-hidden hover:border-accent-gold-muted transition-all duration-500">
+      <TiltCard className={`group glass-card overflow-hidden transition-all duration-500 ${!perfume.inStock ? "opacity-60" : "hover:border-accent-gold-muted"}`}>
         <div className="relative aspect-square overflow-hidden bg-surface-primary">
+          {!perfume.inStock && (
+            <div className="absolute inset-0 z-10 bg-black/50 backdrop-blur-[2px] flex items-center justify-center rounded-2xl">
+              <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-red-500/80 text-white border border-red-400/50 backdrop-blur-sm">
+                {isEnglish ? "Unavailable" : "غير متوفر"}
+              </span>
+            </div>
+          )}
+          {perfume.featured && perfume.inStock && (
+            <span className="absolute top-3 left-3 z-10 text-[10px] font-bold px-2 py-1 rounded-full bg-accent-gold/20 text-accent-gold border border-accent-gold/30 backdrop-blur-sm flex items-center gap-1">
+              <i className="fas fa-star text-[8px]" />
+              {isEnglish ? "Featured" : "مميز"}
+            </span>
+          )}
           <div
             className="absolute inset-0 will-change-transform"
             style={{
@@ -82,10 +100,10 @@ function PerfumeCardWithParallax({ perfume, isEnglish, index = 0 }: { perfume: P
           <p className="text-xs text-accent-gold/40 line-clamp-2 leading-relaxed">{isEnglish ? perfume.englishDescription : perfume.description}</p>
           <div className="flex items-center justify-between pt-1">
             <CurrencyPopup price={getPerfumePrice(perfume)}>
-              <span className="text-xs font-bold text-accent-gold">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "?.?"}</span>
+              <span className="text-xs font-bold text-accent-gold">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "د.أ"}</span>
             </CurrencyPopup>
-            <motion.button onClick={handleAdd} className="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted hover:bg-accent-gold/25 transition-all" whileHover={{ scale: 1.06, transition: springs.gentle }} whileTap={{ scale: 0.93, transition: springs.snappy }}>
-              <i className="fas fa-shopping-bag mr-1" />{isEnglish ? "Add" : "???"}
+            <motion.button onClick={handleAdd} disabled={!perfume.inStock} className={`text-[10px] font-bold px-3 py-1.5 rounded-lg transition-all ${perfume.inStock ? "bg-accent-gold-muted text-accent-gold border border-accent-gold-muted hover:bg-accent-gold/25" : "bg-red-500/10 text-red-400 border border-red-500/30 cursor-not-allowed"}`} whileHover={perfume.inStock ? { scale: 1.06, transition: springs.gentle } : {}} whileTap={perfume.inStock ? { scale: 0.93, transition: springs.snappy } : {}}>
+              <i className={`fas ${perfume.inStock ? "fa-shopping-bag" : "fa-times-circle"} mr-1`} />{perfume.inStock ? (isEnglish ? "Add" : "أضف") : (isEnglish ? "Unavailable" : "غير متوفر")}
             </motion.button>
           </div>
           {perfume.notes && (

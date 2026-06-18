@@ -7,7 +7,7 @@ import Image from "next/image";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { springs } from "@/lib/springs";
 import { useCart } from "@/context/CartContext";
-import { useToast } from "@/components/Toast/ToastContext";
+import { useToast } from "@/components/GlassToast/ToastProvider";
 import CurrencyPopup from "@/components/CurrencyPopup";
 
 interface CartDrawerProps {

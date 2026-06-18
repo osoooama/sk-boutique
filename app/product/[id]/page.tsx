@@ -23,7 +23,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { useProducts } from "@/lib/data";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
-import { useToast } from "@/components/Toast/ToastContext";
+import { useToast } from "@/components/GlassToast/ToastProvider";
 import CurrencyPopup from "@/components/CurrencyPopup";
 
 const RECENT_KEY = "sk_recently_viewed";
@@ -102,6 +102,10 @@ export default function ProductDetailPage() {
   const finalPrice = product.basePrice + sizeSurcharge;
 
   const handleAddToCart = () => {
+    if (!product.inStock) {
+      show("error", isEnglish ? "Product unavailable" : "هذا المنتج غير متوفر", "fa-times");
+      return;
+    }
     if (!selectedSize && product.sizes[0]) setSelectedSize(product.sizes[0]);
     const size = selectedSize || product.sizes[0];
     if (!size || !activeColor) {
@@ -117,6 +121,7 @@ export default function ProductDetailPage() {
       color: activeColor.name,
       colorHex: activeColor.hex,
       image: activeColor.images[0] || "",
+      inStock: product.inStock,
     });
     setAddedToCart(true);
     show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
@@ -196,9 +201,19 @@ export default function ProductDetailPage() {
                   <i className="fas fa-tshirt text-6xl text-accent-gold/20" />
                 </div>
               )}
-              {product.inStock && (
+              {product.inStock ? (
                 <span className="absolute top-4 left-4 text-[10px] font-bold px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 backdrop-blur-sm z-10">
                   {isEnglish ? "In Stock" : "متوفر"}
+                </span>
+              ) : (
+                <span className="absolute top-4 left-4 text-[10px] font-bold px-3 py-1.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 backdrop-blur-sm z-10">
+                  {isEnglish ? "Unavailable" : "غير متوفر"}
+                </span>
+              )}
+              {product.featured && product.inStock && (
+                <span className="absolute top-4 right-14 text-[10px] font-bold px-2 py-1.5 rounded-full bg-accent-gold/20 text-accent-gold border border-accent-gold/30 backdrop-blur-sm z-10 flex items-center gap-1">
+                  <i className="fas fa-star text-[8px]" />
+                  {isEnglish ? "Featured" : "مميز"}
                 </span>
               )}
               {cartQty > 0 && (
@@ -280,24 +295,33 @@ export default function ProductDetailPage() {
             <div className="flex gap-3">
               <motion.button
                 onClick={handleAddToCart}
-                className="flex-1 py-4 rounded-2xl bg-accent-gold text-surface-primary font-bold text-sm tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-accent-gold/20"
-                whileHover={{ scale: 1.02, transition: springs.gentle }}
-                whileTap={{ scale: 0.95, transition: springs.snappy }}
+                disabled={!product.inStock}
+                className={`flex-1 py-4 rounded-2xl font-bold text-sm tracking-wide transition-all duration-300 flex items-center justify-center gap-2 ${
+                  product.inStock
+                    ? "bg-accent-gold text-surface-primary shadow-lg shadow-accent-gold/20"
+                    : "bg-red-500/10 text-red-400 border border-red-500/30 cursor-not-allowed"
+                }`}
+                whileHover={product.inStock ? { scale: 1.02, transition: springs.gentle } : {}}
+                whileTap={product.inStock ? { scale: 0.95, transition: springs.snappy } : {}}
               >
-                {addedToCart ? (
+                {!product.inStock ? (
+                  <><i className="fas fa-times-circle" />{isEnglish ? "Unavailable" : "غير متوفر"}</>
+                ) : addedToCart ? (
                   <><i className="fas fa-check" />{isEnglish ? "Added!" : "تمت الإضافة!"}</>
                 ) : (
                   <><i className="fas fa-shopping-bag" />{isEnglish ? "Add to Cart" : "أضف للسلة"}</>
                 )}
               </motion.button>
-              <motion.button
-                onClick={handleBuyNow}
-                className="py-4 px-6 rounded-2xl border border-accent-gold/30 text-accent-gold font-bold text-sm transition-all"
-                whileHover={{ scale: 1.02, transition: springs.gentle }}
-                whileTap={{ scale: 0.95, transition: springs.snappy }}
-              >
-                {isEnglish ? "Buy Now" : "اشتر الآن"}
-              </motion.button>
+              {product.inStock && (
+                <motion.button
+                  onClick={handleBuyNow}
+                  className="py-4 px-6 rounded-2xl border border-accent-gold/30 text-accent-gold font-bold text-sm transition-all"
+                  whileHover={{ scale: 1.02, transition: springs.gentle }}
+                  whileTap={{ scale: 0.95, transition: springs.snappy }}
+                >
+                  {isEnglish ? "Buy Now" : "اشتر الآن"}
+                </motion.button>
+              )}
             </div>
 
             <div className="pt-4 border-t border-border space-y-4">
@@ -306,11 +330,11 @@ export default function ProductDetailPage() {
                 <p className="text-xs text-accent-gold/40 leading-relaxed">{isEnglish ? product.englishDetails : product.details}</p>
               </div>
               <div>
-                <h3 className="text-xs font-bold text-content-secondary mb-2">{isEnglish ? "Shipping" : "الشحن"}</h3>
+                <h3 className="text-xs font-bold text-content-secondary mb-2">{isEnglish ? "Delivery" : "التوصيل"}</h3>
                 <ul className="space-y-2 text-xs text-accent-gold/40">
                   <li className="flex items-center gap-2">
                     <i className="fas fa-truck text-accent-gold/60 text-[8px]" />
-                    {isEnglish ? product.englishShipping : product.shipping}
+                    {isEnglish ? "Delivery within Amman. 2-3 business days to other cities." : "توصيل داخل عمان. 2-3 أيام عمل لباقي المدن."}
                   </li>
                   <li className="flex items-center gap-2">
                     <i className="fas fa-shield text-accent-gold/60 text-[8px]" />
@@ -396,11 +420,25 @@ export default function ProductDetailPage() {
             </AnimatePresence>
           </div>
           <motion.button
-            onClick={() => { setSheetQuantity(1); setSelectedSize(product.sizes[0] || ""); setBottomSheetOpen(true); }}
-            className="px-8 py-3 rounded-xl bg-accent-gold text-surface-primary font-bold text-xs whitespace-nowrap"
+            onClick={() => {
+              if (!product.inStock) {
+                show("error", isEnglish ? "Product unavailable" : "هذا المنتج غير متوفر", "fa-times");
+                return;
+              }
+              setSheetQuantity(1); setSelectedSize(product.sizes[0] || ""); setBottomSheetOpen(true);
+            }}
+            className={`px-8 py-3 rounded-xl font-bold text-xs whitespace-nowrap ${
+              product.inStock
+                ? "bg-accent-gold text-surface-primary"
+                : "bg-red-500/10 text-red-400 border border-red-500/30"
+            }`}
             whileTap={{ scale: 0.95, transition: springs.snappy }}
           >
-            <i className="fas fa-shopping-bag ml-1" />{isEnglish ? "Add" : "أضف"}
+            {product.inStock ? (
+              <><i className="fas fa-shopping-bag ml-1" />{isEnglish ? "Add" : "أضف"}</>
+            ) : (
+              <><i className="fas fa-times-circle ml-1" />{isEnglish ? "Unavailable" : "غير متوفر"}</>
+            )}
           </motion.button>
         </div>
       </div>
@@ -496,6 +534,10 @@ export default function ProductDetailPage() {
           <div className="flex gap-3 pt-2">
             <motion.button
               onClick={() => {
+                if (!product.inStock) {
+                  show("error", isEnglish ? "Product unavailable" : "هذا المنتج غير متوفر", "fa-times");
+                  return;
+                }
                 hapticMedium();
                 const size = selectedSize || product.sizes[0];
                 if (!size || !activeColor) return;
@@ -509,6 +551,7 @@ export default function ProductDetailPage() {
                     color: activeColor.name,
                     colorHex: activeColor.hex,
                     image: activeColor.images[0] || "",
+                    inStock: product.inStock,
                   });
                 }
                 setAddedToCart(true);

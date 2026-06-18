@@ -14,6 +14,7 @@ export const perfumes: Perfume[] = [
     basePrice: 0,
     volume: "50ml",
     inStock: true,
+    featured: true,
     notes: {
       top: ["كرامبولا", "فاوانيا", "منديرن"],
       middle: ["لوتس", "ورد"],
