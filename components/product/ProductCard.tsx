@@ -32,7 +32,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
   const [heartAnimation, setHeartAnimation] = useState<"idle" | "adding" | "removing">("idle");
   const { addItem } = useCart();
   const { isWishlisted, toggleItem } = useWishlist();
-  const { addToast } = useToast();
+  const { show } = useToast();
   const firstColor = product.colors[0];
   const previewColors = product.colors.slice(0, 3);
   const images = firstColor?.images || [];
@@ -51,12 +51,12 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
       colorHex: firstColor.hex,
       image: firstColor.images[0] || "",
     });
-    addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
+    show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
   }, [product, firstColor, addItem, addToast, isEnglish]);
 
   const handleSwipeRight = useCallback(() => {
     toggleItem(product.id);
-    addToast(
+    show(
       "success",
       isEnglish ? "Added to wishlist" : "أضيف للمفضلة!",
       "fa-heart"
@@ -90,7 +90,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
       });
       setAddingToCart(false);
       setAddedToCart(true);
-      addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
+      show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
       setTimeout(() => setAddedToCart(false), 1500);
     }, 400);
   };
@@ -101,7 +101,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
     if (wishlisted) {
       setHeartAnimation("removing");
       toggleItem(product.id);
-      addToast(
+      show(
         "info",
         isEnglish ? "Removed from wishlist" : "تمت الإزالة من المفضلة",
         "fa-heart"
@@ -110,7 +110,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
     } else {
       setHeartAnimation("adding");
       toggleItem(product.id);
-      addToast(
+      show(
         "success",
         isEnglish ? "Added to wishlist" : "أضيف للمفضلة!",
         "fa-heart"
@@ -198,7 +198,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
                   }).catch(() => {});
                 } else {
                   navigator.clipboard.writeText(url).then(() => {
-                    addToast("success", isEnglish ? "Link copied ✓" : "تم نسخ الرابط ✓", "fa-link");
+                    show("success", isEnglish ? "Link copied ✓" : "تم نسخ الرابط ✓", "fa-link");
                   }).catch(() => {});
                 }
               }}

@@ -126,15 +126,16 @@ export default function Navbar({
     setOverrideMode(true);
   }, [openCart]);
 
-  const IridescentLogo = ({ className = "", width = 80, height = 24 }: { className?: string; width?: number; height?: number }) => (
-    <span className={`inline-block select-none ${className}`}>
+  const IridescentLogo = ({ className = "", width = 40, height = 40 }: { className?: string; width?: number; height?: number }) => (
+    <span className={`logo-container relative inline-block select-none ${className}`}>
       <Image
-        src="/logo/sk-logo.webp"
+        src="/logo.png"
         alt="SK BOUTIQUE"
         width={width}
         height={height}
         priority
         className="object-contain"
+        style={{ borderRadius: "50%" }}
       />
     </span>
   );

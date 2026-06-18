@@ -30,7 +30,7 @@ export default function WishlistPage() {
   const { perfumes } = usePerfumes();
   const { items: wishlist, toggleItem } = useWishlist();
   const { addItem } = useCart();
-  const { addToast } = useToast();
+  const { show } = useToast();
 
   const wishlistedProducts = products.filter((p) => wishlist.includes(p.id));
   const wishlistedPerfumes = perfumes.filter((p) => wishlist.includes(p.id));
@@ -106,7 +106,7 @@ export default function WishlistPage() {
                     <button
                       onClick={() => {
                         toggleItem(product.id);
-                        addToast("info", isEnglish ? "Removed from wishlist" : "تمت الإزالة من المفضلة", "fa-heart");
+                        show("info", isEnglish ? "Removed from wishlist" : "تمت الإزالة من المفضلة", "fa-heart");
                       }}
                       className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-red-400 hover:bg-red-500/20 transition-all"
                     >
@@ -150,7 +150,7 @@ export default function WishlistPage() {
                               colorHex: product.colors[0].hex,
                               image: product.colors[0].images[0] || "",
                             });
-                            addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
+                            show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
                           }
                         }}
                         className="w-full py-2.5 rounded-xl border border-accent-gold-muted text-accent-gold text-[10px] font-medium hover:bg-accent-gold-muted transition-all"
@@ -174,7 +174,7 @@ export default function WishlistPage() {
                   <button
                     onClick={() => {
                       toggleItem(perfume.id);
-                      addToast("info", isEnglish ? "Removed from wishlist" : "تمت الإزالة من المفضلة", "fa-heart");
+                      show("info", isEnglish ? "Removed from wishlist" : "تمت الإزالة من المفضلة", "fa-heart");
                     }}
                     className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-red-400 hover:bg-red-500/20 transition-all"
                   >

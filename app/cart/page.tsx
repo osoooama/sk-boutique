@@ -24,16 +24,16 @@ export default function CartPage() {
   const { isDark, toggleTheme } = useTheme();
 
   const { items, removeItem, updateQuantity, subtotal, clearCart, discountCode, discountPercent, discountedSubtotal, applyDiscount, removeDiscount } = useCart();
-  const { addToast } = useToast();
+  const { show } = useToast();
   const [discountInput, setDiscountInput] = useState("");
 
   const handleApplyDiscount = () => {
     if (!discountInput.trim()) return;
     if (applyDiscount(discountInput.trim())) {
-      addToast("success", isEnglish ? "Discount applied — 20% off!" : "تم تطبيق الخصم — خصم 20%!", "fa-tag");
+      show("success", isEnglish ? "Discount applied — 20% off!" : "تم تطبيق الخصم — خصم 20%!", "fa-tag");
       setDiscountInput("");
     } else {
-      addToast("error", isEnglish ? "Invalid discount code" : "رمز خصم غير صالح", "fa-times");
+      show("error", isEnglish ? "Invalid discount code" : "رمز خصم غير صالح", "fa-times");
     }
   };
 
@@ -131,7 +131,7 @@ export default function CartPage() {
                             onClick={() => {
                               if (item.quantity <= 1) {
                                 removeItem(item.productId, item.size, item.color);
-                                addToast("info", isEnglish ? "Item removed" : "تمت إزالة المنتج", "fa-trash");
+                                show("info", isEnglish ? "Item removed" : "تمت إزالة المنتج", "fa-trash");
                               } else {
                                 updateQuantity(item.productId, item.size, item.color, -1);
                               }
@@ -166,7 +166,7 @@ export default function CartPage() {
                           <button
                             onClick={() => {
                               removeItem(item.productId, item.size, item.color);
-                              addToast("info", isEnglish ? "Item removed" : "تمت إزالة المنتج", "fa-trash");
+                              show("info", isEnglish ? "Item removed" : "تمت إزالة المنتج", "fa-trash");
                             }}
                             className="w-7 h-7 rounded-lg border border-border text-red-400/60 hover:text-red-400 hover:bg-red-500/10 transition-all text-xs flex items-center justify-center"
                           >
@@ -282,7 +282,7 @@ export default function CartPage() {
               <button
                 onClick={() => {
                   clearCart();
-                  addToast("info", isEnglish ? "Cart cleared" : "تم إفراغ السلة", "fa-trash");
+                  show("info", isEnglish ? "Cart cleared" : "تم إفراغ السلة", "fa-trash");
                 }}
                 className="block w-full py-2 text-[10px] text-red-400/40 hover:text-red-400 transition-colors text-center"
               >

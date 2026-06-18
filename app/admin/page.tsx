@@ -12,7 +12,7 @@ export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [shake, setShake] = useState(false);
   const router = useRouter();
-  const { addToast } = useToast();
+  const { show } = useToast();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -21,11 +21,11 @@ export default function AdminLoginPage() {
       try {
         localStorage.setItem("sk_admin_auth", "true");
       } catch { /* ignore */ }
-      addToast("success", "مرحباً بك في لوحة التحكم");
+      show("success", "مرحباً بك في لوحة التحكم");
       router.push("/admin/dashboard");
     } else {
       setShake(true);
-      addToast("error", "كلمة المرور غير صحيحة");
+      show("error", "كلمة المرور غير صحيحة");
       setTimeout(() => setShake(false), 500);
       if (inputRef.current) {
         inputRef.current.style.borderColor = "#ff4444";

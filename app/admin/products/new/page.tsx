@@ -24,7 +24,7 @@ interface ColorRow {
 
 export default function NewProductPage() {
   const router = useRouter();
-  const { addToast } = useToast();
+  const { show } = useToast();
 
   const [nameAr, setNameAr] = useState("");
   const [nameEn, setNameEn] = useState("");
@@ -71,19 +71,19 @@ export default function NewProductPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!nameAr.trim()) {
-      addToast("error", "اسم المنتج بالعربية مطلوب");
+      show("error", "اسم المنتج بالعربية مطلوب");
       return;
     }
     if (!price || isNaN(Number(price)) || Number(price) <= 0) {
-      addToast("error", "السعر مطلوب ويجب أن يكون رقم صحيح");
+      show("error", "السعر مطلوب ويجب أن يكون رقم صحيح");
       return;
     }
     if (sizes.length === 0) {
-      addToast("error", "اختر مقاس واحد على الأقل");
+      show("error", "اختر مقاس واحد على الأقل");
       return;
     }
     if (colors.some((c) => !c.name.trim())) {
-      addToast("error", "جميع الألوان يجب أن يكون لها اسم");
+      show("error", "جميع الألوان يجب أن يكون لها اسم");
       return;
     }
 
@@ -114,10 +114,10 @@ export default function NewProductPage() {
         featured,
       });
 
-      addToast("success", "تم نشر المنتج بنجاح");
+      show("success", "تم نشر المنتج بنجاح");
       router.push("/admin/dashboard");
     } catch (err) {
-      addToast("error", "فشل النشر: " + (err instanceof Error ? err.message : "خطأ غير معروف"));
+      show("error", "فشل النشر: " + (err instanceof Error ? err.message : "خطأ غير معروف"));
     } finally {
       setSubmitting(false);
     }

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -34,7 +34,7 @@ const CATEGORIES = [
 function PerfumeCardWithParallax({ perfume, isEnglish, index = 0 }: { perfume: Perfume; isEnglish: boolean; index?: number }) {
   const { ref, offset } = useDeviceParallax();
   const { addItem } = useCart();
-  const { addToast } = useToast();
+  const { show } = useToast();
 
   const handleAdd = () => {
     addItem({
@@ -47,7 +47,7 @@ function PerfumeCardWithParallax({ perfume, isEnglish, index = 0 }: { perfume: P
       colorHex: "#C9A84C",
       image: perfume.image,
     });
-    addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
+    show("success", isEnglish ? "Added to cart!" : "???? ?????!", "fa-check");
   };
 
   return (
@@ -82,17 +82,17 @@ function PerfumeCardWithParallax({ perfume, isEnglish, index = 0 }: { perfume: P
           <p className="text-xs text-accent-gold/40 line-clamp-2 leading-relaxed">{isEnglish ? perfume.englishDescription : perfume.description}</p>
           <div className="flex items-center justify-between pt-1">
             <CurrencyPopup price={getPerfumePrice(perfume)}>
-              <span className="text-xs font-bold text-accent-gold">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "د.أ"}</span>
+              <span className="text-xs font-bold text-accent-gold">{getPerfumePrice(perfume)} {isEnglish ? "JD" : "?.?"}</span>
             </CurrencyPopup>
             <motion.button onClick={handleAdd} className="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-accent-gold-muted text-accent-gold border border-accent-gold-muted hover:bg-accent-gold/25 transition-all" whileHover={{ scale: 1.06, transition: springs.gentle }} whileTap={{ scale: 0.93, transition: springs.snappy }}>
-              <i className="fas fa-shopping-bag mr-1" />{isEnglish ? "Add" : "أضف"}
+              <i className="fas fa-shopping-bag mr-1" />{isEnglish ? "Add" : "???"}
             </motion.button>
           </div>
           {perfume.notes && (
             <div className="pt-2 border-t border-border space-y-1">
-              {perfume.notes.top && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Top:" : "البداية:"} <span className="text-accent-gold/60">{perfume.notes.top.join("، ")}</span></p>}
-              {perfume.notes.middle && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Heart:" : "القلب:"} <span className="text-accent-gold/60">{perfume.notes.middle.join("، ")}</span></p>}
-              {perfume.notes.base && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Base:" : "القاعدة:"} <span className="text-accent-gold/60">{perfume.notes.base.join("، ")}</span></p>}
+              {perfume.notes.top && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Top:" : "???????:"} <span className="text-accent-gold/60">{perfume.notes.top.join("? ")}</span></p>}
+              {perfume.notes.middle && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Heart:" : "?????:"} <span className="text-accent-gold/60">{perfume.notes.middle.join("? ")}</span></p>}
+              {perfume.notes.base && <p className="text-[10px] text-accent-gold/40">{isEnglish ? "Base:" : "???????:"} <span className="text-accent-gold/60">{perfume.notes.base.join("? ")}</span></p>}
             </div>
           )}
         </div>

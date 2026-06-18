@@ -13,7 +13,7 @@ const VOLUMES = ["10ml", "30ml", "50ml", "100ml"];
 
 export default function NewPerfumePage() {
   const router = useRouter();
-  const { addToast } = useToast();
+  const { show } = useToast();
 
   const [nameAr, setNameAr] = useState("");
   const [nameEn, setNameEn] = useState("");
@@ -47,8 +47,8 @@ export default function NewPerfumePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nameAr.trim()) { addToast("error", "اسم العطر بالعربية مطلوب"); return; }
-    if (!price || isNaN(Number(price)) || Number(price) <= 0) { addToast("error", "السعر مطلوب"); return; }
+    if (!nameAr.trim()) { show("error", "اسم العطر بالعربية مطلوب"); return; }
+    if (!price || isNaN(Number(price)) || Number(price) <= 0) { show("error", "السعر مطلوب"); return; }
 
     setSubmitting(true);
     try {
@@ -71,10 +71,10 @@ export default function NewPerfumePage() {
         featured,
       });
 
-      addToast("success", "تم نشر العطر بنجاح");
+      show("success", "تم نشر العطر بنجاح");
       router.push("/admin/dashboard");
     } catch (err) {
-      addToast("error", "فشل النشر: " + (err instanceof Error ? err.message : "خطأ غير معروف"));
+      show("error", "فشل النشر: " + (err instanceof Error ? err.message : "خطأ غير معروف"));
     } finally {
       setSubmitting(false);
     }

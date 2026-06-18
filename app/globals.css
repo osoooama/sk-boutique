@@ -448,3 +448,20 @@
   }
 
 }
+
+@keyframes spin-glow {
+  100% { transform: rotate(360deg); }
+}
+
+.logo-container::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  background: conic-gradient(from 0deg, #C9A84C, #FFB6C1, #C0C0C0, #C9A84C);
+  filter: blur(20px);
+  opacity: 0.4;
+  border-radius: 50%;
+  z-index: -1;
+  animation: spin-glow 6s linear infinite;
+}
+

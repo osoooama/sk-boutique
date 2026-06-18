@@ -14,7 +14,7 @@ type Tab = "products" | "perfumes";
 
 export default function AdminDashboardPage() {
   const router = useRouter();
-  const { addToast } = useToast();
+  const { show } = useToast();
   const [tab, setTab] = useState<Tab>("products");
   const [deleteTarget, setDeleteTarget] = useState<{ type: Tab; id: string; name: string } | null>(null);
   const [deleting, setDeleting] = useState(false);
@@ -30,7 +30,7 @@ export default function AdminDashboardPage() {
 
   const handleLogout = () => {
     try { localStorage.removeItem("sk_admin_auth"); } catch { /* ignore */ }
-    addToast("info", "تم تسجيل الخروج");
+    show("info", "تم تسجيل الخروج");
     router.push("/admin");
   };
 
@@ -43,10 +43,10 @@ export default function AdminDashboardPage() {
       } else {
         await deletePerfume(deleteTarget.id);
       }
-      addToast("success", `تم حذف ${deleteTarget.name}`);
+      show("success", `تم حذف ${deleteTarget.name}`);
       setTimeout(() => window.location.reload(), 500);
     } catch (err) {
-      addToast("error", "فشل الحذف: " + (err instanceof Error ? err.message : "خطأ غير معروف"));
+      show("error", "فشل الحذف: " + (err instanceof Error ? err.message : "خطأ غير معروف"));
     } finally {
       setDeleting(false);
       setDeleteTarget(null);

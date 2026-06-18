@@ -22,7 +22,7 @@ export default function CheckoutPage() {
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
   const { items, subtotal, discountCode, discountPercent, discountedSubtotal, clearCart } = useCart();
-  const { addToast } = useToast();
+  const { show } = useToast();
 
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -80,7 +80,7 @@ export default function CheckoutPage() {
 
   const handleSubmit = async () => {
     if (!validateForm()) {
-      addToast("error", isEnglish ? "Please fill all required fields" : "يرجى ملء جميع الحقول المطلوبة");
+      show("error", isEnglish ? "Please fill all required fields" : "يرجى ملء جميع الحقول المطلوبة");
       return;
     }
 

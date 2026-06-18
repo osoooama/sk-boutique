@@ -4,7 +4,6 @@ import "./globals.css";
 import Providers from "@/context/Providers";
 import AmbientBackground from "@/components/AmbientBackground";
 import GlassSplash from "@/components/GlassSplash";
-import NotificationBar from "@/components/ui/NotificationBar";
 
 const alexandria = Alexandria({
   subsets: ["arabic"],
@@ -128,7 +127,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AmbientBackground />
         <div className="relative z-[1]">
           <Providers>
-            <NotificationBar />
             {children}
           </Providers>
         </div>
