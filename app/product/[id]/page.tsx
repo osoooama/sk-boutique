@@ -2,12 +2,13 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { springs } from "@/lib/springs";
 import Link from "next/link";
 import Image from "next/image";
 import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import { hapticMedium } from "@/lib/haptics";
+import { useProductColor } from "@/hooks/useProductColor";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
@@ -72,6 +73,7 @@ export default function ProductDetailPage() {
   const { addToast } = useToast();
 
   const product = products.find((p) => p.id === params.id);
+  const { dominantColor } = useProductColor(product?.colors[0]?.images[0]);
 
   useEffect(() => {
     if (!product) return;
@@ -163,7 +165,13 @@ export default function ProductDetailPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           <div className="space-y-4">
-            <div className="relative">
+            <div
+              className="relative rounded-3xl"
+              style={{
+                boxShadow: `0 0 0px ${dominantColor}00`,
+                transition: "box-shadow 0.5s ease",
+              }}
+            >
               <button
                 onClick={() => {
                   toggleItem(product.id);
@@ -211,9 +219,18 @@ export default function ProductDetailPage() {
               </h1>
               <div className="flex items-center gap-4">
                 <CurrencyPopup price={finalPrice}>
-                  <span className="text-2xl md:text-3xl font-bold text-accent-gold">
-                    {finalPrice} {isEnglish ? "JD" : "د.أ"}
-                  </span>
+                  <AnimatePresence mode="popLayout">
+                    <motion.span
+                      key={finalPrice}
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.15, ...springs.snappy }}
+                      className="text-2xl md:text-3xl font-bold text-accent-gold block"
+                    >
+                      {finalPrice} {isEnglish ? "JD" : "د.أ"}
+                    </motion.span>
+                  </AnimatePresence>
                 </CurrencyPopup>
                 {sizeSurcharge > 0 && (
                   <span className="text-xs text-accent-gold/40 line-through">
@@ -378,9 +395,18 @@ export default function ProductDetailPage() {
             <p className={`font-bold text-sm truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>
               {isEnglish ? product.englishTitle : product.title}
             </p>
-            <p className="text-accent-gold font-bold text-sm">
-              {finalPrice} {isEnglish ? "JD" : "د.أ"}
-            </p>
+            <AnimatePresence mode="popLayout">
+              <motion.p
+                key={finalPrice}
+                initial={{ y: 12, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -12, opacity: 0 }}
+                transition={{ duration: 0.15, ...springs.snappy }}
+                className="text-accent-gold font-bold text-sm"
+              >
+                {finalPrice} {isEnglish ? "JD" : "د.أ"}
+              </motion.p>
+            </AnimatePresence>
           </div>
           <motion.button
             onClick={() => { setSheetQuantity(1); setSelectedSize(product.sizes[0] || ""); setBottomSheetOpen(true); }}
@@ -405,9 +431,18 @@ export default function ProductDetailPage() {
               <p className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
                 {isEnglish ? product.englishTitle : product.title}
               </p>
-              <p className="text-accent-gold font-bold text-sm mt-1">
-                {finalPrice} {isEnglish ? "JD" : "د.أ"}
-              </p>
+              <AnimatePresence mode="popLayout">
+                <motion.p
+                  key={finalPrice}
+                  initial={{ y: 12, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -12, opacity: 0 }}
+                  transition={{ duration: 0.15, ...springs.snappy }}
+                  className="text-accent-gold font-bold text-sm mt-1"
+                >
+                  {finalPrice} {isEnglish ? "JD" : "د.أ"}
+                </motion.p>
+              </AnimatePresence>
             </div>
           </div>
 

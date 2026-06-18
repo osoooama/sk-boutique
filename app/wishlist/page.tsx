@@ -19,6 +19,7 @@ import { useToast } from "@/components/Toast/ToastContext";
 import CurrencyPopup from "@/components/CurrencyPopup";
 import { useProducts, usePerfumes } from "@/lib/data";
 import { getPerfumePrice } from "@/lib/perfumes";
+import { springs } from "@/lib/springs";
 
 export default function WishlistPage() {
   const [isEnglish, setIsEnglish] = useState(false);
@@ -64,16 +65,27 @@ export default function WishlistPage() {
 
         {wishlist.length === 0 ? (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={springs.bouncy}
             className="text-center py-20 space-y-6"
           >
-            <i className="fas fa-heart text-5xl text-accent-gold/20 block" />
-            <p className="text-sm text-accent-gold/40">
-              {isEnglish ? "Your wishlist is empty" : "قائمة المفضلة فارغة"}
-            </p>
-            <Link href="/shop" className="btn-primary text-xs px-8 py-3.5 inline-block">
-              {isEnglish ? "Browse Collection" : "تصفح المجموعة"}
+            <motion.i
+              className="far fa-heart text-5xl block"
+              style={{ color: "var(--accent-gold)", textShadow: "0 0 40px rgba(201,169,110,0.4)" }}
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "ease-in-out" }}
+            />
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+                {isEnglish ? "Your wishlist is empty" : "قائمة المفضلة فارغة"}
+              </h2>
+              <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                {isEnglish ? "Save your favorites and come back anytime" : "احفظي ما يعجبك للعودة إليه"}
+              </p>
+            </div>
+            <Link href="/shop" className="btn-primary text-xs px-8 py-3.5 inline-block gold-gradient" style={{ color: "var(--text-on-accent)" }}>
+              {isEnglish ? "Browse Products" : "تصفح المنتجات"}
             </Link>
           </motion.div>
         ) : (

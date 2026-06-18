@@ -91,27 +91,21 @@ export default function CheckoutPage() {
     const orderLines = items
       .map(
         (i) =>
-          `• ${isEnglish ? i.englishTitle : i.title} (${i.color} / ${i.size}) × ${i.quantity} = ${i.price * i.quantity} JD`
+          `- ${isEnglish ? i.englishTitle : i.title} | ${i.size} | ${i.color} | ${i.quantity} | ${i.price * i.quantity} د.أ`
       )
       .join("\n");
 
-    const msg = `🛍️ طلب جديد — SK BOUTIQUE
-
-👤 الاسم: ${name}
-📍 المدينة: ${selectedCity}
-📞 الهاتف: ${phone}${backupPhone ? `\n📞 رقم احتياطي: ${backupPhone}` : ""}
-🏠 العنوان: ${address}
-📝 ملاحظات: ${notes || "—"}
-
-🧾 الطلبات:
+    const msg = `🛍️ *طلب جديد — SK BOUTIQUE*
+━━━━━━━━━━━━━━━━━━
+👤 *الاسم:* ${name}
+📱 *الواتساب:* ${phone}${backupPhone ? `\n📞 *احتياطي:* ${backupPhone}` : ""}
+━━━━━━━━━━━━━━━━━━
+🛒 *الطلبات:*
 ${orderLines}
-
-💰 المجموع الفرعي: ${subtotal.toFixed(2)} د.أ
-${discountPercent > 0 ? `🏷️ خصم (${discountPercent}%): -${(subtotal - discountedSubtotal).toFixed(2)} د.أ` : ""}
-🚚 التوصيل (${deliveryFee === 2 ? "داخل عمّان والزرقاء" : "خارج العاصمة"}): ${deliveryFee} د.أ
-✅ الإجمالي: ${total.toFixed(2)} د.أ
-
-💳 الدفع عند الاستلام`;
+━━━━━━━━━━━━━━━━━━
+${discountPercent > 0 ? `🎁 *كود الخصم:* ${discountCode} (-${(subtotal - discountedSubtotal).toFixed(2)} د.أ)\n` : ""}💰 *الإجمالي:* ${total.toFixed(2)} د.أ
+━━━━━━━━━━━━━━━━━━
+📝 *ملاحظات:* ${notes || "—"}`;
 
     const encoded = encodeURIComponent(msg);
     const waUrl = `https://wa.me/962798921123?text=${encoded}`;

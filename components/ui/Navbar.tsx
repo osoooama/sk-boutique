@@ -177,8 +177,8 @@ export default function Navbar({
                 style={{ background: "var(--accent-gold)", color: "var(--text-on-accent)" }}
                 key={totalItems}
                 initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={springs.bouncy}
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ scale: { duration: 0.35, ...springs.bouncy } }}
               >
                 {totalItems > 9 ? "9+" : totalItems}
               </motion.span>
@@ -305,8 +305,8 @@ export default function Navbar({
                           style={{ background: "var(--accent-gold)", color: "var(--text-on-accent)" }}
                           key={totalItems}
                           initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={springs.bouncy}
+                          animate={{ scale: [1, 1.2, 1] }}
+                          transition={{ scale: { duration: 0.35, ...springs.bouncy } }}
                         >
                           {totalItems > 9 ? "9+" : totalItems}
                         </motion.span>

@@ -11,6 +11,7 @@ import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import ProductCard from "@/components/product/ProductCard";
+import ProductCardSkeleton from "@/components/Skeleton/ProductCardSkeleton";
 import { useTheme } from "@/context/ThemeContext";
 import { useProducts } from "@/lib/data";
 import { springs } from "@/lib/springs";
@@ -27,7 +28,7 @@ export default function ShopPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
-  const { products } = useProducts();
+  const { products, loading } = useProducts();
 
   const filtered =
     activeCategory === "all"
@@ -97,6 +98,19 @@ export default function ShopPage() {
             ))}
           </div>
 
+          {loading ? (
+            <motion.div
+              key="skeleton"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
+            >
+              {Array.from({ length: 6 }).map((_, i) => (
+                <ProductCardSkeleton key={i} isEnglish={isEnglish} />
+              ))}
+            </motion.div>
+          ) : (
           <AnimatePresence mode="wait">
             {filtered.length === 0 ? (
               <motion.div
@@ -125,6 +139,7 @@ export default function ShopPage() {
               </motion.div>
             )}
           </AnimatePresence>
+          )}
         </section>
       </main>
 

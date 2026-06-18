@@ -22,6 +22,7 @@ import { useDeviceParallax } from "@/hooks/useDeviceParallax";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
 import CurrencyPopup from "@/components/CurrencyPopup";
+import PerfumeCardSkeleton from "@/components/Skeleton/PerfumeCardSkeleton";
 
 const CATEGORIES = [
   { id: "all", ar: "\u0627\u0644\u0643\u0644", en: "All" },
@@ -105,7 +106,7 @@ export default function PerfumesPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchOpen, setSearchOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
-  const { perfumes } = usePerfumes();
+  const { perfumes, loading } = usePerfumes();
 
   const filtered =
     activeCategory === "all"
@@ -193,6 +194,19 @@ export default function PerfumesPage() {
             ))}
           </div>
 
+          {loading ? (
+            <motion.div
+              key="skeleton"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"
+            >
+              {Array.from({ length: 6 }).map((_, i) => (
+                <PerfumeCardSkeleton key={i} />
+              ))}
+            </motion.div>
+          ) : (
           <AnimatePresence mode="wait">
             {filtered.length === 0 ? (
               <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center py-24 glass-card">
@@ -215,6 +229,7 @@ export default function PerfumesPage() {
               </motion.div>
             )}
           </AnimatePresence>
+          )}
         </section>
       </main>
 

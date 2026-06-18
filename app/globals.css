@@ -206,6 +206,16 @@
     66% { transform: translate(-20px, 20px) scale(0.95); }
   }
 
+  @keyframes gold-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
   @keyframes ripple-in {
     from {
       clip-path: circle(0% at var(--ripple-x) var(--ripple-y));
@@ -385,6 +395,13 @@
 }
 
 @layer utilities {
+  .skeleton-gold {
+    background: linear-gradient(90deg, rgba(201,168,76,0.05) 25%, rgba(201,168,76,0.15) 50%, rgba(201,168,76,0.05) 75%);
+    background-size: 200% 100%;
+    animation: gold-shimmer 1.5s infinite;
+    border-radius: 4px;
+  }
+
   .line-clamp-1 {
     display: -webkit-box;
     -webkit-line-clamp: 1;

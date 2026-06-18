@@ -16,6 +16,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/components/Toast/ToastContext";
 import CurrencyPopup from "@/components/CurrencyPopup";
+import { springs } from "@/lib/springs";
 
 export default function CartPage() {
   const [isEnglish, setIsEnglish] = useState(false);
@@ -67,16 +68,27 @@ export default function CartPage() {
 
         {items.length === 0 ? (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={springs.bouncy}
             className="text-center py-20 space-y-6"
           >
-            <i className="fas fa-shopping-bag text-5xl text-accent-gold/20 block" />
-            <p className="text-sm text-accent-gold/40">
-              {isEnglish ? "Your cart is empty" : "سلتك فارغة"}
-            </p>
-            <Link href="/shop" className="btn-primary text-xs px-8 py-3.5 inline-block">
-              {isEnglish ? "Browse Collection" : "تصفح المجموعة"}
+            <motion.i
+              className="fas fa-shopping-bag text-5xl block"
+              style={{ color: "var(--accent-gold)", textShadow: "0 0 40px rgba(201,169,110,0.4)" }}
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "ease-in-out" }}
+            />
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+                {isEnglish ? "Your cart is empty" : "سلتك فارغة"}
+              </h2>
+              <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                {isEnglish ? "Discover our premium collection" : "اكتشفي تشكيلتنا الفاخرة"}
+              </p>
+            </div>
+            <Link href="/shop" className="btn-primary text-xs px-8 py-3.5 inline-block gold-gradient" style={{ color: "var(--text-on-accent)" }}>
+              {isEnglish ? "Shop Now" : "تسوقي الآن"}
             </Link>
           </motion.div>
         ) : (
@@ -138,9 +150,18 @@ export default function CartPage() {
                         </div>
                         <div className="flex items-center gap-3">
                           <CurrencyPopup price={item.price * item.quantity}>
-                            <span className="text-sm font-bold text-accent-gold">
-                              {item.price * item.quantity} {isEnglish ? "JD" : "د.أ"}
-                            </span>
+                            <AnimatePresence mode="popLayout">
+                              <motion.span
+                                key={item.price * item.quantity}
+                                initial={{ y: 12, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: -12, opacity: 0 }}
+                                transition={{ duration: 0.15, ...springs.snappy }}
+                                className="text-sm font-bold text-accent-gold block"
+                              >
+                                {item.price * item.quantity} {isEnglish ? "JD" : "د.أ"}
+                              </motion.span>
+                            </AnimatePresence>
                           </CurrencyPopup>
                           <button
                             onClick={() => {
@@ -196,18 +217,40 @@ export default function CartPage() {
               )}
 
               <div className="space-y-2 text-xs">
-                <div className="flex items-center justify-between text-accent-gold/60">
-                  <span>{isEnglish ? "Subtotal" : "المجموع الفرعي"}</span>
-                  <CurrencyPopup price={subtotal}>
-                    <span>{subtotal} {isEnglish ? "JD" : "د.أ"}</span>
-                  </CurrencyPopup>
-                </div>
+                  <div className="flex items-center justify-between text-accent-gold/60">
+                    <span>{isEnglish ? "Subtotal" : "المجموع الفرعي"}</span>
+                    <CurrencyPopup price={subtotal}>
+                      <AnimatePresence mode="popLayout">
+                        <motion.span
+                          key={subtotal}
+                          initial={{ y: 12, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          exit={{ y: -12, opacity: 0 }}
+                          transition={{ duration: 0.15, ...springs.snappy }}
+                          className="block"
+                        >
+                          {subtotal} {isEnglish ? "JD" : "د.أ"}
+                        </motion.span>
+                      </AnimatePresence>
+                    </CurrencyPopup>
+                  </div>
 
                 {discountPercent > 0 && (
                   <div className="flex items-center justify-between text-green-400/80">
                     <span>{isEnglish ? "Discount (20%)" : "الخصم (20%)"}</span>
                     <CurrencyPopup price={subtotal - discountedSubtotal}>
-                      <span className="font-bold text-green-400">-{(subtotal - discountedSubtotal).toFixed(2)} {isEnglish ? "JD" : "د.أ"}</span>
+                      <AnimatePresence mode="popLayout">
+                        <motion.span
+                          key={subtotal - discountedSubtotal}
+                          initial={{ y: 12, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          exit={{ y: -12, opacity: 0 }}
+                          transition={{ duration: 0.15, ...springs.snappy }}
+                          className="font-bold text-green-400 block"
+                        >
+                          -{(subtotal - discountedSubtotal).toFixed(2)} {isEnglish ? "JD" : "د.أ"}
+                        </motion.span>
+                      </AnimatePresence>
                     </CurrencyPopup>
                   </div>
                 )}
@@ -219,7 +262,18 @@ export default function CartPage() {
                 <div className="border-t border-border pt-2 flex items-center justify-between font-bold text-sm">
                   <span>{isEnglish ? "Total" : "المجموع"}</span>
                   <CurrencyPopup price={discountedSubtotal}>
-                    <span className="text-accent-gold">{discountedSubtotal} {isEnglish ? "JD" : "د.أ"}</span>
+                    <AnimatePresence mode="popLayout">
+                      <motion.span
+                        key={discountedSubtotal}
+                        initial={{ y: 12, opacity: 0, scale: 1 }}
+                        animate={{ y: 0, opacity: 1, scale: [1, 1.05, 1] }}
+                        exit={{ y: -12, opacity: 0, scale: 1 }}
+                        transition={{ y: { duration: 0.15, ...springs.snappy }, opacity: { duration: 0.15, ...springs.snappy }, scale: { duration: 0.3 } }}
+                        className="text-accent-gold block"
+                      >
+                        {discountedSubtotal} {isEnglish ? "JD" : "د.أ"}
+                      </motion.span>
+                    </AnimatePresence>
                   </CurrencyPopup>
                 </div>
               </div>

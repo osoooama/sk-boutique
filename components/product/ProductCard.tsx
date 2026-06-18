@@ -13,6 +13,7 @@ import { springs } from "@/lib/springs";
 import { hapticMedium, hapticLight } from "@/lib/haptics";
 import { useSwipeAction } from "@/hooks/useSwipeAction";
 import { useDeviceParallax } from "@/hooks/useDeviceParallax";
+import { useProductColor } from "@/hooks/useProductColor";
 import CurrencyPopup from "@/components/CurrencyPopup";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -37,6 +38,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
   const previewColors = product.colors.slice(0, 3);
   const images = firstColor?.images || [];
   const wishlisted = isWishlisted(product.id);
+  const { dominantColor } = useProductColor(images[0]);
 
   const handleSwipeLeft = useCallback(() => {
     if (!firstColor || !product.sizes[0]) return;
@@ -159,28 +161,53 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
         className="cursor-pointer"
         style={{ textDecoration: "none" }}
       >
-        <motion.div
-          ref={parallaxRef}
-          className="group relative rounded-[20px] overflow-hidden will-change-transform"
-          style={{
-            background: "var(--bg-card)",
-            backdropFilter: "blur(20px) saturate(180%)",
-            WebkitBackdropFilter: "blur(20px) saturate(180%)",
-            border: "1px solid rgba(201,168,76,0.15)",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
-          }}
-          whileHover={{
-            y: -8,
-            borderColor: "rgba(201,168,76,0.4)",
-            transition: springs.gentle,
-          }}
-          whileTap={{ scale: 0.97, transition: springs.snappy }}
+          <motion.div
+            ref={parallaxRef}
+            className="group relative rounded-[20px] overflow-hidden will-change-transform"
+            style={{
+              background: "var(--bg-card)",
+              backdropFilter: "blur(20px) saturate(180%)",
+              WebkitBackdropFilter: "blur(20px) saturate(180%)",
+              border: "1px solid rgba(201,168,76,0.15)",
+              boxShadow: `0 8px 32px rgba(0,0,0,0.3), 0 0 0px ${dominantColor}00`,
+              transition: "box-shadow 0.5s ease",
+            }}
+            whileHover={{
+              y: -8,
+              borderColor: "rgba(201,168,76,0.4)",
+              boxShadow: `0 8px 32px rgba(0,0,0,0.3), 0 0 24px ${dominantColor}30`,
+              transition: springs.gentle,
+            }}
+            whileTap={{ scale: 0.97, transition: springs.snappy }}
 
         >
           <div
             className="relative aspect-[3/4] overflow-hidden bg-surface-primary product-transition-image-card"
             style={{ "--vt-name": `vt-product-image-${product.id}` } as React.CSSProperties}
           >
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                hapticLight();
+                const url = `${window.location.origin}/product/${product.id}`;
+                if (navigator.share) {
+                  navigator.share({
+                    title: isEnglish ? product.englishTitle : product.title,
+                    text: isEnglish ? product.englishDescription : product.description,
+                    url,
+                  }).catch(() => {});
+                } else {
+                  navigator.clipboard.writeText(url).then(() => {
+                    addToast("success", isEnglish ? "Link copied ✓" : "تم نسخ الرابط ✓", "fa-link");
+                  }).catch(() => {});
+                }
+              }}
+              className={`absolute ${isEnglish ? "left-3" : "right-3"} top-3 z-10 w-9 h-9 rounded-full backdrop-blur-md flex items-center justify-center cursor-pointer`}
+              style={{ background: "rgba(0,0,0,0.5)" }}
+            >
+              <i className="fas fa-share-nodes text-xs" style={{ color: "var(--accent-gold)" }} />
+            </button>
             <motion.button
               onClick={handleToggleWishlist}
               className={`absolute ${isEnglish ? "right-3" : "left-3"} top-3 z-10 w-9 h-9 rounded-full backdrop-blur-md flex items-center justify-center cursor-pointer`}
