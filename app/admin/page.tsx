@@ -41,7 +41,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "#0a0a0f" }}>
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "transparent" }}>
       <motion.div
         className="w-full max-w-sm rounded-2xl p-8 space-y-7"
         style={{

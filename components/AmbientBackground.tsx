@@ -3,36 +3,36 @@
 const ORBS = [
   {
     style: {
-      top: "0",
-      left: "0",
-      width: "500px",
-      height: "500px",
+      top: "-10%",
+      left: "-10%",
+      width: "600px",
+      height: "600px",
       background: "var(--orb-1)",
-      filter: "blur(100px)",
+      filter: "blur(120px)",
       animation: "float-orb 28s ease-in-out infinite",
       animationDelay: "0s",
     },
   },
   {
     style: {
-      bottom: "0",
-      right: "0",
-      width: "600px",
-      height: "600px",
+      bottom: "-10%",
+      right: "-10%",
+      width: "700px",
+      height: "700px",
       background: "var(--orb-2)",
-      filter: "blur(120px)",
+      filter: "blur(150px)",
       animation: "float-orb 22s ease-in-out infinite",
       animationDelay: "-7s",
     },
   },
   {
     style: {
-      top: "50%",
-      right: "10%",
-      width: "400px",
-      height: "400px",
+      top: "40%",
+      left: "55%",
+      width: "500px",
+      height: "500px",
       background: "var(--orb-3)",
-      filter: "blur(90px)",
+      filter: "blur(100px)",
       animation: "float-orb 35s ease-in-out infinite",
       animationDelay: "-14s",
     },
@@ -41,7 +41,7 @@ const ORBS = [
 
 export default function AmbientBackground() {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
+    <div className="orb fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
       {ORBS.map((orb, i) => (
         <div
           key={i}

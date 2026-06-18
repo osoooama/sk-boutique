@@ -48,10 +48,7 @@ export default function ShopPage() {
       <BackToTop />
 
       <main>
-        <section className="relative pt-28 pb-16 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-accent-gold/10 via-transparent to-surface-primary pointer-events-none" />
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-radial from-accent-gold/[0.06] to-transparent rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-radial from-purple-500/[0.04] to-transparent rounded-full blur-[80px] pointer-events-none" />
+        <section className="pt-28 pb-16">
 
           <motion.div
             initial={{ opacity: 0, x: -40 }}

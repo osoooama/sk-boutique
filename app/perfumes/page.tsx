@@ -72,10 +72,7 @@ export default function PerfumesPage() {
       <BackToTop />
 
       <main>
-        <section className="relative pt-28 pb-16 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-accent-gold/[0.08] via-transparent to-surface-primary pointer-events-none" />
-          <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-accent-gold/[0.05] rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-purple-500/[0.03] rounded-full blur-[100px] pointer-events-none" />
+        <section className="pt-28 pb-16">
 
           <motion.div
             variants={fadeLeftVariant}

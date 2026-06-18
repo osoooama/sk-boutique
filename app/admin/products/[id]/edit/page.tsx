@@ -61,7 +61,7 @@ export default function EditProductPage() {
 
   if (!product) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "#0a0a0f" }}>
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "transparent" }}>
         <div className="text-center space-y-3">
           <div className="text-4xl" style={{ color: "#C9A84C" }}>
             <i className="fas fa-exclamation-circle" />
@@ -158,7 +158,7 @@ export default function EditProductPage() {
   });
 
   return (
-    <div className="min-h-screen p-4 md:p-6" style={{ background: "#0a0a0f" }}>
+    <div className="min-h-screen p-4 md:p-6" style={{ background: "transparent" }}>
       <div className="max-w-2xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-bold" style={{ color: "#F5F5F0" }}>تعديل المنتج</h1>

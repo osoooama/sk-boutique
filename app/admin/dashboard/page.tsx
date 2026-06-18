@@ -67,7 +67,7 @@ export default function AdminDashboardPage() {
     : (lastProduct || lastPerfume);
 
   return (
-    <div className="min-h-screen p-4 md:p-6 max-w-6xl mx-auto" style={{ background: "#0a0a0f" }}>
+    <div className="min-h-screen p-4 md:p-6 max-w-6xl mx-auto" style={{ background: "transparent" }}>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-lg font-bold" style={{ color: "#F5F5F0" }}>
           <span className="text-accent-gold">SK BOUTIQUE</span> Admin

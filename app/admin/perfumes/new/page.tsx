@@ -81,7 +81,7 @@ export default function NewPerfumePage() {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-6" style={{ background: "#0a0a0f" }}>
+    <div className="min-h-screen p-4 md:p-6" style={{ background: "transparent" }}>
       <div className="max-w-2xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-bold" style={{ color: "#F5F5F0" }}>إضافة عطر جديد</h1>

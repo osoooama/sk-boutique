@@ -100,11 +100,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="relative py-20 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent-gold/[0.02] to-transparent pointer-events-none" />
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-gold-muted rounded-full blur-[120px] pointer-events-none" />
-
-          <div className="relative max-w-7xl mx-auto px-4 md:px-8">
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
             <motion.div
               variants={fadeLeftVariant}
               initial="hidden"
@@ -192,7 +189,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-16 border-t border-border">
+        <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <motion.div
               variants={staggerContainer}
@@ -220,9 +217,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-20 border-t border-border overflow-hidden">
-          <div className="absolute left-1/4 w-96 h-96 bg-accent-gold-muted rounded-full blur-[120px] pointer-events-none" />
-          <div className="relative max-w-7xl mx-auto px-4 md:px-8">
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
             <motion.div
               variants={fadeLeftVariant}
               initial="hidden"
