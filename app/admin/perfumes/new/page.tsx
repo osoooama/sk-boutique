@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useToast } from "@/components/Toast/ToastContext";
 import ImageUploader from "@/components/admin/ImageUploader";
-import { createPerfume, uploadImage } from "@/lib/products-api";
+import { createPerfume } from "@/lib/products-api";
 
 const SCENT_TYPES = ["مسك", "زهري", "عودي", "فواكهي", "خشبي", "شرقي"];
 const VOLUMES = ["10ml", "30ml", "50ml", "100ml"];

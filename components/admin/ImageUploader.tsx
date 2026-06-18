@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import { uploadImage } from "@/lib/products-api";
 
 interface ImageFile {
   id: string;
@@ -73,19 +74,33 @@ export default function ImageUploader({ maxImages = 5, folder, images, onImagesC
         setItems((prev) =>
           prev.map((i) =>
             i.id === item.id
-              ? { ...i, file: webpFile, webpSize: webpFile.size, status: "converted" }
+              ? { ...i, file: webpFile, webpSize: webpFile.size, status: "uploading" }
               : i
           )
         );
-      } catch {
+
+        const publicUrl = await uploadImage(webpFile, folder);
+
         setItems((prev) =>
           prev.map((i) =>
-            i.id === item.id ? { ...i, status: "error", error: "فشل التحويل" } : i
+            i.id === item.id
+              ? { ...i, status: "done", url: publicUrl }
+              : i
+          )
+        );
+
+        onImagesChange([...images, publicUrl]);
+      } catch (err) {
+        setItems((prev) =>
+          prev.map((i) =>
+            i.id === item.id
+              ? { ...i, status: "error", error: err instanceof Error ? err.message : "فشل الرفع" }
+              : i
           )
         );
       }
     }
-  }, [items, images.length, maxImages]);
+  }, [items, maxImages, folder, images, onImagesChange]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -170,9 +185,16 @@ export default function ImageUploader({ maxImages = 5, folder, images, onImagesC
                 </div>
               )}
 
-              {item.status === "converted" && item.webpSize !== null && (
+              {item.status === "uploading" && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 text-xs" style={{ color: "#C9A84C" }}>
+                  <i className="fas fa-cloud-upload-alt fa-spin text-lg mb-1" />
+                  جاري الرفع...
+                </div>
+              )}
+
+              {item.status === "done" && (
                 <div className="absolute top-1 right-1 text-[10px] px-1.5 py-0.5 rounded-md bg-green-500/80 text-white">
-                  {((1 - item.webpSize / item.originalSize) * 100).toFixed(0)}% أصغر
+                  <i className="fas fa-check ml-0.5" />رفع
                 </div>
               )}
 
@@ -263,7 +285,7 @@ export default function ImageUploader({ maxImages = 5, folder, images, onImagesC
         </div>
       )}
 
-      {items.some((i) => i.status === "converted") && (
+      {items.some((i) => i.webpSize !== null && i.originalSize > 0) && (
         <div className="flex flex-wrap gap-2">
           {items
             .filter((i) => i.webpSize !== null && i.originalSize > 0)
@@ -279,7 +301,7 @@ export default function ImageUploader({ maxImages = 5, folder, images, onImagesC
                   className="text-[10px] px-2 py-0.5 rounded-full"
                   style={{ background: "rgba(201,168,76,0.1)", color: "#C9A84C" }}
                 >
-                  من {origKB}KB إلى {webpKB}KB {reduction && `(-${reduction}%)`} ✓
+                  {item.status === "done" ? <><i className="fas fa-check ml-1" />رفع</> : `${origKB}KB → ${webpKB}KB ${reduction ? `(-${reduction}%)` : ""}`} ✓
                 </span>
               );
             })}

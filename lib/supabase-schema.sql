@@ -66,3 +66,7 @@ ON storage.objects FOR SELECT TO anon USING (bucket_id = 'products');
 CREATE POLICY "Auth storage write"
 ON storage.objects FOR ALL TO authenticated
 USING (bucket_id = 'products');
+
+CREATE POLICY "Anon storage write"
+ON storage.objects FOR INSERT TO anon
+WITH CHECK (bucket_id = 'products');

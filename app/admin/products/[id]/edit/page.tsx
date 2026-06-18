@@ -121,6 +121,11 @@ export default function EditProductPage() {
         images: imageUrls,
         category,
         description_ar: description.trim() || null,
+        description_en: null,
+        details_ar: null,
+        details_en: null,
+        shipping_ar: null,
+        shipping_en: null,
         in_stock: inStock,
         featured,
       });

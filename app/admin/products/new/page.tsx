@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { useToast } from "@/components/Toast/ToastContext";
 import ImageUploader from "@/components/admin/ImageUploader";
 import ColorPicker from "@/components/admin/ColorPicker";
-import { createProduct, uploadImage } from "@/lib/products-api";
+import { createProduct } from "@/lib/products-api";
 
 const ALL_SIZES = ["S", "M", "L", "XL", "XXL"];
 const CATEGORIES = [
@@ -89,18 +89,11 @@ export default function NewProductPage() {
 
     setSubmitting(true);
     try {
-      const uploaded: string[] = [];
-
-      for (const img of imageUrls) {
-        if (img.startsWith("blob:")) continue;
-        uploaded.push(img);
-      }
-
       const dbColors = colors.map((c) => ({
         name: c.name,
         englishName: "",
         hex: c.hex,
-        images: uploaded,
+        images: imageUrls,
       }));
 
       await createProduct({
@@ -109,7 +102,7 @@ export default function NewProductPage() {
         price: Number(price),
         sizes,
         colors: dbColors,
-        images: uploaded,
+        images: imageUrls,
         category,
         description_ar: description.trim() || null,
         description_en: null,
