@@ -52,7 +52,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
       image: firstColor.images[0] || "",
     });
     show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
-  }, [product, firstColor, addItem, addToast, isEnglish]);
+  }, [product, firstColor, addItem, show, isEnglish]);
 
   const handleSwipeRight = useCallback(() => {
     toggleItem(product.id);
@@ -61,7 +61,7 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
       isEnglish ? "Added to wishlist" : "أضيف للمفضلة!",
       "fa-heart"
     );
-  }, [product.id, isEnglish, toggleItem, addToast]);
+  }, [product.id, isEnglish, toggleItem, show]);
 
   const swipe = useSwipeAction({
     threshold: 60,

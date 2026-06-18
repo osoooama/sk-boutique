@@ -8,7 +8,7 @@ import { BLUR_PLACEHOLDER } from "@/lib/blur-placeholder";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
-import Toast from "@/components/Toast/Toast";
+
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
@@ -48,7 +48,7 @@ export default function CartPage() {
       />
       <CartDrawer isEnglish={isEnglish} />
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} isEnglish={isEnglish} />
-      <Toast />
+      
       <BackToTop />
 
       <main className="pt-28 pb-20 section-padding max-w-6xl mx-auto">

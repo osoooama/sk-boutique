@@ -27,7 +27,7 @@ interface ColorRow {
 export default function EditProductPage() {
   const router = useRouter();
   const params = useParams();
-  const { addToast } = useToast();
+  const { show } = useToast();
 
   const product = products.find((p) => p.id === params.id);
 
@@ -98,10 +98,10 @@ export default function EditProductPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nameAr.trim()) { addToast("error", "اسم المنتج بالعربية مطلوب"); return; }
-    if (!price || isNaN(Number(price)) || Number(price) <= 0) { addToast("error", "السعر مطلوب"); return; }
-    if (sizes.length === 0) { addToast("error", "اختر مقاس واحد على الأقل"); return; }
-    if (colors.some((c) => !c.name.trim())) { addToast("error", "جميع الألوان يجب أن يكون لها اسم"); return; }
+    if (!nameAr.trim()) { show("error", "اسم المنتج بالعربية مطلوب"); return; }
+    if (!price || isNaN(Number(price)) || Number(price) <= 0) { show("error", "السعر مطلوب"); return; }
+    if (sizes.length === 0) { show("error", "اختر مقاس واحد على الأقل"); return; }
+    if (colors.some((c) => !c.name.trim())) { show("error", "جميع الألوان يجب أن يكون لها اسم"); return; }
 
     setSubmitting(true);
     try {
@@ -130,10 +130,10 @@ export default function EditProductPage() {
         featured,
       });
 
-      addToast("success", "تم حفظ التغييرات");
+      show("success", "تم حفظ التغييرات");
       router.push("/admin/dashboard");
     } catch (err) {
-      addToast("error", "فشل الحفظ: " + (err instanceof Error ? err.message : "خطأ غير معروف"));
+      show("error", "فشل الحفظ: " + (err instanceof Error ? err.message : "خطأ غير معروف"));
     } finally {
       setSubmitting(false);
     }
@@ -142,10 +142,10 @@ export default function EditProductPage() {
   const handleDelete = async () => {
     try {
       await deleteProduct(product.id);
-      addToast("success", "تم حذف المنتج");
+      show("success", "تم حذف المنتج");
       router.push("/admin/dashboard");
     } catch (err) {
-      addToast("error", "فشل الحذف: " + (err instanceof Error ? err.message : "خطأ غير معروف"));
+      show("error", "فشل الحذف: " + (err instanceof Error ? err.message : "خطأ غير معروف"));
     }
   };
 

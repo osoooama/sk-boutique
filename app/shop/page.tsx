@@ -6,7 +6,7 @@ import { staggerContainer } from "@/lib/animations";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
-import Toast from "@/components/Toast/Toast";
+
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import BackToTop from "@/components/ui/BackToTop";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
@@ -46,7 +46,7 @@ export default function ShopPage() {
       />
       <CartDrawer isEnglish={isEnglish} />
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} isEnglish={isEnglish} />
-      <Toast />
+      
       <BackToTop />
 
       <main>

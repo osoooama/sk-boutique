@@ -12,7 +12,6 @@ import { useProductColor } from "@/hooks/useProductColor";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
-import Toast from "@/components/Toast/Toast";
 import ColorSwatches from "@/components/product/ColorSwatches";
 import SizeSelector from "@/components/product/SizeSelector";
 import ImageTouchSlider from "@/components/product/ImageTouchSlider";
@@ -69,7 +68,7 @@ export default function ProductDetailPage() {
   const { products } = useProducts();
   const { addItem, items: cartItems } = useCart();
   const { isWishlisted, toggleItem } = useWishlist();
-  const { addToast } = useToast();
+  const { show } = useToast();
 
   const product = products.find((p) => p.id === params.id);
   const { dominantColor } = useProductColor(product?.colors[0]?.images[0]);
@@ -106,7 +105,7 @@ export default function ProductDetailPage() {
     if (!selectedSize && product.sizes[0]) setSelectedSize(product.sizes[0]);
     const size = selectedSize || product.sizes[0];
     if (!size || !activeColor) {
-      addToast("warning", isEnglish ? "Please select a size" : "الرجاء اختيار مقاس", "fa-ruler");
+      show("warning", isEnglish ? "Please select a size" : "الرجاء اختيار مقاس", "fa-ruler");
       return;
     }
     addItem({
@@ -120,7 +119,7 @@ export default function ProductDetailPage() {
       image: activeColor.images[0] || "",
     });
     setAddedToCart(true);
-    addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
+    show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
     setTimeout(() => setAddedToCart(false), 2000);
   };
 
@@ -150,7 +149,6 @@ export default function ProductDetailPage() {
         onToggleTheme={toggleTheme}
       />
       <CartDrawer isEnglish={isEnglish} />
-      <Toast />
 
       <main className="pt-28 pb-28 md:pb-20 section-padding max-w-7xl mx-auto">
         <Breadcrumbs
@@ -174,7 +172,7 @@ export default function ProductDetailPage() {
               <button
                 onClick={() => {
                   toggleItem(product.id);
-                  addToast(
+                  show(
                     wishlisted ? "info" : "success",
                     wishlisted
                       ? (isEnglish ? "Removed from wishlist" : "تمت الإزالة من المفضلة")
@@ -300,10 +298,6 @@ export default function ProductDetailPage() {
               >
                 {isEnglish ? "Buy Now" : "اشتر الآن"}
               </motion.button>
-            </div>
-
-            <div className="flex items-center gap-4 text-[10px] text-accent-gold/30">
-              <span className="flex items-center gap-1"><i className="fas fa-shield text-accent-gold/40" />{isEnglish ? "COD" : "دفع عند الاستلام"}</span>
             </div>
 
             <div className="pt-4 border-t border-border space-y-4">
@@ -518,7 +512,7 @@ export default function ProductDetailPage() {
                   });
                 }
                 setAddedToCart(true);
-                addToast("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
+                show("success", isEnglish ? "Added to cart!" : "أضيف للسلة!", "fa-check");
                 setTimeout(() => setAddedToCart(false), 2000);
                 setBottomSheetOpen(false);
               }}
@@ -531,7 +525,7 @@ export default function ProductDetailPage() {
             <motion.button
               onClick={() => {
                 toggleItem(product.id);
-                addToast("success", isEnglish ? "Added to wishlist" : "أضيف للمفضلة!", "fa-heart");
+                show("success", isEnglish ? "Added to wishlist" : "أضيف للمفضلة!", "fa-heart");
                 setBottomSheetOpen(false);
               }}
               className="py-3.5 px-5 rounded-2xl border border-accent-gold/30 text-accent-gold font-bold text-sm"
