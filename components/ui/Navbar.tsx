@@ -126,7 +126,7 @@ export default function Navbar({
     setOverrideMode(true);
   }, [openCart]);
 
-  const IridescentLogo = ({ className = "", width = 40, height = 40 }: { className?: string; width?: number; height?: number }) => (
+  const IridescentLogo = ({ className = "", width = 32, height = 32 }: { className?: string; width?: number; height?: number }) => (
     <span className={`logo-container relative inline-flex items-center justify-center select-none ${className}`}>
       <span className="absolute inset-0 rounded-full" style={{
         background: "conic-gradient(from 0deg, #C9A84C, #FFB6C1, #C0C0C0, #C9A84C)",
@@ -170,7 +170,7 @@ export default function Navbar({
       dir={isEnglish ? "ltr" : "rtl"}
     >
         <Link href="/" className="flex items-center shrink-0" style={{ textDecoration: "none" }}>
-          <IridescentLogo width={60} height={18} />
+          <IridescentLogo width={48} height={14} />
         </Link>
       <div className="flex items-center gap-1">
         <MagneticWrapper>
@@ -263,7 +263,7 @@ export default function Navbar({
                 dir={isEnglish ? "ltr" : "rtl"}
               >
                 <Link href="/" className="flex items-center shrink-0 mx-2" style={{ textDecoration: "none" }}>
-                  <IridescentLogo width={80} height={24} />
+                  <IridescentLogo width={60} height={18} />
                 </Link>
 
                 <nav className="flex items-center gap-1 text-sm mx-2">
@@ -468,7 +468,7 @@ export default function Navbar({
                 className="flex items-center justify-between p-4 border-b border-border"
                 style={{ paddingTop: "calc(env(safe-area-inset-top, 0px) + 1rem)" }}
               >
-                <IridescentLogo width={80} height={24} />
+                <IridescentLogo width={60} height={18} />
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="w-10 h-10 rounded-xl flex items-center justify-center border border-border text-accent-gold"

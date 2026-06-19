@@ -69,7 +69,7 @@ export default function ShopPage() {
             <span className="inline-block bg-accent-gold-muted text-accent-gold px-4 py-1.5 rounded-full text-xs font-bold border border-accent-gold-muted backdrop-blur-sm">
               {isEnglish ? "Our Collection" : "تشكيلتنا"}
             </span>
-            <h1 className={`text-4xl md:text-5xl font-bold gold-gradient bg-clip-text text-transparent ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+            <h1 className={`text-4xl md:text-5xl font-bold gold-gradient bg-clip-text text-transparent ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
               {isEnglish ? "Women's Fashion" : "أزياء نسائية عصرية"}
             </h1>
             <p className="text-accent-gold/60 text-sm max-w-xl mx-auto">

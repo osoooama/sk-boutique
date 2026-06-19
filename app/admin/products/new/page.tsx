@@ -57,10 +57,10 @@ export default function NewProductPage() {
 
   const inputStyle = (focus: boolean): React.CSSProperties => ({
     background: "rgba(255,255,255,0.05)",
-    border: focus ? "1px solid #C9A84C" : "1px solid rgba(201,168,76,0.2)",
-    color: "#F5F5F0",
+    border: focus ? "1px solid var(--accent-gold)" : "1px solid var(--accent-gold-muted)",
+    color: "var(--text-primary)",
     outline: "none",
-    boxShadow: focus ? "0 0 16px rgba(201,168,76,0.15)" : "none",
+    boxShadow: focus ? "0 0 16px var(--accent-gold-muted)" : "none",
     borderRadius: "12px",
     padding: "12px 16px",
     fontSize: "14px",
@@ -127,14 +127,14 @@ export default function NewProductPage() {
     <div className="min-h-screen p-4 md:p-6" style={{ background: "transparent" }}>
       <div className="max-w-2xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-lg font-bold" style={{ color: "#F5F5F0" }}>إضافة منتج جديد</h1>
+          <h1 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>إضافة منتج جديد</h1>
           <Link
             href="/admin/dashboard"
             className="text-xs px-4 h-9 rounded-xl flex items-center transition-all"
             style={{
               background: "rgba(255,255,255,0.05)",
               border: "1px solid rgba(255,255,255,0.1)",
-              color: "#A8A89A",
+              color: "var(--text-muted)",
             }}
           >
             <i className="fas fa-arrow-right ml-1.5" />
@@ -145,10 +145,10 @@ export default function NewProductPage() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div
             className="rounded-xl p-5 space-y-5"
-            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(201,168,76,0.12)" }}
+            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--accent-gold-muted)" }}
           >
             <div className="space-y-1.5">
-              <label className="text-xs font-medium" style={{ color: "#C9A84C" }}>اسم المنتج (عربي) *</label>
+              <label className="text-xs font-medium" style={{ color: "var(--accent-gold)" }}>اسم المنتج (عربي) *</label>
               <input
                 value={nameAr}
                 onChange={(e) => setNameAr(e.target.value)}
@@ -161,7 +161,7 @@ export default function NewProductPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium" style={{ color: "#C9A84C" }}>اسم المنتج (إنجليزي)</label>
+              <label className="text-xs font-medium" style={{ color: "var(--accent-gold)" }}>اسم المنتج (إنجليزي)</label>
               <input
                 value={nameEn}
                 onChange={(e) => setNameEn(e.target.value)}
@@ -175,7 +175,7 @@ export default function NewProductPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-medium" style={{ color: "#C9A84C" }}>السعر *</label>
+                <label className="text-xs font-medium" style={{ color: "var(--accent-gold)" }}>السعر *</label>
                 <div className="relative">
                   <input
                     type="number"
@@ -189,7 +189,7 @@ export default function NewProductPage() {
                   />
                   <span
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-xs"
-                    style={{ color: "#6B6B5F" }}
+                    style={{ color: "var(--text-muted)" }}
                   >
                     د.أ
                   </span>
@@ -197,7 +197,7 @@ export default function NewProductPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium" style={{ color: "#C9A84C" }}>التصنيف</label>
+                <label className="text-xs font-medium" style={{ color: "var(--accent-gold)" }}>التصنيف</label>
                 <div className="flex gap-2 h-12">
                   {CATEGORIES.map((c) => (
                     <button
@@ -206,9 +206,9 @@ export default function NewProductPage() {
                       onClick={() => setCategory(c.id)}
                       className="flex-1 rounded-xl text-xs font-medium transition-all"
                       style={{
-                        background: category === c.id ? "rgba(201,168,76,0.15)" : "rgba(255,255,255,0.04)",
-                        border: category === c.id ? "1px solid #C9A84C" : "1px solid rgba(255,255,255,0.06)",
-                        color: category === c.id ? "#C9A84C" : "#6B6B5F",
+                        background: category === c.id ? "var(--accent-gold-muted)" : "rgba(255,255,255,0.04)",
+                        border: category === c.id ? "1px solid var(--accent-gold)" : "1px solid rgba(255,255,255,0.06)",
+                        color: category === c.id ? "var(--accent-gold)" : "var(--text-muted)",
                       }}
                     >
                       {c.ar}
@@ -219,7 +219,7 @@ export default function NewProductPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium" style={{ color: "#C9A84C" }}>الوصف (عربي)</label>
+              <label className="text-xs font-medium" style={{ color: "var(--accent-gold)" }}>الوصف (عربي)</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -233,7 +233,7 @@ export default function NewProductPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium" style={{ color: "#C9A84C" }}>المقاسات</label>
+              <label className="text-xs font-medium" style={{ color: "var(--accent-gold)" }}>المقاسات</label>
               <div className="flex gap-2 flex-wrap">
                 {ALL_SIZES.map((s) => (
                   <button
@@ -242,9 +242,9 @@ export default function NewProductPage() {
                     onClick={() => toggleSize(s)}
                     className="h-11 min-w-[48px] rounded-xl text-sm font-medium transition-all"
                     style={{
-                      background: sizes.includes(s) ? "#C9A84C" : "rgba(255,255,255,0.05)",
-                      border: sizes.includes(s) ? "1px solid #C9A84C" : "1px solid rgba(255,255,255,0.08)",
-                      color: sizes.includes(s) ? "#0A0A0A" : "#A8A89A",
+                      background: sizes.includes(s) ? "var(--accent-gold)" : "rgba(255,255,255,0.05)",
+                      border: sizes.includes(s) ? "1px solid var(--accent-gold)" : "1px solid rgba(255,255,255,0.08)",
+                      color: sizes.includes(s) ? "var(--text-on-accent)" : "var(--text-muted)",
                     }}
                   >
                     {s}
@@ -255,15 +255,15 @@ export default function NewProductPage() {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-medium" style={{ color: "#C9A84C" }}>الألوان</label>
+                <label className="text-xs font-medium" style={{ color: "var(--accent-gold)" }}>الألوان</label>
                 <button
                   type="button"
                   onClick={addColor}
                   className="text-[11px] h-8 px-3 rounded-lg flex items-center gap-1 transition-all"
                   style={{
-                    background: "rgba(201,168,76,0.1)",
-                    border: "1px solid rgba(201,168,76,0.2)",
-                    color: "#C9A84C",
+                    background: "var(--accent-gold-muted)",
+                    border: "1px solid var(--accent-gold-muted)",
+                    color: "var(--accent-gold)",
                   }}
                 >
                   <i className="fas fa-plus text-[9px]" />
@@ -278,7 +278,7 @@ export default function NewProductPage() {
                     style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px]" style={{ color: "#6B6B5F" }}>{idx + 1}.</span>
+                      <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>{idx + 1}.</span>
                       <input
                         value={c.name}
                         onChange={(e) => updateColor(c.key, "name", e.target.value)}
@@ -288,7 +288,7 @@ export default function NewProductPage() {
                         style={{
                           background: "rgba(255,255,255,0.05)",
                           border: "1px solid rgba(255,255,255,0.08)",
-                          color: "#F5F5F0",
+                          color: "var(--text-primary)",
                           outline: "none",
                         }}
                       />
@@ -313,7 +313,7 @@ export default function NewProductPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium" style={{ color: "#C9A84C" }}>الصور (حتى 5)</label>
+              <label className="text-xs font-medium" style={{ color: "var(--accent-gold)" }}>الصور (حتى 5)</label>
               <ImageUploader
                 maxImages={5}
                 folder="products/clothing"
@@ -329,9 +329,9 @@ export default function NewProductPage() {
                   checked={inStock}
                   onChange={(e) => setInStock(e.target.checked)}
                   className="w-4 h-4 rounded"
-                  style={{ accentColor: "#C9A84C" }}
+                  style={{ accentColor: "var(--accent-gold)" }}
                 />
-                <span className="text-xs" style={{ color: "#A8A89A" }}>متوفر للبيع</span>
+                <span className="text-xs" style={{ color: "var(--text-muted)" }}>متوفر للبيع</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -339,9 +339,9 @@ export default function NewProductPage() {
                   checked={featured}
                   onChange={(e) => setFeatured(e.target.checked)}
                   className="w-4 h-4 rounded"
-                  style={{ accentColor: "#C9A84C" }}
+                  style={{ accentColor: "var(--accent-gold)" }}
                 />
-                <span className="text-xs" style={{ color: "#A8A89A" }}>منتج مميز - يظهر بالرئيسية</span>
+                <span className="text-xs" style={{ color: "var(--text-muted)" }}>منتج مميز - يظهر بالرئيسية</span>
               </label>
             </div>
           </div>
@@ -352,8 +352,8 @@ export default function NewProductPage() {
               disabled={submitting}
               className="flex-1 h-11 rounded-xl font-semibold text-sm"
               style={{
-                background: submitting ? "rgba(201,168,76,0.3)" : "linear-gradient(135deg, #C9A84C, #D4B87A)",
-                color: submitting ? "#6B6B5F" : "#0A0A0A",
+                background: submitting ? "var(--accent-gold-muted)" : "linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover))",
+                color: submitting ? "var(--text-muted)" : "var(--text-on-accent)",
               }}
               whileHover={submitting ? {} : { scale: 1.02 }}
               whileTap={submitting ? {} : { scale: 0.98 }}
@@ -368,7 +368,7 @@ export default function NewProductPage() {
               style={{
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.1)",
-                color: "#A8A89A",
+                color: "var(--text-muted)",
               }}
             >
               إلغاء

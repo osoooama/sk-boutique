@@ -38,7 +38,7 @@ export default function CartPage() {
   };
 
   return (
-    <div className={`min-h-screen ${isEnglish ? "font-inter" : "font-alexandria"}`} dir={isEnglish ? "ltr" : "rtl"}>
+    <div className={`min-h-screen ${isEnglish ? "font-hanken" : "font-alexandria"}`} dir={isEnglish ? "ltr" : "rtl"}>
       <Navbar
         isEnglish={isEnglish}
         isDark={isDark}
@@ -61,7 +61,7 @@ export default function CartPage() {
           isEnglish={isEnglish}
         />
 
-        <h1 className={`text-2xl font-bold mb-8 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+        <h1 className={`text-2xl font-bold mb-8 ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
           {isEnglish ? "Shopping Cart" : "سلة التسوق"}
           {items.length > 0 && <span className="text-accent-gold/40 text-sm mr-2">({items.length})</span>}
         </h1>
@@ -109,11 +109,11 @@ export default function CartPage() {
                     </Link>
                     <div className="flex-1 min-w-0 space-y-1.5">
                       <div className="relative">
-                        <Link href={`/product/${item.productId}`} className={`text-sm font-bold line-clamp-2 block hover:text-accent-gold transition-colors ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                        <Link href={`/product/${item.productId}`} className={`text-sm font-bold line-clamp-2 block hover:text-accent-gold transition-colors ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
                           {isEnglish ? item.englishTitle : item.title}
                         </Link>
                         <div className="title-tooltip">
-                          <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+                          <p className={`text-xs font-bold ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
                             {isEnglish ? item.englishTitle : item.title}
                           </p>
                         </div>
@@ -181,7 +181,7 @@ export default function CartPage() {
             </div>
 
             <div className="sticky top-28 space-y-4 p-5 rounded-2xl bg-white/[0.03] border border-border">
-              <h3 className={`font-bold text-sm ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+              <h3 className={`font-bold text-sm ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
                 {isEnglish ? "Order Summary" : "ملخص الطلب"}
               </h3>
 

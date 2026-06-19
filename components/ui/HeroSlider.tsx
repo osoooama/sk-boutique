@@ -82,7 +82,7 @@ export default function HeroSlider({ isEnglish = false }: HeroSliderProps) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold font-alexandria leading-tight"
+            className={`text-4xl md:text-6xl lg:text-7xl font-bold leading-tight ${isEnglish ? "font-bodoni" : "font-alexandria"}`}
           >
             <span
               className="bg-clip-text text-transparent"

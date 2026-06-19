@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
         inputRef.current.style.boxShadow = "0 0 16px rgba(255,68,68,0.3)";
         setTimeout(() => {
           if (inputRef.current) {
-            inputRef.current.style.borderColor = "rgba(201,168,76,0.2)";
+            inputRef.current.style.borderColor = "var(--border-color)";
             inputRef.current.style.boxShadow = "none";
           }
         }, 1000);
@@ -45,9 +45,9 @@ export default function AdminLoginPage() {
       <motion.div
         className="w-full max-w-sm rounded-2xl p-8 space-y-7"
         style={{
-          background: "rgba(255,255,255,0.04)",
+          background: "var(--bg-card)",
           backdropFilter: "blur(24px)",
-          border: "1px solid rgba(201,168,76,0.2)",
+          border: "1px solid var(--border-color)",
         }}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -55,7 +55,7 @@ export default function AdminLoginPage() {
       >
         <div className="text-center space-y-2">
           <div className="text-3xl font-bold" style={{
-            background: "linear-gradient(135deg, #C9A84C, #E8C97A, #C9A84C)",
+            background: "linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover), var(--accent-gold))",
             backgroundSize: "200% auto",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -63,7 +63,7 @@ export default function AdminLoginPage() {
           }}>
             SK BOUTIQUE
           </div>
-          <p className="text-xs" style={{ color: "#6B6B5F" }}>
+          <p className="text-xs" style={{ color: "var(--text-muted)" }}>
             لوحة التحكم
           </p>
         </div>
@@ -80,18 +80,18 @@ export default function AdminLoginPage() {
               autoFocus
               className={`w-full h-12 rounded-xl px-4 text-sm transition-all duration-200 ${shake ? "animate__animated animate__shakeX" : ""}`}
               style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(201,168,76,0.2)",
-                color: "#F5F5F0",
+                background: "var(--input-bg)",
+                border: "1px solid var(--input-border)",
+                color: "var(--input-text)",
                 outline: "none",
                 paddingLeft: "44px",
               }}
               onFocus={(e) => {
-                e.currentTarget.style.borderColor = "#C9A84C";
-                e.currentTarget.style.boxShadow = "0 0 16px rgba(201,168,76,0.15)";
+                e.currentTarget.style.borderColor = "var(--accent-gold)";
+                e.currentTarget.style.boxShadow = "0 0 16px rgba(212,175,55,0.15)";
               }}
               onBlur={(e) => {
-                e.currentTarget.style.borderColor = "rgba(201,168,76,0.2)";
+                e.currentTarget.style.borderColor = "var(--input-border)";
                 e.currentTarget.style.boxShadow = "none";
               }}
             />
@@ -99,7 +99,7 @@ export default function AdminLoginPage() {
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-sm transition-colors"
-              style={{ color: "#6B6B5F" }}
+              style={{ color: "var(--text-muted)" }}
             >
               <i className={`fas fa-${showPassword ? "eye-slash" : "eye"}`} />
             </button>
@@ -108,7 +108,7 @@ export default function AdminLoginPage() {
           {shake && (
             <motion.div
               className="text-xs text-center"
-              style={{ color: "#ff4444" }}
+              style={{ color: "#ef4444" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -121,8 +121,8 @@ export default function AdminLoginPage() {
             type="submit"
             className="w-full h-11 rounded-xl font-semibold text-sm cursor-pointer"
             style={{
-              background: "linear-gradient(135deg, #C9A84C, #D4B87A)",
-              color: "#0A0A0A",
+              background: "var(--accent-gold)",
+              color: "var(--text-on-accent)",
             }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

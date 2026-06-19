@@ -9,7 +9,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div
       className="min-h-screen w-full overflow-x-hidden font-alexandria"
-      style={{ background: "transparent" }}
+      style={{ background: "var(--bg-primary)" }}
     >
       {children}
     </div>

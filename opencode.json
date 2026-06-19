@@ -1,24 +1,13 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "default_agent": "SK",
-  "instructions": [".opencode/agents/SK.md"],
-  "snapshot": true,
-  "command": {
-    "dev": {
-      "description": "تشغيل سيرفر التططوير",
-      "template": "شغل npm run dev في مجلد المشروع"
-    },
-    "build": {
-      "description": "بناء المشروع",
-      "template": "شغل npm run build في مجلد المشروع"
-    },
-    "deploy": {
-      "description": "رفع التعديلات للموقع المباشر",
-      "template": "شغل deploy.ps1 -Prod في مجلد المشروع"
-    },
-    "deploy-draft": {
-      "description": "رفع التعديلات لرابط تجريبي",
-      "template": "شغل deploy.ps1 في مجلد المشروع"
+  "mcp": {
+    "stitch": {
+      "type": "remote",
+      "url": "https://stitch.googleapis.com/mcp",
+      "enabled": true,
+      "headers": {
+        "X-Goog-Api-Key": "{env:STITCH_API_KEY}"
+      }
     }
   }
 }

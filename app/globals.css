@@ -4,111 +4,111 @@
 
 @layer base {
   :root {
-    --bg-primary: #0A0A0A;
-    --bg-secondary: #111111;
+    --bg-primary: #1A1A1B;
+    --bg-secondary: #2D2D2E;
     --bg-card: rgba(255, 255, 255, 0.03);
     --bg-card-hover: rgba(255, 255, 255, 0.06);
 
-    --text-primary: #F5F5F0;
-    --text-secondary: #A8A89A;
-    --text-muted: #6B6B5F;
-    --text-on-accent: #0A0A0A;
+    --text-primary: #FBF9F9;
+    --text-secondary: #E4E2E3;
+    --text-muted: #7F7663;
+    --text-on-accent: #1A1A1B;
 
     --border-color: rgba(255, 255, 255, 0.08);
     --border-color-strong: rgba(255, 255, 255, 0.15);
 
-    --accent-gold: #C9A96E;
-    --accent-gold-hover: #D4B87A;
-    --accent-gold-muted: rgba(201, 169, 110, 0.15);
+    --accent-gold: #D4AF37;
+    --accent-gold-hover: #E0C04A;
+    --accent-gold-muted: rgba(212, 175, 55, 0.15);
 
-    --button-primary-bg: #C9A96E;
-    --button-primary-text: #0A0A0A;
+    --button-primary-bg: #D4AF37;
+    --button-primary-text: #1A1A1B;
     --button-secondary-bg: transparent;
     --button-secondary-border: rgba(255, 255, 255, 0.2);
-    --button-secondary-text: #F5F5F0;
+    --button-secondary-text: #FBF9F9;
 
-    --badge-bg: rgba(201, 169, 110, 0.12);
-    --badge-text: #C9A96E;
-    --badge-border: rgba(201, 169, 110, 0.25);
+    --badge-bg: rgba(212, 175, 55, 0.12);
+    --badge-text: #D4AF37;
+    --badge-border: rgba(212, 175, 55, 0.25);
 
     --input-bg: rgba(255, 255, 255, 0.04);
     --input-border: rgba(255, 255, 255, 0.1);
-    --input-focus-border: #C9A96E;
-    --input-text: #F5F5F0;
-    --input-placeholder: #6B6B5F;
+    --input-focus-border: #D4AF37;
+    --input-text: #FBF9F9;
+    --input-placeholder: #7F7663;
 
-    --nav-bg: rgba(10, 10, 10, 0.92);
+    --nav-bg: rgba(26, 26, 27, 0.92);
     --nav-border: rgba(255, 255, 255, 0.06);
-    --nav-text: #A8A89A;
-    --nav-text-hover: #F5F5F0;
-    --nav-text-active: #C9A96E;
+    --nav-text: #E4E2E3;
+    --nav-text-hover: #FBF9F9;
+    --nav-text-active: #D4AF37;
 
-    --footer-bg: #080808;
-    --footer-text: #7A7A6E;
-    --footer-link: #A8A89A;
-    --footer-link-hover: #C9A96E;
+    --footer-bg: #151516;
+    --footer-text: #7F7663;
+    --footer-link: #E4E2E3;
+    --footer-link-hover: #D4AF37;
 
-    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
-    --shadow-button: 0 2px 12px rgba(201, 169, 110, 0.2);
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-button: 0 2px 12px rgba(212, 175, 55, 0.2);
 
-    --nav-bg-ghost: rgba(10, 10, 10, 0.4);
-    --toast-bg: rgba(10, 10, 10, 0.9);
-    --orb-1: rgba(201, 168, 76, 0.18);
+    --nav-bg-ghost: rgba(26, 26, 27, 0.4);
+    --toast-bg: rgba(26, 26, 27, 0.9);
+    --orb-1: rgba(212, 175, 55, 0.18);
     --orb-2: rgba(74, 0, 128, 0.12);
     --orb-3: rgba(0, 26, 74, 0.08);
   }
 
   .light {
-    --bg-primary: #FFFDF7;
+    --bg-primary: #F9F6F0;
     --bg-secondary: #FFFFFF;
     --bg-card: rgba(255, 255, 255, 0.6);
     --bg-card-hover: rgba(255, 255, 255, 0.75);
 
-    --text-primary: #1A1A1A;
-    --text-secondary: #6B6B5F;
-    --text-muted: #A8A89A;
-    --text-on-accent: #0A0A0A;
+    --text-primary: #1B1B1C;
+    --text-secondary: #4D4635;
+    --text-muted: #7F7663;
+    --text-on-accent: #1B1B1C;
 
-    --border-color: rgba(201, 169, 110, 0.15);
-    --border-color-strong: rgba(201, 169, 110, 0.3);
+    --border-color: rgba(208, 197, 175, 0.3);
+    --border-color-strong: rgba(208, 197, 175, 0.5);
 
-    --accent-gold: #C9A96E;
-    --accent-gold-hover: #D4B87A;
-    --accent-gold-muted: rgba(201, 169, 110, 0.1);
+    --accent-gold: #D4AF37;
+    --accent-gold-hover: #E0C04A;
+    --accent-gold-muted: rgba(212, 175, 55, 0.1);
 
-    --button-primary-bg: #C9A96E;
-    --button-primary-text: #0A0A0A;
+    --button-primary-bg: #D4AF37;
+    --button-primary-text: #1B1B1C;
     --button-secondary-bg: transparent;
-    --button-secondary-border: rgba(201, 169, 110, 0.35);
-    --button-secondary-text: #C9A96E;
+    --button-secondary-border: rgba(212, 175, 55, 0.35);
+    --button-secondary-text: #D4AF37;
 
-    --badge-bg: rgba(201, 169, 110, 0.1);
-    --badge-text: #C9A96E;
-    --badge-border: rgba(201, 169, 110, 0.25);
+    --badge-bg: rgba(212, 175, 55, 0.1);
+    --badge-text: #D4AF37;
+    --badge-border: rgba(212, 175, 55, 0.25);
 
     --input-bg: #FFFFFF;
-    --input-border: rgba(201, 169, 110, 0.2);
-    --input-focus-border: #C9A96E;
-    --input-text: #1A1A1A;
-    --input-placeholder: #A8A89A;
+    --input-border: rgba(208, 197, 175, 0.4);
+    --input-focus-border: #D4AF37;
+    --input-text: #1B1B1C;
+    --input-placeholder: #7F7663;
 
-    --nav-bg: rgba(255, 253, 247, 0.88);
-    --nav-border: rgba(201, 169, 110, 0.2);
-    --nav-text: #6B6B5F;
-    --nav-text-hover: #1A1A1A;
-    --nav-text-active: #C9A96E;
+    --nav-bg: rgba(249, 246, 240, 0.88);
+    --nav-border: rgba(208, 197, 175, 0.3);
+    --nav-text: #4D4635;
+    --nav-text-hover: #1B1B1C;
+    --nav-text-active: #D4AF37;
 
-    --footer-bg: #FFFFFF;
-    --footer-text: #A8A89A;
-    --footer-link: #6B6B5F;
-    --footer-link-hover: #C9A96E;
+    --footer-bg: #F0EDE8;
+    --footer-text: #7F7663;
+    --footer-link: #4D4635;
+    --footer-link-hover: #D4AF37;
 
     --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06);
-    --shadow-button: 0 2px 12px rgba(201, 169, 110, 0.3);
+    --shadow-button: 0 2px 12px rgba(212, 175, 55, 0.3);
 
-    --nav-bg-ghost: rgba(255, 253, 247, 0.6);
-    --toast-bg: rgba(255, 253, 247, 0.95);
-    --orb-1: rgba(232, 213, 163, 0.22);
+    --nav-bg-ghost: rgba(249, 246, 240, 0.6);
+    --toast-bg: rgba(249, 246, 240, 0.95);
+    --orb-1: rgba(212, 175, 55, 0.22);
     --orb-2: rgba(255, 182, 193, 0.18);
     --orb-3: rgba(230, 230, 250, 0.12);
   }
@@ -246,8 +246,8 @@
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(201, 168, 76, 0.15);
-    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
@@ -257,7 +257,7 @@
   }
 
   .glass-card:hover {
-    border-color: rgba(201, 168, 76, 0.4);
+    border-color: var(--accent-gold);
   }
 
   .gold-gradient {

@@ -28,7 +28,7 @@ export default function GlassToast({
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: -10 }}
           transition={springs.bouncy}
-          className="fixed top-24 left-1/2 -translate-x-1/2 z-[9999] px-6 py-3 rounded-full backdrop-blur-xl border border-accent-gold/30 bg-white/10 shadow-2xl flex items-center gap-3 pointer-events-auto"
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] px-6 py-3 rounded-full backdrop-blur-xl border border-accent-gold/30 bg-white/10 shadow-2xl flex items-center gap-3 pointer-events-auto max-w-[90vw]"
           style={{
             background: "rgba(255,255,255,0.08)",
             WebkitBackdropFilter: "blur(24px) saturate(200%)",

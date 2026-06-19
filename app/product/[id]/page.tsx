@@ -226,7 +226,7 @@ export default function ProductDetailPage() {
 
           <div className="space-y-6 md:sticky md:top-28 md:self-start">
             <div className="space-y-3">
-              <h1 className={`text-2xl md:text-4xl font-bold leading-tight ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+              <h1 className={`text-2xl md:text-4xl font-bold leading-tight ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
                 {isEnglish ? product.englishTitle : product.title}
               </h1>
               <div className="flex items-center gap-4">
@@ -348,7 +348,7 @@ export default function ProductDetailPage() {
 
         {relatedProducts.length > 0 && (
           <section className="mt-20 pt-10 border-t border-border">
-            <h2 className={`text-xl font-bold mb-6 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+            <h2 className={`text-xl font-bold mb-6 ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
               {isEnglish ? "You May Also Like" : "قد يعجبك أيضاً"}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -359,9 +359,9 @@ export default function ProductDetailPage() {
                   </div>
                   <div className="p-2.5 space-y-1">
                     <div className="relative">
-                      <p className={`text-xs font-bold line-clamp-2 ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p.englishTitle : p.title}</p>
+                      <p className={`text-xs font-bold line-clamp-2 ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>{isEnglish ? p.englishTitle : p.title}</p>
                       <div className="title-tooltip">
-                        <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p.englishTitle : p.title}</p>
+                        <p className={`text-xs font-bold ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>{isEnglish ? p.englishTitle : p.title}</p>
                       </div>
                     </div>
                     <p className="text-[10px] text-accent-gold/40">{p.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
@@ -374,7 +374,7 @@ export default function ProductDetailPage() {
 
         {recentProducts.length > 0 && (
           <section className="mt-12 pt-10 border-t border-border">
-            <h2 className={`text-xl font-bold mb-6 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+            <h2 className={`text-xl font-bold mb-6 ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
               <i className="fas fa-clock-rotate text-accent-gold/40 mr-2" />
               {isEnglish ? "Recently Viewed" : "مُشاهَد مؤخراً"}
             </h2>
@@ -386,9 +386,9 @@ export default function ProductDetailPage() {
                   </div>
                   <div className="p-2.5 space-y-1">
                     <div className="relative">
-                      <p className={`text-xs font-bold line-clamp-2 ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p!.englishTitle : p!.title}</p>
+                      <p className={`text-xs font-bold line-clamp-2 ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>{isEnglish ? p!.englishTitle : p!.title}</p>
                       <div className="title-tooltip">
-                        <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? p!.englishTitle : p!.title}</p>
+                        <p className={`text-xs font-bold ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>{isEnglish ? p!.englishTitle : p!.title}</p>
                       </div>
                     </div>
                     <p className="text-[10px] text-accent-gold/40">{p!.basePrice} {isEnglish ? "JD" : "د.أ"}</p>
@@ -403,7 +403,7 @@ export default function ProductDetailPage() {
       <div className="fixed bottom-0 inset-x-0 z-40 md:hidden bg-black/80 backdrop-blur-xl border-t border-border p-4">
         <div className="flex items-center gap-4">
           <div className="flex-1 min-w-0">
-            <p className={`font-bold text-sm truncate ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+            <p className={`font-bold text-sm truncate ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
               {isEnglish ? product.englishTitle : product.title}
             </p>
             <AnimatePresence mode="popLayout">
@@ -453,7 +453,7 @@ export default function ProductDetailPage() {
               )}
             </div>
             <div className="min-w-0">
-              <p className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+              <p className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
                 {isEnglish ? product.englishTitle : product.title}
               </p>
               <AnimatePresence mode="popLayout">

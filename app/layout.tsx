@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Alexandria, Inter } from "next/font/google";
+import { Alexandria, Inter, Bodoni_Moda, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import Providers from "@/context/Providers";
 import AmbientBackground from "@/components/AmbientBackground";
@@ -15,6 +15,20 @@ const alexandria = Alexandria({
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+  adjustFontFallback: false,
+});
+
+const bodoniModa = Bodoni_Moda({
+  subsets: ["latin"],
+  variable: "--font-bodoni",
+  display: "swap",
+  adjustFontFallback: false,
+});
+
+const hankenGrotesk = Hanken_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-hanken",
   display: "swap",
   adjustFontFallback: false,
 });
@@ -68,7 +82,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="ar"
       dir="rtl"
-      className={`${alexandria.variable} ${inter.variable} h-full scroll-smooth`}
+      className={`${alexandria.variable} ${inter.variable} ${bodoniModa.variable} ${hankenGrotesk.variable} h-full scroll-smooth`}
       style={{
         paddingTop: "env(safe-area-inset-top, 0px)",
         paddingBottom: "env(safe-area-inset-bottom, 0px)",

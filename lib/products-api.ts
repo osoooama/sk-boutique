@@ -1,5 +1,9 @@
 import { getSupabase } from "./supabase";
 import type { Product, Perfume, ProductColor, DbProduct, DbPerfume } from "./types";
+import {
+  getLocalProducts, saveLocalProduct, removeLocalProduct,
+  getLocalPerfumes, saveLocalPerfume, removeLocalPerfume,
+} from "./local-store";
 
 function toProduct(row: DbProduct): Product {
   return {
@@ -74,37 +78,82 @@ export async function getProduct(id: string): Promise<Product | null> {
 export async function createProduct(
   input: Omit<DbProduct, "id" | "created_at" | "updated_at">
 ): Promise<Product> {
-  const sb = getSupabase();
-  const { data, error } = await sb
-    .from("products")
-    .insert(input)
-    .select()
-    .single();
+  try {
+    const sb = getSupabase();
+    const { data, error } = await sb
+      .from("products")
+      .insert(input)
+      .select()
+      .single();
 
-  if (error) throw new Error(error.message);
-  return toProduct(data as DbProduct);
+    if (error) throw new Error(error.message);
+    return toProduct(data as DbProduct);
+  } catch {
+    const product: Product = {
+      id: crypto.randomUUID(),
+      title: input.name_ar,
+      englishTitle: input.name_en ?? "",
+      description: input.description_ar ?? "",
+      englishDescription: input.description_en ?? "",
+      category: input.category as Product["category"],
+      basePrice: input.price,
+      sizes: input.sizes ?? [],
+      colors: (input.colors ?? []) as ProductColor[],
+      details: input.details_ar ?? "",
+      englishDetails: input.details_en ?? "",
+      inStock: input.in_stock,
+      featured: input.featured,
+      createdAt: new Date().toISOString().split("T")[0],
+    };
+    saveLocalProduct(product);
+    return product;
+  }
 }
 
 export async function updateProduct(
   id: string,
   input: Partial<Omit<DbProduct, "id" | "created_at" | "updated_at">>
 ): Promise<Product> {
-  const sb = getSupabase();
-  const { data, error } = await sb
-    .from("products")
-    .update(input)
-    .eq("id", id)
-    .select()
-    .single();
+  try {
+    const sb = getSupabase();
+    const { data, error } = await sb
+      .from("products")
+      .update(input)
+      .eq("id", id)
+      .select()
+      .single();
 
-  if (error) throw new Error(error.message);
-  return toProduct(data as DbProduct);
+    if (error) throw new Error(error.message);
+    return toProduct(data as DbProduct);
+  } catch {
+    const local = getLocalProducts().find((p) => p.id === id);
+    if (!local) throw new Error("المنتج غير موجود");
+    const updated: Product = {
+      ...local,
+      title: input.name_ar ?? local.title,
+      englishTitle: input.name_en ?? local.englishTitle,
+      description: input.description_ar ?? local.description,
+      englishDescription: input.description_en ?? local.englishDescription,
+      category: (input.category as Product["category"]) ?? local.category,
+      basePrice: input.price ?? local.basePrice,
+      sizes: input.sizes ?? local.sizes,
+      colors: (input.colors as ProductColor[]) ?? local.colors,
+      inStock: input.in_stock ?? local.inStock,
+      featured: input.featured ?? local.featured,
+    };
+    saveLocalProduct(updated);
+    return updated;
+  }
 }
 
 export async function deleteProduct(id: string): Promise<void> {
-  const sb = getSupabase();
-  const { error } = await sb.from("products").delete().eq("id", id);
-  if (error) throw new Error(error.message);
+  try {
+    const sb = getSupabase();
+    const { error } = await sb.from("products").delete().eq("id", id);
+    if (error) throw new Error(error.message);
+  } catch {
+    removeLocalProduct(id);
+  }
 }
 
 export async function getPerfumes(): Promise<Perfume[]> {
@@ -133,37 +182,78 @@ export async function getPerfume(id: string): Promise<Perfume | null> {
 export async function createPerfume(
   input: Omit<DbPerfume, "id" | "created_at" | "updated_at">
 ): Promise<Perfume> {
-  const sb = getSupabase();
-  const { data, error } = await sb
-    .from("perfumes")
-    .insert(input)
-    .select()
-    .single();
+  try {
+    const sb = getSupabase();
+    const { data, error } = await sb
+      .from("perfumes")
+      .insert(input)
+      .select()
+      .single();
 
-  if (error) throw new Error(error.message);
-  return toPerfume(data as DbPerfume);
+    if (error) throw new Error(error.message);
+    return toPerfume(data as DbPerfume);
+  } catch {
+    const perfume: Perfume = {
+      id: crypto.randomUUID(),
+      title: input.name_ar,
+      englishTitle: input.name_en ?? "",
+      description: input.description_ar ?? "",
+      englishDescription: input.description_en ?? "",
+      image: input.images?.[0] ?? "",
+      category: (input.category as Perfume["category"]) ?? "perfume",
+      basePrice: input.price,
+      volume: input.volume ?? `${input.size_ml ?? 0}ml`,
+      inStock: input.in_stock,
+      featured: input.featured,
+      createdAt: new Date().toISOString().split("T")[0],
+    };
+    saveLocalPerfume(perfume);
+    return perfume;
+  }
 }
 
 export async function updatePerfume(
   id: string,
   input: Partial<Omit<DbPerfume, "id" | "created_at" | "updated_at">>
 ): Promise<Perfume> {
-  const sb = getSupabase();
-  const { data, error } = await sb
-    .from("perfumes")
-    .update(input)
-    .eq("id", id)
-    .select()
-    .single();
+  try {
+    const sb = getSupabase();
+    const { data, error } = await sb
+      .from("perfumes")
+      .update(input)
+      .eq("id", id)
+      .select()
+      .single();
 
-  if (error) throw new Error(error.message);
-  return toPerfume(data as DbPerfume);
+    if (error) throw new Error(error.message);
+    return toPerfume(data as DbPerfume);
+  } catch {
+    const local = getLocalPerfumes().find((p) => p.id === id);
+    if (!local) throw new Error("العطر غير موجود");
+    const updated: Perfume = {
+      ...local,
+      title: input.name_ar ?? local.title,
+      englishTitle: input.name_en ?? local.englishTitle,
+      description: input.description_ar ?? local.description,
+      englishDescription: input.description_en ?? local.englishDescription,
+      basePrice: input.price ?? local.basePrice,
+      volume: input.volume ?? local.volume,
+      inStock: input.in_stock ?? local.inStock,
+      featured: input.featured ?? local.featured,
+    };
+    saveLocalPerfume(updated);
+    return updated;
+  }
 }
 
 export async function deletePerfume(id: string): Promise<void> {
-  const sb = getSupabase();
-  const { error } = await sb.from("perfumes").delete().eq("id", id);
-  if (error) throw new Error(error.message);
+  try {
+    const sb = getSupabase();
+    const { error } = await sb.from("perfumes").delete().eq("id", id);
+    if (error) throw new Error(error.message);
+  } catch {
+    removeLocalPerfume(id);
+  }
 }
 
 export async function uploadImage(

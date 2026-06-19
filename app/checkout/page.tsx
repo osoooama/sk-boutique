@@ -123,7 +123,7 @@ ${discountPercent > 0 ? `🎁 *كود الخصم:* ${discountCode} (-${(subtotal
 
   return (
     <div
-      className={`min-h-screen ${isEnglish ? "font-inter" : "font-alexandria"}`}
+      className={`min-h-screen ${isEnglish ? "font-hanken" : "font-alexandria"}`}
       dir={isEnglish ? "ltr" : "rtl"}
     >
       <Navbar
@@ -148,7 +148,7 @@ ${discountPercent > 0 ? `🎁 *كود الخصم:* ${discountCode} (-${(subtotal
           isEnglish={isEnglish}
         />
 
-        <h1 className={`text-2xl font-bold mb-8 ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+        <h1 className={`text-2xl font-bold mb-8 ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
           {isEnglish ? "Checkout" : "إتمام الطلب"}
         </h1>
 
@@ -160,7 +160,7 @@ ${discountPercent > 0 ? `🎁 *كود الخصم:* ${discountCode} (-${(subtotal
           <div className="space-y-6">
             {/* Shipping Information */}
             <div className="p-5 rounded-2xl bg-white/[0.03] border border-border space-y-4">
-              <h3 className={`font-bold text-sm ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+              <h3 className={`font-bold text-sm ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
                 {isEnglish ? "Shipping Information" : "معلومات الشحن"}
               </h3>
 
@@ -302,7 +302,7 @@ ${discountPercent > 0 ? `🎁 *كود الخصم:* ${discountCode} (-${(subtotal
 
             {/* Order Summary */}
             <div className="p-5 rounded-2xl bg-white/[0.03] border border-border space-y-3">
-              <h3 className={`font-bold text-sm ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+              <h3 className={`font-bold text-sm ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
                 {isEnglish ? "Order Summary" : "ملخص الطلب"}
               </h3>
 
@@ -371,7 +371,7 @@ ${discountPercent > 0 ? `🎁 *كود الخصم:* ${discountCode} (-${(subtotal
                   : "تأكيد الطلب عبر واتساب"}
             </motion.button>
 
-            <p className={`text-[10px] text-accent-gold/30 text-center ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+            <p className={`text-[10px] text-accent-gold/30 text-center ${isEnglish ? "font-hanken" : "font-alexandria"}`}>
               <i className="fas fa-shield-alt mr-1" />
               {isEnglish
                 ? "You will be redirected to WhatsApp to confirm your order. We accept cash on delivery."

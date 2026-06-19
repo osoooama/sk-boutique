@@ -325,9 +325,9 @@ export default function ProductCard({ product, isEnglish, index = 0 }: ProductCa
           <div className="p-3 md:p-4 space-y-2" style={{ transform: `translate3d(${(parallax.x * -5).toFixed(1)}px, ${(parallax.y * -5).toFixed(1)}px, 0)`, willChange: "transform" }}>
             <div className="relative">
               <h3
-                className={`font-bold text-sm line-clamp-2 ${
-                  isEnglish ? "font-inter" : "font-alexandria"
-                }`}
+className={`font-bold text-sm line-clamp-2 ${
+          isEnglish ? "font-bodoni" : "font-alexandria"
+        }`}
               >
                 {isEnglish ? product.englishTitle : product.title}
               </h3>

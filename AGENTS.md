@@ -289,7 +289,24 @@ interface Perfume { id, title, englishTitle, description, englishDescription,
 
 ---
 
-## 8. Project History (Summary)
+---
+
+## 9. Stitch MCP Integration
+
+### Setup
+- MCP server configured in `opencode.json` at project root
+- Uses `npx @_davideast/stitch-mcp proxy` (stdio mode) with API key via `STITCH_API_KEY` env
+- Google Stitch URL: `https://stitch.googleapis.com/mcp`
+
+### Workflow
+When asked to design any UI/page:
+1. Use Stitch MCP tool (`stitch_screen_create`, `stitch_list_projects`, etc.) to generate designs
+2. Apply generated design into the project following SK BOUTIQUE design system (Section 5)
+3. Run `npm run build` to verify 0 errors
+
+---
+
+## 10. Project History (Summary)
 
 | Session | Date | What |
 |---------|------|------|
@@ -306,3 +323,4 @@ interface Perfume { id, title, englishTitle, description, englishDescription,
 | 11 | Jun 15, 2026 | Full dead code audit — 16 CSS classes, 26 files, duplicate logic, broken icons |
 | 12 | Jun 18, 2026 | Data layer — `lib/data.ts` hooks + `lib/products-api.ts` CRUD, admin panel, migration script, currency popup |
 | 13 | Jun 18, 2026 | **Deploy to production:** Supabase SQL schema, migration (8 products, 8 perfumes, 16 images), env vars in Cloudflare Dashboard, npm run deploy, git commit + push |
+| 14 | Jun 19, 2026 | MCP integration — Google Stitch via `opencode.json` proxy, AGENTS.md updated |

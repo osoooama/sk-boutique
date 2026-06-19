@@ -92,9 +92,9 @@ function PerfumeCardWithParallax({ perfume, isEnglish, index = 0 }: { perfume: P
         </div>
         <div className="p-4 space-y-2" style={{ transform: `translate3d(${(offset.x * -5).toFixed(1)}px, ${(offset.y * -5).toFixed(1)}px, 0)`, willChange: "transform" }}>
           <div className="relative">
-            <h3 className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</h3>
+            <h3 className={`font-bold text-sm line-clamp-1 ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</h3>
             <div className="title-tooltip">
-              <p className={`text-xs font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</p>
+              <p className={`text-xs font-bold ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>{isEnglish ? perfume.englishTitle : perfume.title}</p>
             </div>
           </div>
           <p className="text-xs text-accent-gold/40 line-clamp-2 leading-relaxed">{isEnglish ? perfume.englishDescription : perfume.description}</p>
@@ -166,7 +166,7 @@ export default function PerfumesPage() {
               <i className="fas fa-spray-can-sparkles text-[10px]" />
               {isEnglish ? "Premium Fragrances" : "\u0639\u0637\u0648\u0631 \u0641\u0627\u062e\u0631\u0629"}
             </span>
-            <h1 className={`text-4xl md:text-5xl font-bold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+            <h1 className={`text-4xl md:text-5xl font-bold ${isEnglish ? "font-bodoni" : "font-alexandria"}`}>
               <span className="gold-gradient bg-clip-text text-transparent">
                 {isEnglish ? "SK Exclusive Perfumes" : "\u0639\u0637\u0648\u0631 SK \u0627\u0644\u062d\u0635\u0631\u064a\u0629"}
               </span>
@@ -186,7 +186,7 @@ export default function PerfumesPage() {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,168,76,0.15)_0%,transparent_70%)] pointer-events-none" />
             <div className="relative flex items-center justify-center gap-3 flex-wrap">
               <i className="fas fa-tag text-accent-gold text-lg" />
-              <p className={`font-bold text-sm md:text-base text-accent-gold ${isEnglish ? "font-inter" : "font-alexandria"}`}>
+              <p className={`font-bold text-sm md:text-base text-accent-gold ${isEnglish ? "font-hanken" : "font-alexandria"}`}>
                 {isEnglish ? "Use code SKP30 for 30% off your first perfume order!" : "\u0627\u0633\u062a\u062e\u062f\u0645 \u0643\u0648\u062f SKP30 \u0644\u0644\u062d\u0635\u0648\u0644 \u0639\u0644\u0649 \u062e\u0635\u0645 30% \u0639\u0644\u0649 \u0623\u0648\u0644 \u0637\u0644\u0628 \u0639\u0637\u0648\u0631!"}
               </p>
               <span className="text-xs font-mono font-bold bg-accent-gold text-surface-primary px-3 py-1 rounded-lg tracking-widest">

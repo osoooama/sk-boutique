@@ -6,8 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useToast } from "@/components/GlassToast/ToastProvider";
 import ConfirmModal from "@/components/admin/ConfirmModal";
-import { products } from "@/lib/products";
-import { perfumes } from "@/lib/perfumes";
+import { getLocalProducts, getLocalPerfumes } from "@/lib/local-store";
 import { deleteProduct, deletePerfume } from "@/lib/products-api";
 
 type Tab = "products" | "perfumes";
@@ -55,10 +54,12 @@ export default function AdminDashboardPage() {
     }
   };
 
-  const sortedProducts = [...products].sort(
+  const allProducts = getLocalProducts();
+  const allPerfumes = getLocalPerfumes();
+  const sortedProducts = [...allProducts].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
-  const sortedPerfumes = [...perfumes].sort(
+  const sortedPerfumes = [...allPerfumes].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
@@ -71,16 +72,16 @@ export default function AdminDashboardPage() {
   return (
     <div className="min-h-screen p-4 md:p-6 max-w-6xl mx-auto" style={{ background: "transparent" }}>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-lg font-bold" style={{ color: "#F5F5F0" }}>
+        <h1 className="text-lg font-bold" style={{ color: "var(--text-primary)" }}>
           <span className="text-accent-gold">SK BOUTIQUE</span> Admin
         </h1>
         <button
           onClick={handleLogout}
           className="text-xs px-4 h-9 rounded-xl transition-all"
           style={{
-            background: "rgba(255,255,255,0.05)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            color: "#A8A89A",
+            background: "var(--bg-card)",
+            border: "1px solid var(--border-color)",
+            color: "var(--text-muted)",
           }}
         >
           <i className="fas fa-sign-out-alt ml-1.5" />
@@ -90,46 +91,43 @@ export default function AdminDashboardPage() {
 
       <div className="grid grid-cols-3 gap-3 mb-6">
         <div
-          className="rounded-xl p-4 text-center"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(201,168,76,0.15)" }}
+          className="rounded-xl p-4 text-center glass-card"
         >
-          <div className="text-2xl font-bold" style={{ color: "#C9A84C" }}>{products.length}</div>
-          <div className="text-xs mt-1" style={{ color: "#6B6B5F" }}>عدد الملابس</div>
+          <div className="text-2xl font-bold" style={{ color: "var(--accent-gold)" }}>{allProducts.length}</div>
+          <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>عدد الملابس</div>
         </div>
         <div
-          className="rounded-xl p-4 text-center"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(201,168,76,0.15)" }}
+          className="rounded-xl p-4 text-center glass-card"
         >
-          <div className="text-2xl font-bold" style={{ color: "#C9A84C" }}>{perfumes.length}</div>
-          <div className="text-xs mt-1" style={{ color: "#6B6B5F" }}>عدد العطور</div>
+          <div className="text-2xl font-bold" style={{ color: "var(--accent-gold)" }}>{allPerfumes.length}</div>
+          <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>عدد العطور</div>
         </div>
         <div
-          className="rounded-xl p-4 text-center"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(201,168,76,0.15)" }}
+          className="rounded-xl p-4 text-center glass-card"
         >
-          <div className="text-xs font-medium truncate" style={{ color: "#C9A84C" }}>
+          <div className="text-xs font-medium truncate" style={{ color: "var(--accent-gold)" }}>
             {lastAdded?.title || "-"}
           </div>
-          <div className="text-[10px] mt-0.5" style={{ color: "#6B6B5F" }}>
+          <div className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)" }}>
             {lastAdded?.createdAt || "آخر إضافة"}
           </div>
         </div>
       </div>
 
-      <div className="flex gap-4 items-center mb-5 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+      <div className="flex gap-4 items-center mb-5 border-b" style={{ borderColor: "var(--border-color)" }}>
         {(["products", "perfumes"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className="relative pb-3 text-sm font-medium transition-colors"
-            style={{ color: tab === t ? "#C9A84C" : "#6B6B5F" }}
+            style={{ color: tab === t ? "var(--accent-gold)" : "var(--text-muted)" }}
           >
             {t === "products" ? "الملابس" : "العطور"}
             {tab === t && (
               <motion.div
                 layoutId="tab-underline"
                 className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
-                style={{ background: "#C9A84C" }}
+                style={{ background: "var(--accent-gold)" }}
               />
             )}
           </button>
@@ -140,7 +138,7 @@ export default function AdminDashboardPage() {
               key={f}
               onClick={() => setFilter(f)}
               className={`text-[10px] px-2.5 h-7 rounded-lg font-medium transition-all ${
-                filter === f ? "bg-accent-gold/20 text-accent-gold border border-accent-gold/30" : "text-[#6B6B5F] border border-transparent hover:text-accent-gold/60"
+                filter === f ? "bg-accent-gold/20 text-accent-gold border border-accent-gold/30" : "text-accent-gold/40 border border-transparent hover:text-accent-gold/60"
               }`}
             >
               {f === "all" ? "الكل" : f === "available" ? "متوفر" : f === "unavailable" ? "غير متوفر" : "مميز"}
@@ -151,8 +149,8 @@ export default function AdminDashboardPage() {
           href={tab === "products" ? "/admin/products/new" : "/admin/perfumes/new"}
           className="text-xs h-9 px-4 rounded-xl font-medium flex items-center gap-1.5 transition-all"
           style={{
-            background: "linear-gradient(135deg, #C9A84C, #D4B87A)",
-            color: "#0A0A0A",
+            background: "var(--accent-gold)",
+            color: "var(--text-on-accent)",
           }}
         >
           <i className="fas fa-plus text-[10px]" />
@@ -174,13 +172,9 @@ export default function AdminDashboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.05 }}
-            className={`rounded-xl overflow-hidden transition-all ${!item.inStock ? "opacity-60" : ""}`}
-            style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.06)",
-            }}
+            className={`rounded-xl overflow-hidden transition-all glass-card ${!item.inStock ? "opacity-60" : ""}`}
           >
-            <div className="aspect-[4/3] relative" style={{ background: "#111" }}>
+            <div className="aspect-[4/3] relative" style={{ background: "var(--bg-secondary)" }}>
               {!item.inStock && (
                 <div className="absolute inset-0 z-10 bg-black/60 flex items-center justify-center">
                   <span className="text-xs font-bold px-3 py-1 rounded-full bg-red-500/80 text-white">غير متوفر</span>
@@ -214,7 +208,7 @@ export default function AdminDashboardPage() {
             </div>
             <div className="p-3 space-y-2">
               <div className="flex items-center justify-between gap-2">
-                <h3 className="text-sm font-medium truncate flex-1" style={{ color: "#F5F5F0" }}>{item.title}</h3>
+                <h3 className="text-sm font-medium truncate flex-1" style={{ color: "var(--text-primary)" }}>{item.title}</h3>
                 {item.inStock ? (
                   <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-green-500/15 text-green-400 border border-green-500/20 whitespace-nowrap">
                     🟢 متوفر
@@ -226,8 +220,8 @@ export default function AdminDashboardPage() {
                 )}
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs" style={{ color: "#C9A84C" }}>{item.basePrice} د.أ</span>
-                <span className="text-[10px]" style={{ color: "#6B6B5F" }}>
+                <span className="text-xs" style={{ color: "var(--accent-gold)" }}>{item.basePrice} د.أ</span>
+                <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>
                   {"sizes" in item ? item.sizes.join(" · ") : item.volume}
                 </span>
               </div>
@@ -236,9 +230,9 @@ export default function AdminDashboardPage() {
                   href={tab === "products" ? `/admin/products/${item.id}/edit` : `/admin/perfumes/${item.id}/edit`}
                   className="flex-1 h-9 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-all"
                   style={{
-                    background: "rgba(201,168,76,0.1)",
-                    border: "1px solid rgba(201,168,76,0.2)",
-                    color: "#C9A84C",
+                    background: "var(--accent-gold-muted)",
+                    border: "1px solid var(--accent-gold/0.3)",
+                    color: "var(--accent-gold)",
                   }}
                 >
                   <i className="fas fa-pen text-[10px]" />
